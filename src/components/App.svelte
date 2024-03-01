@@ -4,10 +4,7 @@
 </script>
 
 <main>
-  <h1>Svelte template</h1>
-
-  <p>Write your HTML here</p>
-
+  <h1>Card Interaction</h1>
   <Card />
 </main>
 
