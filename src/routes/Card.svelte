@@ -28,6 +28,9 @@
 
     function hit() {
         playerHand = deal(playerHand);
+        if (calculateHand(playerHand) > 21) {
+            gameOver = true;
+        }
     }
 
     function newGame() {
