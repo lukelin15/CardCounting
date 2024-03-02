@@ -1,11 +1,11 @@
 <script>
+  import BlackJack from './Blackjack.svelte';
   // Write your JS here, or import other files
-  import Card from './Card.svelte';
 </script>
 
 <main>
   <h1>Card Interaction</h1>
-  <Card />
+  <BlackJack />
 </main>
 
 <style>

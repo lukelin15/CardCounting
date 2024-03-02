@@ -4,13 +4,16 @@
     // deck initializing stuff
     let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     let suits = ['♠', '♣', '♥', '♦'];
-    let deck = [];
+    let newDeck = [];
     
     for (let suit of suits) {
       for (let val of vals) {
-        deck.push(val + suit);
+        newDeck.push(val + suit);
       }
     }
+
+    // newDeck is a template to copy decks from
+    let deck = [...newDeck]
   
     let playerHand = [];
     let dealerHand = [];
@@ -29,9 +32,11 @@
     }
 
     function hit() {
-        playerHand = deal(playerHand);
-        if (calculateHand(playerHand) > 21) {
-            gameOver = true;
+        if (!gameOver) {
+          playerHand = deal(playerHand);
+          if (calculateHand(playerHand) > 21) {
+              gameOver = true;
+          }
         }
     }
 
@@ -45,10 +50,12 @@
     }
   
     function stand() {
-      while (calculateHand(dealerHand) < 17) {
-        dealerHand = deal(dealerHand);
+      if (!gameOver) {
+        while (calculateHand(dealerHand) < 17) {
+          dealerHand = deal(dealerHand);
+        }
+        gameOver = true;
       }
-      gameOver = true;
     }
   
     function calculateHand(hand) {
@@ -102,7 +109,7 @@
         <div class="card" in:fly="{{ y: -200, duration: 500 }}">{card}</div>
         {/each}
       </div>
-      <div>Score: {calculateHand(dealerHand)}</div>
+      <!-- <div>Score: {calculateHand(dealerHand)}</div> -->
     </div>
   
     <div id="player">
@@ -112,7 +119,7 @@
         <div class="card" in:fly="{{ y: 200, duration: 500 }}">{card}</div>
         {/each}
       </div>
-      <div>Score: {calculateHand(playerHand)}</div>
+      <!-- <div>Score: {calculateHand(playerHand)}</div> -->
     </div>
   
     <div id="controls">
@@ -130,8 +137,23 @@
 </main>
   
 <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 300px; /* Adjust the size to your preference */
+      height: 300px; /* Adjust the size to your preference */
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      background-color: #f9f9f9;
+    }
+
     .card {
-      font-size: 1.5em;
+      font-size: 1em;
       text-align: center;
       padding: 1em;
       border: 1px solid #ccc;
@@ -148,7 +170,7 @@
     }
   
     #dealer, #player {
-      margin-bottom: 2em;
+      margin-bottom: 1em;
     }
   
     #controls {
