@@ -1,6 +1,8 @@
 <script>
   export let card;
   export let isPlaceholder = false;
+  export let width = '80px';
+  export let height = '120px';
 
   // $ for reactivity
   $: value = isPlaceholder ? '' : card.slice(0, -1);
@@ -8,7 +10,7 @@
   $: isRed = suit === '♥' || suit === '♦';
 </script>
 
-<div class="card" class:placeholder={isPlaceholder}>
+<div class="card" class:placeholder={isPlaceholder} style="width: {width}; height: {height};">
   <div class="card-top">
     <span class="card-value" class:red={isRed}>{value}</span>
     <span class="card-suit" class:red={isRed}>{suit}</span>
@@ -24,8 +26,6 @@
 
 <style>
   .card {
-    width: 80px;
-    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;

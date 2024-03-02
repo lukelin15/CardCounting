@@ -1,6 +1,7 @@
 <script>
     import { fly } from 'svelte/transition';
-    import Card from './Card.svelte'
+    import Card from './Card.svelte';
+    import Stats from './Stats.svelte';
 
     // deck initializing stuff
     let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -22,6 +23,7 @@
     let hasStood = false;
     let showOverlay = false;
     let timeoutId;
+    let hasStarted = false;
 
     // only display overlay after animations
     // equations gets amount of extra cards dealt
@@ -46,11 +48,12 @@
         shuffle()
       }
         let newHand = [...hand, deck.pop()];
+        deck = [...deck];
         return newHand;
     }
 
     function hit() {
-        if (!gameOver) {
+        if (!gameOver && hasStarted) {
           playerHand = deal(playerHand);
           if (calculateHand(playerHand) > 21) {
               gameOver = true;
@@ -63,6 +66,7 @@
       hasStood = false
       gameOver = false;
       showOverlay = false;
+      hasStarted = true
       playerHand = []
       dealerHand = []
 
@@ -77,7 +81,7 @@
 
   
     function stand() {
-      if (!gameOver) {
+      if (!gameOver && hasStarted) {
         while (calculateHand(dealerHand) < 17) {
           dealerHand = deal(dealerHand);
         }
@@ -171,6 +175,9 @@
             <h2>Winner: {determineWinner()}</h2>
         </div>
     {/if}
+
+    <Stats {deck} dealerSecondCard={dealerHand[1]} />
+
 </main>
   
 <style>
@@ -180,8 +187,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      width: 400px; /* Adjust the size to your preference */
-      height: 400px; /* Adjust the size to your preference */
+      width: 600px; /* Adjust the size to your preference */
+      height: 700px; /* Adjust the size to your preference */
       margin: auto;
       padding: 20px;
       border: 1px solid #ccc;
@@ -216,7 +223,7 @@
     .overlay {
       position: absolute;
       width: 70%;
-      height: 70%;
+      height: 10%;
       display: flex;
       justify-content: center;
       align-items: center;
