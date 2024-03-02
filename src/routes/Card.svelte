@@ -22,22 +22,20 @@
     }
   
     function deal(hand) {
-      hand.push(deck.pop());
-      hand = hand.slice();
+        let newHand = [...hand, deck.pop()];
+        return newHand;
     }
-  
-    function newGame() {
-      shuffle();
-      playerHand = [];
-      dealerHand = [];
-      deal(playerHand);
-      deal(dealerHand);
-      deal(playerHand);
-      deal(dealerHand);
-    }
-  
+
     function hit() {
-      deal(playerHand);
+        playerHand = deal(playerHand);
+    }
+
+    function newGame() {
+        shuffle();
+        playerHand = deal([]);
+        dealerHand = deal([]);
+        playerHand = deal(playerHand);
+        dealerHand = deal(dealerHand);
     }
   
     function stand() {
