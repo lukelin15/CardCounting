@@ -39,11 +39,12 @@
         dealerHand = deal([]);
         playerHand = deal(playerHand);
         dealerHand = deal(dealerHand);
+        gameOver = false;
     }
   
     function stand() {
       while (calculateHand(dealerHand) < 17) {
-        deal(dealerHand);
+        dealerHand = deal(dealerHand);
       }
       gameOver = true;
     }
