@@ -1,4 +1,5 @@
 <script>
+    import { fly } from 'svelte/transition';
     let deck = [
       'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
       'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
@@ -97,7 +98,7 @@
       <h2>Dealer</h2>
       <div class="hand">
         {#each dealerHand as card, i (i)}
-        <div class="card">{card}</div>
+        <div class="card" in:fly="{{ y: -200, duration: 500 }}">{card}</div>
         {/each}
       </div>
       <div>Score: {calculateHand(dealerHand)}</div>
@@ -107,7 +108,7 @@
       <h2>Player</h2>
       <div class="hand">
         {#each playerHand as card, i (i)}
-        <div class="card">{card}</div>
+        <div class="card" in:fly="{{ y: 200, duration: 500 }}">{card}</div>
         {/each}
       </div>
       <div>Score: {calculateHand(playerHand)}</div>
