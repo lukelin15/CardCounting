@@ -20,6 +20,16 @@
     let dealerHand = [];
     let gameOver = false;
     let hasStood = false;
+    let showOverlay = false;
+    let timeoutId;
+
+    // only display overlay after animations
+    // equations gets amount of extra cards dealt
+    $: if (gameOver) {
+    timeoutId = setTimeout(() => {
+        showOverlay = true;
+    }, (Math.max(1, dealerHand.length -2)) * 100 + 400);
+}
   
     function shuffle() {
       for (let i = deck.length - 1; i > 0; i--) {
@@ -49,12 +59,22 @@
     }
 
     function newGame() {
+      clearTimeout(timeoutId);
+      hasStood = false
+      gameOver = false;
+      showOverlay = false;
+      playerHand = []
+      dealerHand = []
+
+      setTimeout(() => {
         playerHand = deal([]);
         dealerHand = deal([]);
         playerHand = deal(playerHand);
         dealerHand = deal(dealerHand);
-        gameOver = false;
+      }, 250);
+
     }
+
   
     function stand() {
       if (!gameOver) {
@@ -118,8 +138,8 @@
       {/if}
       <div class="hand">
         {#each dealerHand as card, i (i)}          
-          <div in:fly={{ y: -100, duration: 400, delay: (i+1) * 100 }}>
-          {#if i === 1 && !gameOver && !hasStood}
+          <div in:fly={{ y: -100, duration: 400, delay: i * 100}}>
+          {#if i === 1 && !showOverlay && !hasStood}
             <Card isPlaceholder={true} />
           {:else}
             <Card {card} />
@@ -133,7 +153,7 @@
       <h2>Player: {calculateHand(playerHand)}</h2>
       <div class="hand">
         {#each playerHand as card, i (i)}
-          <div in:fly={{ y: 100, duration: 400, delay: (i+1) * 100 }}>
+          <div in:fly={{ y: 100, duration: 400, delay: i * 100}}>
             <Card {card} />
           </div>
         {/each}
@@ -146,7 +166,7 @@
       <button on:click={stand}>Stand</button>
     </div>
   
-    {#if gameOver}
+    {#if showOverlay}
         <div class="overlay">
             <h2>Winner: {determineWinner()}</h2>
         </div>
