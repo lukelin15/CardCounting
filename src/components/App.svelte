@@ -9,5 +9,7 @@
 </main>
 
 <style>
-  /* Write your CSS here */
+  h1 {
+    text-align: center;
+  }
 </style>

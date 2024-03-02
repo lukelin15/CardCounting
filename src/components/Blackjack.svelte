@@ -1,5 +1,6 @@
 <script>
     import { fly } from 'svelte/transition';
+    import Card from './Card.svelte'
 
     // deck initializing stuff
     let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -18,6 +19,7 @@
     let playerHand = [];
     let dealerHand = [];
     let gameOver = false;
+    let hasStood = false;
   
     function shuffle() {
       for (let i = deck.length - 1; i > 0; i--) {
@@ -25,8 +27,14 @@
         [deck[i], deck[j]] = [deck[j], deck[i]];
       }
     }
+
+    shuffle()
   
     function deal(hand) {
+      if (deck.length == 0) {
+        deck = [...newDeck]
+        shuffle()
+      }
         let newHand = [...hand, deck.pop()];
         return newHand;
     }
@@ -41,7 +49,6 @@
     }
 
     function newGame() {
-        shuffle();
         playerHand = deal([]);
         dealerHand = deal([]);
         playerHand = deal(playerHand);
@@ -55,6 +62,7 @@
           dealerHand = deal(dealerHand);
         }
         gameOver = true;
+        hasStood = true;
       }
     }
   
@@ -103,23 +111,29 @@
   
 <main>
     <div id="dealer">
-      <h2>Dealer</h2>
+      {#if !gameOver && !hasStood}
+        <h2>Dealer: ?</h2>
+      {:else}
+        <h2>Dealer: {calculateHand(dealerHand)}</h2>
+      {/if}
       <div class="hand">
         {#each dealerHand as card, i (i)}
-        <div class="card" in:fly="{{ y: -200, duration: 500 }}">{card}</div>
+          {#if i === 1 && !gameOver && !hasStood}
+            <Card isPlaceholder={true} />
+          {:else}
+            <Card {card} />
+          {/if}
         {/each}
       </div>
-      <!-- <div>Score: {calculateHand(dealerHand)}</div> -->
     </div>
   
     <div id="player">
-      <h2>Player</h2>
+      <h2>Player: {calculateHand(playerHand)}</h2>
       <div class="hand">
         {#each playerHand as card, i (i)}
-        <div class="card" in:fly="{{ y: 200, duration: 500 }}">{card}</div>
+          <Card {card} />
         {/each}
       </div>
-      <!-- <div>Score: {calculateHand(playerHand)}</div> -->
     </div>
   
     <div id="controls">
@@ -129,21 +143,21 @@
     </div>
   
     {#if gameOver}
-        <div>
-            <h2>Winner</h2>
-            <div>{determineWinner()}</div>
+        <div class="overlay">
+            <h2>Winner: {determineWinner()}</h2>
         </div>
     {/if}
 </main>
   
 <style>
     main {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      width: 300px; /* Adjust the size to your preference */
-      height: 300px; /* Adjust the size to your preference */
+      justify-content: space-between;
+      width: 400px; /* Adjust the size to your preference */
+      height: 400px; /* Adjust the size to your preference */
       margin: auto;
       padding: 20px;
       border: 1px solid #ccc;
@@ -151,31 +165,41 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       background-color: #f9f9f9;
     }
-
-    .card {
-      font-size: 1em;
-      text-align: center;
-      padding: 1em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin: 1em;
-      background-color: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    }
   
     .hand {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap; /* Prevent cards from wrapping */
+      overflow-x: auto; /* Allow horizontal scrolling */
+      max-width: 100%; /* Limit the width to the parent container */
+      gap: -1rem; /* Optional: Adjust the gap between cards if you want them to overlap */
+
     }
   
     #dealer, #player {
       margin-bottom: 1em;
+      overflow: visible; /* Ensure the container allows for overflow */
+      width: 100%; /* Ensure full utilization of the available width */
+      min-height: 140px; /* Adjust based on card height to ensure container does not collapse */
     }
   
     #controls {
+      position: relative;
       display: flex;
       justify-content: center;
       gap: 1em;
+      bottom: 0;
+    }
+
+    .overlay {
+      position: absolute;
+      width: 70%;
+      height: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 24px;
     }
 </style>
