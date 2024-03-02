@@ -117,12 +117,14 @@
         <h2>Dealer: {calculateHand(dealerHand)}</h2>
       {/if}
       <div class="hand">
-        {#each dealerHand as card, i (i)}
+        {#each dealerHand as card, i (i)}          
+          <div in:fly={{ y: -100, duration: 400, delay: (i+1) * 100 }}>
           {#if i === 1 && !gameOver && !hasStood}
             <Card isPlaceholder={true} />
           {:else}
             <Card {card} />
           {/if}
+          </div>
         {/each}
       </div>
     </div>
@@ -131,7 +133,9 @@
       <h2>Player: {calculateHand(playerHand)}</h2>
       <div class="hand">
         {#each playerHand as card, i (i)}
-          <Card {card} />
+          <div in:fly={{ y: 100, duration: 400, delay: (i+1) * 100 }}>
+            <Card {card} />
+          </div>
         {/each}
       </div>
     </div>
@@ -169,11 +173,9 @@
     .hand {
       display: flex;
       justify-content: center;
-      flex-wrap: nowrap; /* Prevent cards from wrapping */
-      overflow-x: auto; /* Allow horizontal scrolling */
-      max-width: 100%; /* Limit the width to the parent container */
-      gap: -1rem; /* Optional: Adjust the gap between cards if you want them to overlap */
-
+      flex-wrap: nowrap;
+      max-width: 100%;
+      overflow: hidden;
     }
   
     #dealer, #player {
