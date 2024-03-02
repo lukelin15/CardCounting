@@ -93,41 +93,65 @@
 </script>
   
 <main>
-    <button on:click={newGame}>New Game</button>
-    <button on:click={hit}>Hit</button>
-    <button on:click={stand}>Stand</button>
-
-    <div>
-        <h2>Player</h2>
-        {#each playerHand as card (card)}
+    <div id="dealer">
+      <h2>Dealer</h2>
+      <div class="hand">
+        {#each dealerHand as card, i (i)}
         <div class="card">{card}</div>
         {/each}
-        <div>Score: {calculateHand(playerHand)}</div>
+      </div>
+      <div>Score: {calculateHand(dealerHand)}</div>
     </div>
-
-    <div>
-        <h2>Dealer</h2>
-        {#each dealerHand as card (card)}
+  
+    <div id="player">
+      <h2>Player</h2>
+      <div class="hand">
+        {#each playerHand as card, i (i)}
         <div class="card">{card}</div>
         {/each}
-        <div>Score: {calculateHand(dealerHand)}</div>
+      </div>
+      <div>Score: {calculateHand(playerHand)}</div>
     </div>
-
+  
+    <div id="controls">
+      <button on:click={newGame}>New Game</button>
+      <button on:click={hit}>Hit</button>
+      <button on:click={stand}>Stand</button>
+    </div>
+  
     {#if gameOver}
-    <div>
-      <h2>Winner</h2>
-      <div>{determineWinner()}</div>
-    </div>
-  {/if}
+        <div>
+            <h2>Winner</h2>
+            <div>{determineWinner()}</div>
+        </div>
+    {/if}
 </main>
   
-  <style>
+<style>
     .card {
-      font-size: 3em;
+      font-size: 1.5em;
       text-align: center;
       padding: 1em;
       border: 1px solid #ccc;
       border-radius: 5px;
       margin: 1em;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     }
-  </style>
+  
+    .hand {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  
+    #dealer, #player {
+      margin-bottom: 2em;
+    }
+  
+    #controls {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+    }
+</style>
