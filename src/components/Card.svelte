@@ -1,15 +1,16 @@
 <script>
     import { fly } from 'svelte/transition';
-    let deck = [
-      'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
-      'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
-      'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
-      'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'
-    ];
+
+    // deck initializing stuff
+    let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     let suits = ['♠', '♣', '♥', '♦'];
-    deck = deck.map(card => {
-      return card + suits[Math.floor(Math.random() * suits.length)];
-    });
+    let deck = [];
+    
+    for (let suit of suits) {
+      for (let val of vals) {
+        deck.push(val + suit);
+      }
+    }
   
     let playerHand = [];
     let dealerHand = [];

@@ -1,6 +1,6 @@
 <script>
   // Write your JS here, or import other files
-  import Card from '../routes/Card.svelte';
+  import Card from './Card.svelte';
 </script>
 
 <main>

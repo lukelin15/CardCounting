@@ -1,7 +1,5 @@
 <script>
-  import App from '../components/App.svelte';
-  import Card from '../routes/Card.svelte';
-  
+  import App from '../components/App.svelte';  
 </script>
 
 <App />
