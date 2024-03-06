@@ -24,6 +24,10 @@
   let showOverlay = false;
   let timeoutId;
   let hasStarted = false;
+  let playerMoney = 1000; 
+  let betAmount = 0;
+  let error = '';
+  let betPlaced = false;
 
   // only display overlay after animations
   // equations gets amount of extra cards dealt
@@ -61,6 +65,17 @@
       }
   }
 
+  function placeBet(amount) {
+    if (playerMoney >= amount) {
+      playerMoney -= amount;
+      betAmount = amount;
+      newGame();
+      betPlaced = true;
+    } else {
+      error = "You don't have enough money to place this bet.";
+    }
+  }
+
   function newGame() {
     clearTimeout(timeoutId);
     hasStood = false
@@ -69,6 +84,7 @@
     hasStarted = true
     playerHand = []
     dealerHand = []
+    betPlaced = false;
 
     setTimeout(() => {
       playerHand = deal([]);
@@ -76,7 +92,6 @@
       playerHand = deal(playerHand);
       dealerHand = deal(dealerHand);
     }, 250);
-
   }
 
 
@@ -115,20 +130,27 @@
   }
 
   function determineWinner() {
-      let playerScore = calculateHand(playerHand);
-      let dealerScore = calculateHand(dealerHand);
+    let playerScore = calculateHand(playerHand);
+    let dealerScore = calculateHand(dealerHand);
 
-      if (playerScore > 21) {
-          return 'Dealer';
-      } else if (dealerScore > 21) {
-          return 'Player';
-      } else if (playerScore > dealerScore) {
-          return 'Player';
-      } else if (dealerScore > playerScore) {
-          return 'Dealer';
-      } else {
-          return 'Draw';
-      }
+    let winner = 'Draw';
+    if (playerScore > 21) {
+      winner = 'Dealer';
+    } else if (dealerScore > 21) {
+      winner = 'Player';
+    } else if (playerScore > dealerScore) {
+      winner = 'Player';
+    } else if (dealerScore > playerScore) {
+      winner = 'Dealer';
+    }
+
+    if (winner === 'Player') {
+      playerMoney += betAmount * 2; // player gets their bet back plus the same amount
+    } else if (winner === 'Draw') {
+      playerMoney += betAmount; // player gets their bet back
+    }
+    betPlaced = false;
+    return winner;
   }
 
 </script>
@@ -155,6 +177,8 @@
 
   <div id="player">
     <h2>Player: {calculateHand(playerHand)}</h2>
+    <h2>Money: {playerMoney}</h2>
+    <h2>Bet: {betAmount}</h2>
     <div class="hand">
       {#each playerHand as card, i (i)}
         <div in:fly={{ y: 100, duration: 400, delay: i * 100}}>
@@ -165,9 +189,18 @@
   </div>
 
   <div id="controls">
-    <button on:click={newGame}>New Game</button>
     <button on:click={hit}>Hit</button>
     <button on:click={stand}>Stand</button>
+  </div>
+
+  <div id="betting">
+    <!-- <h2>Money: {playerMoney}</h2>
+    <h2>Bet: {betAmount}</h2> -->
+    <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="Enter bet amount" disabled={betPlaced} />
+    <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place Bet</button>
+    {#if error}
+      <p>{error}</p>
+    {/if}
   </div>
 
   {#if showOverlay}
@@ -188,7 +221,7 @@
     align-items: center;
     justify-content: space-between;
     width: 600px; /* Adjust the size to your preference */
-    height: 700px; /* Adjust the size to your preference */
+    height: 900px; /* Adjust the size to your preference */
     margin: auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -244,5 +277,18 @@
 
   button:hover {
     background-color: #0056b3;
+  }
+
+  #betting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+  }
+
+  #betting input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
   }
 </style>
