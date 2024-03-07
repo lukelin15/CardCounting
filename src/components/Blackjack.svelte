@@ -94,6 +94,7 @@
   function split() {
     if (canSplit()) {
       playerMoney -= betAmount; 
+      betAmount *= 2;
       playerSplitHand = [playerHand.pop()];
       playerHand = [playerHand[0]];
       haveSplit = true;
