@@ -1,5 +1,6 @@
 <script>
   import BlackJack from './Blackjack.svelte';
+  import BasicStrategy from './BasicStrategy.svelte';
   // Write your JS here, or import other files
 </script>
 
@@ -33,6 +34,7 @@
     can choose their experience and apply what they have learned about card counting to increase their amount of wins.
   </p>
 </body>
+<BasicStrategy />
 </main>
 
 <style>

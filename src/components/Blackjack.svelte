@@ -223,6 +223,46 @@
     betPlaced = false;
     return winner;
   }
+
+  function basicStrategy() {
+    let playerScore = calculateHand(playerHand);
+    let dealerUpcard = dealerHand[0].slice(0, -1);
+    let dealerUpcardValue = ['K', 'Q', 'J'].includes(dealerUpcard) ? 10 : parseInt(dealerUpcard);
+    let isSoftHand = playerHand.some(card => card.slice(0, -1) === 'A');
+    let isPair = playerHand.length === 2 && playerHand[0][0] === playerHand[1][0];
+
+    if (isPair) {
+      let pairValue = playerHand[0].slice(0, -1);
+      if (['A', '8'].includes(pairValue) || 
+          (['2', '3'].includes(pairValue) && dealerUpcardValue >= 4 && dealerUpcardValue <= 7) ||
+          (pairValue === '4' && (dealerUpcardValue === 5 || dealerUpcardValue === 6)) ||
+          (pairValue === '6' && dealerUpcardValue >= 3 && dealerUpcardValue <= 6) ||
+          (pairValue === '7' && dealerUpcardValue >= 2 && dealerUpcardValue <= 7) ||
+          (pairValue === '9' && (dealerUpcardValue >= 2 && dealerUpcardValue <= 6 || dealerUpcardValue === 8 || dealerUpcardValue === 9))) {
+        split();
+      }
+    } else if (isSoftHand) {
+      if (playerScore <= 17 ||
+          (playerScore >= 13 && playerScore <= 18 && (dealerUpcardValue === 5 || dealerUpcardValue === 6)) ||
+          ((playerScore === 19 || playerScore === 20) && dealerUpcardValue === 6)) {
+        doubleDown();
+      } else if (playerScore >= 19) {
+        stand();
+      } else {
+        hit();
+      }
+    } else {
+      if (playerScore <= 8 ||
+          (playerScore === 10 || playerScore === 11 && dealerUpcardValue !== 10 && dealerUpcard !== 'A') ||
+          (playerScore >= 12 && playerScore <= 16 && dealerUpcardValue >= 7)) {
+        doubleDown();
+      } else if (playerScore >= 17) {
+        stand();
+      } else {
+        hit();
+      }
+    }
+  }
 </script>
 
 <main class:split={haveSplit}>
@@ -277,6 +317,8 @@
     <button on:click={stand}>Stand</button>
     <button on:click={split} class:disabled={!cansplit}>Split</button>
     <button on:click={hitSplit} class:disabled={!haveSplit} disabled={!haveSplit}>Hit Split</button>
+
+    <button on:click={basicStrategy}>Basic Strategy</button>
   </div>
 
   <div id="betting">
