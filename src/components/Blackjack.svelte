@@ -224,7 +224,7 @@
   }
 </script>
 
-<main>
+<main class:split={haveSplit}>
   <div id="dealer">
     {#if !gameOver && !hasStood}
       <h2>Dealer: ?</h2>
@@ -313,6 +313,11 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     background-color: #f9f9f9;
+    transition: height 0.5s ease;
+  }
+
+  main.split {
+    height: 1200px; /* Increased height */
   }
 
   .hand {
