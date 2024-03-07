@@ -87,7 +87,7 @@
     // }
     // return false;
     // console.log(playerHand);
-    return playerHand.length === 2;
+    return playerHand.length === 2 && playerHand[0][0] === playerHand[1][0] && playerMoney >= betAmount;
     // return playerHand.length === 2 && playerHand[0][0] === playerHand[1][0] && playerMoney >= betAmount;
   }
 
@@ -132,7 +132,7 @@
       playerHand = deal(playerHand);
       dealerHand = deal(dealerHand);
 
-      playerHand = ['A♠', 'A♣'];
+      // playerHand = ['A♠', 'A♣'];
 
       if (canSplit()) {
         cansplit = true;
