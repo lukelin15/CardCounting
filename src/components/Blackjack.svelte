@@ -69,6 +69,14 @@
       }
     }
   }
+
+  function doubleDown() {
+    if (playerHand.length === 2 && playerMoney >= betAmount * 2) {
+      betAmount *= 2;
+      hit();
+      stand();
+    }
+  }
   
   function hitSplit() {
     if (!gameOverSplit && hasStarted) {
@@ -265,6 +273,7 @@
 
   <div id="controls">
     <button on:click={hit}>Hit</button>
+    <button on:click={doubleDown} class:disabled={playerHand.length !== 2 || playerMoney < betAmount * 2}>Double Down</button>
     <button on:click={stand}>Stand</button>
     <button on:click={split} class:disabled={!cansplit}>Split</button>
     <button on:click={hitSplit} class:disabled={!haveSplit} disabled={!haveSplit}>Hit Split</button>
