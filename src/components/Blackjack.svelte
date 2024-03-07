@@ -80,15 +80,7 @@
   }
 
   function canSplit() {
-    // if (playerHand.length === 2) {
-    //   let card1Value = playerHand[0][0];
-    //   let card2Value = playerHand[1][0];
-    //   return card1Value === card2Value;
-    // }
-    // return false;
-    // console.log(playerHand);
     return playerHand.length === 2 && playerHand[0][0] === playerHand[1][0] && playerMoney >= betAmount;
-    // return playerHand.length === 2 && playerHand[0][0] === playerHand[1][0] && playerMoney >= betAmount;
   }
 
   function split() {
@@ -275,7 +267,7 @@
     <button on:click={hit}>Hit</button>
     <button on:click={stand}>Stand</button>
     <button on:click={split} class:disabled={!cansplit}>Split</button>
-    <button on:click={hitSplit} class:disabled={!haveSplit}>Hit Split</button>
+    <button on:click={hitSplit} class:disabled={!haveSplit} disabled={!haveSplit}>Hit Split</button>
   </div>
 
   <div id="betting">
