@@ -18,8 +18,10 @@
   let deck = [...newDeck]
 
   let playerHand = [];
+  let playerSplitHand = [];
   let dealerHand = [];
   let gameOver = false;
+  let gameOverSplit = false;
   let hasStood = false;
   let showOverlay = false;
   let timeoutId;
@@ -28,6 +30,7 @@
   let betAmount = 0;
   let error = '';
   let betPlaced = false;
+  let haveSplit = false; 
 
   // only display overlay after animations
   // equations gets amount of extra cards dealt
@@ -57,12 +60,36 @@
   }
 
   function hit() {
-      if (!gameOver && hasStarted) {
-        playerHand = deal(playerHand);
-        if (calculateHand(playerHand) > 21) {
-            gameOver = true;
-        }
+    if (!gameOver && hasStarted) {
+      playerHand = deal(playerHand);
+      if (calculateHand(playerHand) > 21) {
+          gameOver = true;
       }
+    }
+  }
+  
+  function hitSplit() {
+    if (!gameOverSplit && hasStarted) {
+      playerSplitHand = deal(playerSplitHand);
+      if (calculateHand(playerSplitHand) > 21) {
+          gameOverSplit = true;
+      }
+    }
+  }
+
+  function canSplit() {
+    // console.log(playerHand);
+    // return playerHand.length === 2;
+    return playerHand.length === 2 && playerHand[0][0] === playerHand[1][0] && playerMoney >= betAmount;
+  }
+
+  function split() {
+    if (canSplit()) {
+      playerMoney -= betAmount; 
+      playerSplitHand = [playerHand.pop()];
+      playerHand = [playerHand[0]];
+      haveSplit = true;
+    }
   }
 
   function placeBet(amount) {
@@ -80,17 +107,22 @@
     clearTimeout(timeoutId);
     hasStood = false
     gameOver = false;
+    gameOverSplit = false;
     showOverlay = false;
     hasStarted = true
     playerHand = []
+    playerSplitHand = []
     dealerHand = []
     betPlaced = false;
+    haveSplit = false;
 
     setTimeout(() => {
       playerHand = deal([]);
       dealerHand = deal([]);
       playerHand = deal(playerHand);
       dealerHand = deal(dealerHand);
+
+      playerHand = ['A♠', 'A♣'];
     }, 250);
   }
 
@@ -101,6 +133,7 @@
         dealerHand = deal(dealerHand);
       }
       gameOver = true;
+      gameOverSplit = true;
       hasStood = true;
     }
   }
@@ -153,6 +186,29 @@
     return winner;
   }
 
+  function determineWinnerSplit() {
+    let playerSplitScore = calculateHand(playerSplitHand);
+    let dealerScore = calculateHand(dealerHand);
+
+    let winner = 'Draw';
+    if (playerSplitScore > 21) {
+      winner = 'Dealer';
+    } else if (dealerScore > 21) {
+      winner = 'Player';
+    } else if (playerSplitScore > dealerScore) {
+      winner = 'Player';
+    } else if (dealerScore > playerSplitScore) {
+      winner = 'Dealer';
+    }
+
+    if (winner === 'Player') {
+      playerMoney += betAmount * 2; // player gets their bet back plus the same amount
+    } else if (winner === 'Draw') {
+      playerMoney += betAmount; // player gets their bet back
+    }
+    betPlaced = false;
+    return winner;
+  }
 </script>
 
 <main>
@@ -177,6 +233,9 @@
 
   <div id="player">
     <h2>Player: {calculateHand(playerHand)}</h2>
+    {#if haveSplit}
+      <h2>Player Split: {calculateHand(playerSplitHand)}</h2>
+    {/if}
     <h2>Money: {playerMoney}</h2>
     <h2>Bet: {betAmount}</h2>
     <div class="hand">
@@ -188,14 +247,30 @@
     </div>
   </div>
 
+  <div id="playerSplit">
+    <div class="hand">
+      {#each playerSplitHand as card, i (i)}
+        <div in:fly={{ y: 100, duration: 400, delay: i * 100}}>
+          <Card {card} />
+        </div>
+      {/each}
+    </div>
+  </div>
+
   <div id="controls">
     <button on:click={hit}>Hit</button>
     <button on:click={stand}>Stand</button>
+    <!-- <button 
+      on:click={split} 
+      class:disabled={!canSplit()}
+    >
+      Split
+    </button> -->
+    <button on:click={split} disabled={!canSplit()}>Split</button>
+    <button on:click={hitSplit}>Hit Split</button>
   </div>
 
   <div id="betting">
-    <!-- <h2>Money: {playerMoney}</h2>
-    <h2>Bet: {betAmount}</h2> -->
     <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="Enter bet amount" disabled={betPlaced} />
     <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place Bet</button>
     {#if error}
@@ -206,6 +281,9 @@
   {#if showOverlay}
       <div class="overlay">
           <h2>Winner: {determineWinner()}</h2>
+          {#if haveSplit}
+            <h2>Winner Split: {determineWinnerSplit()}</h2>
+          {/if}
       </div>
   {/if}
 
@@ -290,5 +368,10 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 </style>
