@@ -34,7 +34,7 @@
     can choose their experience and apply what they have learned about card counting to increase their amount of wins.
   </p>
 </body>
-<BasicStrategy />
+<!-- <BasicStrategy /> -->
 </main>
 
 <style>
