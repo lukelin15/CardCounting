@@ -1,0 +1,29 @@
+Player's Actions:
+
+Hit (H): Take another card to increase the total value of your hand.
+Stand (S): Keep the current hand without taking additional cards.
+Double Down (D): Double your original bet and receive exactly one more card.
+Split (P): Split a pair of cards into two separate hands, each with its own bet.
+Basic Strategy Rules:
+
+Hard Hands (no Ace or Ace counts as 1):
+
+Always hit hard totals of 8 or less.
+Always stand on hard totals of 17 or more.
+Double down on hard totals of 10 or 11 unless the dealer's upcard is 10 or an Ace.
+Hit on hard totals of 12-16 if the dealer's upcard is 7 or higher; otherwise, stand.
+Soft Hands (Ace in the hand):
+
+Always hit soft totals of 17 or less.
+Double down on soft totals of 13-18 when the dealer's upcard is 5 or 6.
+Double down on soft 19 and 20 against the dealer's 6.
+Stand on soft totals of 19 or 20.
+Pairs:
+
+Always split Aces and 8s.
+Never split 5s or 10s.
+Split 2s and 3s against the dealer's 4-7.
+Split 4s against the dealer's 5 or 6.
+Split 6s against the dealer's 3-6.
+Split 7s against the dealer's 2-7.
+Split 9s against the dealer's 2-6 and 8-9.
