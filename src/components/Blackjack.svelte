@@ -31,6 +31,7 @@
   let error = '';
   let betPlaced = false;
   let haveSplit = false; 
+  let cansplit = false;
 
   // only display overlay after animations
   // equations gets amount of extra cards dealt
@@ -60,6 +61,7 @@
   }
 
   function hit() {
+    cansplit = false;
     if (!gameOver && hasStarted) {
       playerHand = deal(playerHand);
       if (calculateHand(playerHand) > 21) {
@@ -78,9 +80,15 @@
   }
 
   function canSplit() {
+    // if (playerHand.length === 2) {
+    //   let card1Value = playerHand[0][0];
+    //   let card2Value = playerHand[1][0];
+    //   return card1Value === card2Value;
+    // }
+    // return false;
     // console.log(playerHand);
-    // return playerHand.length === 2;
-    return playerHand.length === 2 && playerHand[0][0] === playerHand[1][0] && playerMoney >= betAmount;
+    return playerHand.length === 2;
+    // return playerHand.length === 2 && playerHand[0][0] === playerHand[1][0] && playerMoney >= betAmount;
   }
 
   function split() {
@@ -115,6 +123,7 @@
     dealerHand = []
     betPlaced = false;
     haveSplit = false;
+    cansplit = false;
 
     setTimeout(() => {
       playerHand = deal([]);
@@ -123,6 +132,10 @@
       dealerHand = deal(dealerHand);
 
       playerHand = ['A♠', 'A♣'];
+
+      if (canSplit()) {
+        cansplit = true;
+      }
     }, 250);
   }
 
@@ -260,14 +273,8 @@
   <div id="controls">
     <button on:click={hit}>Hit</button>
     <button on:click={stand}>Stand</button>
-    <!-- <button 
-      on:click={split} 
-      class:disabled={!canSplit()}
-    >
-      Split
-    </button> -->
-    <button on:click={split} disabled={!canSplit()}>Split</button>
-    <button on:click={hitSplit}>Hit Split</button>
+    <button on:click={split} class:disabled={!cansplit}>Split</button>
+    <button on:click={hitSplit} class:disabled={!haveSplit}>Hit Split</button>
   </div>
 
   <div id="betting">
