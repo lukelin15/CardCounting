@@ -37,14 +37,15 @@
   let error = '';
   let betPlaced = false;
   let runningCount=0;
+  let stopSimulation = true;
 
   // only display overlay after animations
   // equations gets amount of extra cards dealt
   $: if (gameOver) {
-  timeoutId = setTimeout(() => {
-      showOverlay = true;
-  }, (Math.max(1, dealerHand.length -2)) * 100 + 400);
-}
+    timeoutId = setTimeout(() => {
+        showOverlay = true;
+    }, (Math.max(1, dealerHand.length -2)) * 100 + 400);
+  }
 
   function restart() {
     deck = [...newDeck]
@@ -63,6 +64,8 @@
     betAmount = 100;
     error = '';
     betPlaced = false;
+    runningCount = 0;
+    stopSimulation = true;
   }
 
   function shuffle() {
@@ -129,6 +132,7 @@
     playerHand = []
     dealerHand = []
     betPlaced = false;
+    runningCount = 0;
 
     setTimeout(() => {
       playerHand = deal([]);
@@ -211,6 +215,7 @@
   }
 
   async function simulateRounds(rounds) {
+    stopSimulation = false
     for (let i = 0; i < rounds; i++) {
 
       placeBet(100);
@@ -221,26 +226,30 @@
 
       determineWinner();
 
-      await new Promise(resolve => setTimeout(resolve, 50));
+      if (stopSimulation) {
+        stopSimulation = false
+        break;
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 5000.0 / rounds));
     }
   }
 
   function calculateRunningCount(hand){
     if (deck.length == 0){
-      runningCount =0;
+      runningCount = 0;
     }
-      for (let c of hand) {
-        let val = c.slice(0, -1);
-        if (val >=2 && val<=6) {
-          runningCount += 1;
-        } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
-          runningCount-=1;
-        } else {
-          runningCount += 0;
-        }
+    for (let c of hand) {
+      let val = c.slice(0, -1);
+      if (val >=2 && val<=6) {
+        runningCount += 1;
+      } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+        runningCount -= 1;
+      } else {
+        runningCount += 0;
       }
-      return runningCount;
     }
+  }
 
 
 </script>
@@ -260,7 +269,7 @@
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
         <button on:click={() => restart()}> Restart</button>
         {#if simulate}
-          <button on:click={() => simulateRounds(100)}>Simulate</button>
+          <button on:click={() => simulateRounds(10)}>Simulate</button>
         {/if}
         {#if error}
           <p>{error}</p>
@@ -345,11 +354,11 @@
     align-items: center;
     justify-content: center;
     width: 100%; /* Set this to match the container size you want */
-    max-width: 733px; /* As per the image's apparent width */
-    background: lightgray;
+    max-width: 600px; /* As per the image's apparent width */
+    background: white;
     border-radius: 20px;
+    border: 2px solid black;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust shadow to your preference */
   }
 
 
@@ -402,7 +411,7 @@
 
   .overlay {
     position: absolute;
-    width: 50%;
+    width: 25%;
     height: 10%;
     display: flex;
     justify-content: center;

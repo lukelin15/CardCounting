@@ -15,12 +15,24 @@
   }
 </script>
 
+<div class="card-container">
+  {#each allCards as card}
+    <div class="card {deck.includes(card) || card === dealerSecondCard ? '' : 'drawn'}">
+      <Card card={card} width="40px" height="40px" normal=false/>
+    </div>
+  {/each}
+</div>
+
+
 <style>
   .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     width: 624px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid black;
   }
   .card {
     margin: 4px;
@@ -30,11 +42,3 @@
     opacity: 0.4;
   }
 </style>
-
-<div class="card-container">
-  {#each allCards as card}
-    <div class="card {deck.includes(card) || card === dealerSecondCard ? '' : 'drawn'}">
-      <Card card={card} width="40px" height="40px" normal=false/>
-    </div>
-  {/each}
-</div>
