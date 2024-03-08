@@ -13,6 +13,13 @@
   let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   let suits = ['♠', '♣', '♥', '♦'];
   let newDeck = [];
+
+  let currentMode = 'none'; // This will hold the current mode selected in Counting
+
+  function handleModeChange(event) {
+    currentMode = event.detail.mode;
+    restart();
+  }
   
   for (let suit of suits) {
     for (let val of vals) {
@@ -314,21 +321,20 @@
     return winner;
   }
 
-  async function simulateRounds(rounds, instant=false, counting=false) {
+  async function simulateRounds(rounds, instant=false) {
     stopSimulation = false
     for (let i = 0; i < rounds; i++) {
 
-      if (!counting) {
+      if (currentMode == 'none') {
         placeBet(100);
-      } else {
-        if (runningCount >= 3) {
-          betAmount = Math.round(playerMoney * (runningCount-1) / 1000)
+      } else if (currentMode == 'hi-lo' || currentMode == 'halves') {
+        if (runningCount >= 2) {
+          betAmount = Math.round(playerMoney * (runningCount) / 1000)
           placeBet(betAmount);
         } else {
-          betAmount = Math.round(playerMoney / -(runningCount-3) / 1000)
+          betAmount = Math.round(playerMoney / -(runningCount-2) / 1000)
           placeBet(betAmount)
         }
-        // smartHit(betAmount);
       }
 
       simulateHit();
@@ -349,12 +355,29 @@
 
   function calculateRunningCount(card){
     let val = card.slice(0, -1);
-    if (val >=2 && val<=6) {
-      runningCount += 1;
-    } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
-      runningCount -= 1;
-    } else {
-      runningCount += 0;
+    if (currentMode == 'hi-lo') {
+      if (val >=2 && val<=6) {
+        runningCount += 1;
+      } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+        runningCount -= 1;
+      } else {
+        runningCount += 0;
+      }
+    }
+    if (currentMode == 'halves') {
+      if ([2, 7].includes(val)) {
+        runningCount += 0.5;
+      } else if ([3, 4, 6].includes(val)) {
+        runningCount += 1;
+      } else if (val == 5) {
+        runningCount += 1.5;
+      } else if (val == 9) {
+        runningCount -= 0.5
+      } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+        runningCount -= 1;
+      } else {
+        runningCount += 0;
+      }
     }
   }
 </script>
@@ -362,7 +385,7 @@
 <main>
   <div class="addons" class:stats-active={stats} class:simulate-active={simulate}>
     {#if stats}
-    <Counting counts={runningCount} />
+    <Counting on:modeChange={handleModeChange} counts={runningCount} />
     {/if}
     <div class="blackjack-container">
       <div class="header">
@@ -378,7 +401,7 @@
           <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
           <button on:click={() => restart()}> Restart</button>
           {#if simulate}
-            <button on:click={() => simulateRounds(1000, false, true)}>Simulate</button>
+            <button on:click={() => simulateRounds(1000, false)}>Simulate</button>
           {/if}
           {#if error}
             <p>{error}</p>
