@@ -94,8 +94,8 @@
 
   function doubleDown() {
     if (playerHand.length === 2 && (playerMoney >= betAmount * 2) || simulate) {
-      betAmount *= 2;
       playerMoney -= betAmount;
+      betAmount *= 2;
       hit();
       stand();
     }
@@ -117,8 +117,54 @@
     }
   }
 
-  function smartHit() {
-    let dealerCard = String(dealerHand[0]).slice(0,-1)
+  function smartHit(bet) {
+    let dealerCard = String(dealerHand[0]).slice(0,-1);
+
+    // doubling down when simulating
+    function fakeDouble() {
+      playerMoney -= betAmount;
+      betAmount *= 2
+    }
+
+    // count aces
+    let aces = 0;
+    for (let card of playerHand) {
+      let value = card.slice(0, -1);
+      if (value === 'A') {
+        aces += 1;
+      }
+    }
+
+    // soft responses
+    if (aces = 1) {
+      if (calculateHand(playerHand) == 13 || calculateHand(playerHand) == 14) {
+        if (['5', '6'].includes(dealerCard)) {
+          fakeDouble();
+          return
+        } else {
+          playerHand = deal(playerHand);
+        }
+      } else if (calculateHand(playerHand) == 15 || calculateHand(playerHand) == 16) {
+         if (['4', '5', '6'].includes(dealerCard)) {
+          fakeDouble();
+          return
+        } else {
+          playerHand = deal(playerHand);
+        }
+      } else if (calculateHand(playerHand) == 17) {
+          if (['3', '4', '5', '6'].includes(dealerCard)) {
+            fakeDouble();
+            return
+          } else {
+            playerHand = deal(playerHand);
+          }
+      } else if (calculateHand(playerHand) == 18) {
+          if (['3', '4', '5', '6'].includes(dealerCard)) {
+            fakeDouble();
+            return
+          }
+        }
+    }
 
     // always hit when below 11 or below
     while (calculateHand(playerHand) <= 11) {
@@ -264,7 +310,6 @@
 
   async function simulateRounds(rounds, instant=false, counting=false) {
     stopSimulation = false
-    console.log(5000.0 / rounds)
     for (let i = 0; i < rounds; i++) {
 
       if (!counting) {
@@ -278,7 +323,7 @@
           console.log(betAmount)
           placeBet(betAmount)
         }
-        // smartHit();
+        // smartHit(betAmount);
       }
 
       simulateHit();
@@ -292,7 +337,7 @@
       }
 
       if (!instant) {
-        await new Promise(resolve => setTimeout(resolve, 5000.0 / rounds));
+        await new Promise(resolve => setTimeout(resolve, 500.0 / rounds));
       }
     }
   }
@@ -381,7 +426,7 @@
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
         <button on:click={() => restart()}> Restart</button>
         {#if simulate}
-          <button on:click={() => simulateRounds(10000, true, true)}>Simulate</button>
+          <button on:click={() => simulateRounds(1000, false, false)}>Simulate</button>
         {/if}
         {#if error}
           <p>{error}</p>
