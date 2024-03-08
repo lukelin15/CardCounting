@@ -4,6 +4,7 @@
   import Stats from './Stats.svelte';
   import Graph from './Graph.svelte';
   import Counting from './Counting.svelte';
+  import StatsGraph from './StatsGraph.svelte';
 
   // customization
   export let stats = false;
@@ -46,6 +47,7 @@
   let betPlaced = false;
   let runningCount=0;
   let stopSimulation = true;
+  let winningCards = [];
 
   let moneyHistory = [1000];
   export let svgId = "graph";
@@ -80,6 +82,7 @@
     runningCount = 0;
 
     moneyHistory = [1000];
+    winningCards = [];
   }
 
   function shuffle() {
@@ -310,6 +313,10 @@
     if (winner === 'Player') {
       playerMoney += betAmount * 2; // player gets their bet back plus the same amount
       wins += 1
+      for (let card of playerHand) {
+        winningCards.push(card);
+      }
+      winningCards = [...winningCards];
     } else if (winner === 'Draw') {
       playerMoney += betAmount; // player gets their bet back
       ties += 1
@@ -470,7 +477,12 @@
       {/if}
     </div>
     {#if stats}
-    <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand} simulate={simulate}/>
+    <div class="stats">
+      <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand} simulate={simulate}/>
+      {#if simulate}
+        <StatsGraph {winningCards} />
+      {/if}
+    </div>
     {/if}
   </div>
 </main>
@@ -516,7 +528,10 @@
 
   }
 
-
+  .stats {
+    display: flex;
+    flex-direction: column;
+  }
   .top-bar {
     display: flex;
     flex-direction: column;
