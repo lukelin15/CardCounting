@@ -8,7 +8,6 @@
   // customization
   export let stats = false;
   export let simulate = false;
-  export let counts = false;
 
   // deck initializing stuff
   let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -361,7 +360,7 @@
 </script>
 
 <main>
-  <div class="addons" class:stats-active={stats}>
+  <div class="addons" class:stats-active={stats} class:simulate-active={simulate}>
     {#if stats}
     <Counting counts={runningCount} />
     {/if}
@@ -463,7 +462,8 @@
     align-items: center;
     justify-content: space-between;
     width: 600px; /* Default width */
-    transition: width 0.5s ease; /* Smooth transition for width changes */
+    height: 400px;
+    transition: width 0.5s ease, height 0.5s ease; /* Smooth transition for width changes */
     background: white;
     border: 2px solid black;
     padding: 20px;
@@ -472,6 +472,10 @@
 
   .addons.stats-active {
     width: 1200px; /* Expanded width */
+  }
+
+  .addons.simulate-active {
+    height: 700px; /* Adjusted height for simulate, set to your preferred height */
   }
 
   .blackjack-container {

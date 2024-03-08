@@ -8,17 +8,15 @@
   // presentation stuff
   let stats = false;
   let simulate = false;
-  let counts = false;
 
   function reset() {
     stats = !stats;
     simulate = !simulate;
-    counts = !counts;
   }
 </script>
 
 <main>
-  <Base stats={stats} simulate={simulate} counts={counts}/>
+  <Base stats={stats} simulate={simulate}/>
   <button on:click={reset}>Expand</button>
 
 
@@ -60,7 +58,7 @@
       in BlackJack are... 
     </p>
   </body>
-  <Base stats=true simulate=true counts=true/>
+  <Base stats=true simulate=true/>
   <h2>Betting</h2>
   <h2>Statistics of the Game</h2>
   <h2>Card Counting</h2>
