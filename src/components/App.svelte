@@ -8,6 +8,7 @@
 <main>
   <h1>Card Interaction and Counting: BlackJack</h1>
   <Base />
+  <Base stats=true simulate=true/>
   <body>
   <p>
     1. Thus far, we have created a working single-player BlackJack game. In this game, 

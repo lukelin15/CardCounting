@@ -3,6 +3,10 @@
   import Card from './Card.svelte';
   import Stats from './Stats.svelte';
 
+  // customization
+  export let stats = false;
+  export let simulate = false;
+
   // deck initializing stuff
   let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   let suits = ['♠', '♣', '♥', '♦'];
@@ -234,7 +238,9 @@
         </div>
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
         <button on:click={() => restart()}> Restart</button>
-        <button on:click={() => simulateRounds(100)}>Simulate</button>
+        {#if simulate}
+          <button on:click={() => simulateRounds(100)}>Simulate</button>
+        {/if}
         {#if error}
           <p>{error}</p>
         {/if}
@@ -294,8 +300,10 @@
         </div>
     {/if}
 
-    <Stats {deck} dealerSecondCard={dealerHand[1]} />
 
+    {#if stats}
+      <Stats {deck} dealerSecondCard={dealerHand[1]} />
+    {/if}
   </div>
 </main>
 
@@ -304,6 +312,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
   }
 
   .blackjack-container {
