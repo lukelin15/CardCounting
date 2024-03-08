@@ -6,6 +6,7 @@
   // customization
   export let stats = false;
   export let simulate = false;
+  export let counts = false;
 
   // deck initializing stuff
   let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -35,14 +36,16 @@
   let betAmount = 100;
   let error = '';
   let betPlaced = false;
+  let runningCount=0;
+  let stopSimulation = true;
 
   // only display overlay after animations
   // equations gets amount of extra cards dealt
   $: if (gameOver) {
-  timeoutId = setTimeout(() => {
-      showOverlay = true;
-  }, (Math.max(1, dealerHand.length -2)) * 100 + 400);
-}
+    timeoutId = setTimeout(() => {
+        showOverlay = true;
+    }, (Math.max(1, dealerHand.length -2)) * 100 + 400);
+  }
 
   function restart() {
     deck = [...newDeck]
@@ -61,6 +64,8 @@
     betAmount = 100;
     error = '';
     betPlaced = false;
+    runningCount = 0;
+    stopSimulation = true;
   }
 
   function shuffle() {
@@ -75,9 +80,12 @@
   function deal(hand) {
     if (deck.length == 0) {
       deck = [...newDeck]
+      runningCount = 0
       shuffle()
     }
-      let newHand = [...hand, deck.pop()];
+      let card = deck.pop();
+      calculateRunningCount(card);
+      let newHand = [...hand, card];
       deck = [...deck];
       return newHand;
   }
@@ -99,7 +107,13 @@
   }
 
   function placeBet(amount) {
-    if (amount <= 0) {
+    if (simulate) {
+      playerMoney -= amount;
+      betAmount = amount;
+      newGame();
+      betPlaced = true;
+      error = ""
+    } else if (amount <= 0) {
       error = "Invalid Bet";
     } else if (playerMoney >= amount) {
       playerMoney -= amount;
@@ -121,6 +135,7 @@
     playerHand = []
     dealerHand = []
     betPlaced = false;
+    runningCount = 0;
 
     setTimeout(() => {
       playerHand = deal([]);
@@ -202,10 +217,23 @@
     return winner;
   }
 
-  async function simulateRounds(rounds) {
+  async function simulateRounds(rounds, instant=false, counting=false) {
+    stopSimulation = false
+    console.log(5000.0 / rounds)
     for (let i = 0; i < rounds; i++) {
 
-      placeBet(100);
+      if (!counting) {
+        placeBet(100);
+      } else {
+        if (runningCount > 2) {
+          betAmount = Math.round(playerMoney * (runningCount-1) / 1000)
+          placeBet(betAmount);
+        } else {
+          betAmount = Math.round(playerMoney / -(runningCount-3) / 1000)
+          console.log(betAmount)
+          placeBet(betAmount)
+        }
+      }
 
       simulateHit();
 
@@ -213,11 +241,25 @@
 
       determineWinner();
 
-      if (playerMoney == 0) {
-        break
+      if (stopSimulation) {
+        stopSimulation = false
+        break;
       }
 
-      await new Promise(resolve => setTimeout(resolve, 50));
+      if (!instant) {
+        await new Promise(resolve => setTimeout(resolve, 5000.0 / rounds));
+      }
+    }
+  }
+
+  function calculateRunningCount(card){
+    let val = card.slice(0, -1);
+    if (val >=2 && val<=6) {
+      runningCount += 1;
+    } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+      runningCount -= 1;
+    } else {
+      runningCount += 0;
     }
   }
 
@@ -233,7 +275,7 @@
     <div class="mid">
       <div class="top-bar">
         <div class="betting">
-          Bet:
+          Bet: $
           <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
         </div>
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
@@ -286,12 +328,15 @@
         <div>Losses: {losses}</div>
         <div>Ties: {ties}</div>
         <div>Money: {playerMoney}</div>
+        {#if counts}
+          <div>Running Count: {runningCount}</div>
+        {/if}
         <h2>Player: {calculateHand(playerHand)}</h2>
       </div>
     </div>
     <div id="controls">
-      <button on:click={hit}>Hit</button>
-      <button on:click={stand}>Stand</button>
+      <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
+      <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
     </div>
 
     {#if showOverlay}
@@ -302,7 +347,7 @@
 
 
     {#if stats}
-      <Stats {deck} dealerSecondCard={dealerHand[1]} />
+      <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand}/>
     {/if}
   </div>
 </main>
@@ -321,11 +366,11 @@
     align-items: center;
     justify-content: center;
     width: 100%; /* Set this to match the container size you want */
-    max-width: 733px; /* As per the image's apparent width */
-    background: lightgray;
+    max-width: 600px; /* As per the image's apparent width */
+    background: white;
     border-radius: 20px;
+    border: 2px solid black;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust shadow to your preference */
   }
 
 
@@ -378,7 +423,7 @@
 
   .overlay {
     position: absolute;
-    width: 50%;
+    width: 25%;
     height: 10%;
     display: flex;
     justify-content: center;
@@ -406,5 +451,9 @@
 
   button:hover {
     background-color: #0056b3;
+  }
+
+  button:disabled {
+    background-color: lightgray;
   }
 </style>
