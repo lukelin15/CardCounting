@@ -101,7 +101,13 @@
   }
 
   function placeBet(amount) {
-    if (amount <= 0) {
+    if (simulate) {
+      playerMoney -= amount;
+      betAmount = amount;
+      newGame();
+      betPlaced = true;
+      error = ""
+    } else if (amount <= 0) {
       error = "Invalid Bet";
     } else if (playerMoney >= amount) {
       playerMoney -= amount;
@@ -214,10 +220,6 @@
       simulateStand();
 
       determineWinner();
-
-      if (playerMoney == 0) {
-        break
-      }
 
       await new Promise(resolve => setTimeout(resolve, 50));
     }
