@@ -336,7 +336,7 @@
 
 
     {#if stats}
-      <Stats {deck} dealerSecondCard={dealerHand[1]}/>
+      <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand}/>
     {/if}
   </div>
 </main>
