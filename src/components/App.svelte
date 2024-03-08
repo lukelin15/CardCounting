@@ -18,13 +18,13 @@
 </script>
 
 <main>
-  <!-- <Base stats={stats} simulate={simulate}/>
+  <Base stats={stats} simulate={simulate}/>
   <button on:click={statsButton}>stats</button>
-  <button on:click={simultateButton}>simulate</button> -->
+  <button on:click={simultateButton}>simulate</button>
 
 
   <!-- makes Base the only visible thing -->
-  <!-- <div style="height: 300px;"></div> -->
+  <div style="height: 300px;"></div>
   
   <h1>Card Interaction and Counting: BlackJack</h1>
   <h2>Introduction to Blackjack</h2>
@@ -118,11 +118,8 @@
   h1, h2 {
     text-align: center;
     font-family: "PT Serif", serif;
-    color: #F8F8FF; /* Gold text */
   }
   body {
-    background-color: #333; /* Dark background */
-    color: #F8F8FF; /* Gold text */
     margin: 20px;
     padding: 5px;
   }
@@ -134,6 +131,5 @@
     width: 80%;
     text-indent: 30px;
     font-family: "PT Serif", serif;
-    color: #F8F8FF; /* Gold text */
   }
 </style>
