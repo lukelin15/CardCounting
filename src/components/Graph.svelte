@@ -79,7 +79,7 @@
   }
 </script>
 
-<svg id={svgId}>></svg>
+<svg id={svgId}></svg>
 
 <style>
   svg {
