@@ -29,7 +29,13 @@
           cnt += 1
         }
       }
-      probabilities.push(Math.round(cnt * 1000.0 / totalCards) / 10)
+      let output = Math.round(cnt * 1000.0 / totalCards) / 10
+      if (cnt == 0) {
+        output = 0.0
+      } else if (cnt == totalCards) {
+        output = 100.0
+      }
+      probabilities.push(output)
     }
   }
 

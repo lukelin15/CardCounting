@@ -80,9 +80,12 @@
   function deal(hand) {
     if (deck.length == 0) {
       deck = [...newDeck]
+      runningCount = 0
       shuffle()
     }
-      let newHand = [...hand, deck.pop()];
+      let card = deck.pop();
+      calculateRunningCount(card);
+      let newHand = [...hand, card];
       deck = [...deck];
       return newHand;
   }
@@ -214,12 +217,23 @@
     return winner;
   }
 
-  async function simulateRounds(rounds, instant=false) {
+  async function simulateRounds(rounds, instant=false, counting=false) {
     stopSimulation = false
     console.log(5000.0 / rounds)
     for (let i = 0; i < rounds; i++) {
 
-      placeBet(100);
+      if (!counting) {
+        placeBet(100);
+      } else {
+        if (runningCount > 2) {
+          betAmount = Math.round(playerMoney * (runningCount-1) / 1000)
+          placeBet(betAmount);
+        } else {
+          betAmount = Math.round(playerMoney / -(runningCount-3) / 1000)
+          console.log(betAmount)
+          placeBet(betAmount)
+        }
+      }
 
       simulateHit();
 
@@ -238,19 +252,14 @@
     }
   }
 
-  function calculateRunningCount(hand){
-    if (deck.length == 0){
-      runningCount = 0;
-    }
-    for (let c of hand) {
-      let val = c.slice(0, -1);
-      if (val >=2 && val<=6) {
-        runningCount += 1;
-      } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
-        runningCount -= 1;
-      } else {
-        runningCount += 0;
-      }
+  function calculateRunningCount(card){
+    let val = card.slice(0, -1);
+    if (val >=2 && val<=6) {
+      runningCount += 1;
+    } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+      runningCount -= 1;
+    } else {
+      runningCount += 0;
     }
   }
 
@@ -272,7 +281,7 @@
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
         <button on:click={() => restart()}> Restart</button>
         {#if simulate}
-          <button on:click={() => simulateRounds(10000, true)}>Simulate</button>
+          <button on:click={() => simulateRounds(100)}>Simulate</button>
         {/if}
         {#if error}
           <p>{error}</p>
@@ -320,7 +329,7 @@
         <div>Ties: {ties}</div>
         <div>Money: {playerMoney}</div>
         {#if counts}
-          <div>Running Count: {calculateRunningCount(playerHand)+calculateRunningCount(dealerHand)}</div>
+          <div>Running Count: {runningCount}</div>
         {/if}
         <h2>Player: {calculateHand(playerHand)}</h2>
       </div>
