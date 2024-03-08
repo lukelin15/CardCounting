@@ -35,7 +35,7 @@
               .range([0, width]);
     g.append("g")
      .attr("transform", "translate(0," + height + ")")
-     .call(d3.axisBottom(x).ticks(Math.min(playerMoneyHistory.length, 10)).tickFormat(i => `${i}`))
+     .call(d3.axisBottom(x).ticks(Math.min(playerMoneyHistory.length, 10)).tickFormat(i => `${i + 1}`))
      .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
@@ -64,7 +64,7 @@
     svg.append("text")             
        .attr("transform",
              "translate(" + (width/2 + margin.left) + " ," + 
-                            (height + margin.top + 35) + ")")
+                            (height + margin.top + 40) + ")")
        .style("text-anchor", "middle")
        .text("Bets");
 
@@ -72,7 +72,7 @@
     svg.append("text")
        .attr("transform", "rotate(-90)")
        .attr("y", 0 + margin.left / 4)
-       .attr("x",0 - (height / 2) - margin.top)
+       .attr("x",0 - (height / 2) - margin.top + 5)
        .attr("dy", "1em")
        .style("text-anchor", "middle")
        .text("Money");
