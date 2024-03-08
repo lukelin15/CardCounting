@@ -3,6 +3,7 @@
   export let isPlaceholder = false;
   export let width = '80px';
   export let height = '120px';
+  export let normal = true;
 
   // $ for reactivity
   $: value = isPlaceholder ? '' : card.slice(0, -1);
@@ -15,13 +16,15 @@
     <span class="card-value" class:red={isRed}>{value}</span>
     <span class="card-suit" class:red={isRed}>{suit}</span>
   </div>
-  <div class="card-middle" class:red={isRed}>
-    <span class="card-suit">{suit}</span>
-  </div>
-  <div class="card-bottom">
-    <span class="card-value" class:red={isRed}>{value}</span>
-    <span class="card-suit" class:red={isRed}>{suit}</span>
-  </div>
+  {#if normal == true}
+    <div class="card-middle" class:red={isRed}>
+        <span class="card-suit">{suit}</span>
+    </div>
+    <div class="card-bottom">
+      <span class="card-value" class:red={isRed}>{value}</span>
+      <span class="card-suit" class:red={isRed}>{suit}</span>
+    </div>
+  {/if}
 </div>
 
 <style>

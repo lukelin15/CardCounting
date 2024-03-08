@@ -1,12 +1,13 @@
 <script>
   import BlackJack from './Blackjack.svelte';
+  import Base from './Base.svelte'
   import BasicStrategy from './BasicStrategy.svelte';
   // Write your JS here, or import other files
 </script>
 
 <main>
   <h1>Card Interaction and Counting: BlackJack</h1>
-  <BlackJack />
+  <Base />
   <body>
   <p>
     1. Thus far, we have created a working single-player BlackJack game. In this game, 

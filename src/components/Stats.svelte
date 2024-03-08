@@ -34,7 +34,7 @@
 <div class="card-container">
   {#each allCards as card}
     <div class="card {deck.includes(card) || card === dealerSecondCard ? '' : 'drawn'}">
-      <Card card={card} width="40px" height="60px" />
+      <Card card={card} width="40px" height="40px" normal=false/>
     </div>
   {/each}
 </div>

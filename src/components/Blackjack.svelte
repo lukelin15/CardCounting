@@ -36,10 +36,30 @@
   // only display overlay after animations
   // equations gets amount of extra cards dealt
   $: if (gameOver) {
-  timeoutId = setTimeout(() => {
-      showOverlay = true;
-  }, (Math.max(1, dealerHand.length -2)) * 100 + 400);
-}
+    timeoutId = setTimeout(() => {
+        showOverlay = true;
+    }, (Math.max(1, dealerHand.length -2)) * 100 + 400);
+  }
+
+  function restart() {
+    deck = [...newDeck]
+
+    playerHand = [];
+    playerSplitHand = [];
+    dealerHand = [];
+    gameOver = false;
+    gameOverSplit = false;
+    hasStood = false;
+    showOverlay = false;
+    timeoutId;
+    hasStarted = false;
+    playerMoney = 1000; 
+    betAmount = 0;
+    error = '';
+    betPlaced = false;
+    haveSplit = false; 
+    cansplit = false;
+  }
 
   function shuffle() {
     for (let i = deck.length - 1; i > 0; i--) {
