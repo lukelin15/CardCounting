@@ -18,13 +18,13 @@
 </script>
 
 <main>
-  <Base stats={stats} simulate={simulate}/>
+  <!-- <Base stats={stats} simulate={simulate}/>
   <button on:click={statsButton}>stats</button>
-  <button on:click={simultateButton}>simulate</button>
+  <button on:click={simultateButton}>simulate</button> -->
 
 
   <!-- makes Base the only visible thing -->
-  <div style="height: 300px;"></div>
+  <!-- <div style="height: 300px;"></div> -->
   
   <h1>Card Interaction and Counting: BlackJack</h1>
   <h2>Introduction to Blackjack</h2>
@@ -113,23 +113,20 @@
 </main>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');  h1 {
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+  h1, h2 {
     text-align: center;
     font-family: "PT Serif", serif;
-  }
-  h2{
-    margin-left: 125px;
-    font-family: "PT Serif", serif;
+    color: #F8F8FF; /* Gold text */
   }
   body {
-    /* background-image: url('https://st.depositphotos.com/3215383/5028/i/450/depositphotos_50286385-stock-photo-nice-abstract-background.jpg'); */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    color: #333;
-    margin: 20;
+    background-color: #333; /* Dark background */
+    color: #F8F8FF; /* Gold text */
+    margin: 20px;
     padding: 5px;
   }
+
   p {
     font-size: 1.2em;
     line-height: 1.15;
@@ -137,5 +134,6 @@
     width: 80%;
     text-indent: 30px;
     font-family: "PT Serif", serif;
+    color: #F8F8FF; /* Gold text */
   }
 </style>
