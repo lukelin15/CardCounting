@@ -214,7 +214,7 @@
     return winner;
   }
 
-  async function simulateRounds(rounds) {
+  async function simulateRounds(rounds, instant=false) {
     stopSimulation = false
     console.log(5000.0 / rounds)
     for (let i = 0; i < rounds; i++) {
@@ -232,7 +232,9 @@
         break;
       }
 
-      await new Promise(resolve => setTimeout(resolve, 5000.0 / rounds));
+      if (!instant) {
+        await new Promise(resolve => setTimeout(resolve, 5000.0 / rounds));
+      }
     }
   }
 
@@ -264,13 +266,13 @@
     <div class="mid">
       <div class="top-bar">
         <div class="betting">
-          Bet:
+          Bet: $
           <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
         </div>
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
         <button on:click={() => restart()}> Restart</button>
         {#if simulate}
-          <button on:click={() => simulateRounds(1000)}>Simulate</button>
+          <button on:click={() => simulateRounds(10000, true)}>Simulate</button>
         {/if}
         {#if error}
           <p>{error}</p>
@@ -324,8 +326,8 @@
       </div>
     </div>
     <div id="controls">
-      <button on:click={hit}>Hit</button>
-      <button on:click={stand}>Stand</button>
+      <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
+      <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
     </div>
 
     {#if showOverlay}
@@ -440,5 +442,9 @@
 
   button:hover {
     background-color: #0056b3;
+  }
+
+  button:disabled {
+    background-color: lightgray;
   }
 </style>
