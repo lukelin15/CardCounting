@@ -25,12 +25,22 @@
     .range([0, 100]); // Maximum bar height in pixels
 </script>
 
+
+<div class="histogram">
+  {#each vals as val}
+    <div>
+      <div class="bar" style="height: {heightScale(counts[val] || 0)}px"></div>
+      <div class="bar-label">{val}</div>
+    </div>
+  {/each}
+</div>
+
 <style>
   .histogram {
     display: flex;
     align-items: flex-end;
     height: 120px; /* Total height of the histogram */
-    width: 100%;
+    width: 0px;
     gap: 4px;
   }
 
@@ -46,12 +56,3 @@
     margin-top: 5px;
   }
 </style>
-
-<div class="histogram">
-  {#each vals as val}
-    <div>
-      <div class="bar" style="height: {heightScale(counts[val] || 0)}px"></div>
-      <div class="bar-label">{val}</div>
-    </div>
-  {/each}
-</div>

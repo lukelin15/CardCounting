@@ -83,6 +83,8 @@
 
     moneyHistory = [1000];
     winningCards = [];
+
+    shuffle();
   }
 
   function shuffle() {
