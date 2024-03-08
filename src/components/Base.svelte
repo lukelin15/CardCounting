@@ -92,6 +92,15 @@
       return newHand;
   }
 
+  function doubleDown() {
+    if (playerHand.length === 2 && (playerMoney >= betAmount * 2) || simulate) {
+      betAmount *= 2;
+      playerMoney -= betAmount;
+      hit();
+      stand();
+    }
+  }
+
   function hit() {
     if (!gameOver && hasStarted) {
       playerHand = deal(playerHand);
@@ -106,6 +115,40 @@
     while (calculateHand(playerHand) < 17) {
       playerHand = deal(playerHand);
     }
+  }
+
+  function smartHit() {
+    let dealerCard = String(dealerHand[0]).slice(0,-1)
+
+    // always hit when below 11 or below
+    while (calculateHand(playerHand) <= 11) {
+      playerHand = deal(playerHand);
+    }
+
+    // 12 stands on 4 5 6
+    if (calculateHand(playerHand) == 12) {
+      if (['4', '5', '6'].includes(dealerCard)) {
+        return
+      } else {
+        playerHand = deal(playerHand);
+      }
+    }
+
+    // 13 14 15 16 stands on 2 3 4 5 6
+    if (13 <= calculateHand(playerHand) <= 16) {
+      if (['2', '3', '4', '5', '6'].includes(dealerCard)) {
+        return
+      } else {
+        playerHand = deal(playerHand);
+      }
+    }
+
+    // always stand 17
+    if (calculateHand(playerHand) == 17) {
+      return
+    }
+
+    return
   }
 
   function placeBet(amount) {
@@ -227,7 +270,7 @@
       if (!counting) {
         placeBet(100);
       } else {
-        if (runningCount > 2) {
+        if (runningCount >= 3) {
           betAmount = Math.round(playerMoney * (runningCount-1) / 1000)
           placeBet(betAmount);
         } else {
@@ -235,10 +278,10 @@
           console.log(betAmount)
           placeBet(betAmount)
         }
+        // smartHit();
       }
 
       simulateHit();
-
       simulateStand();
 
       determineWinner();
@@ -338,7 +381,7 @@
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
         <button on:click={() => restart()}> Restart</button>
         {#if simulate}
-          <button on:click={() => simulateRounds(100)}>Simulate</button>
+          <button on:click={() => simulateRounds(10000, true, true)}>Simulate</button>
         {/if}
         {#if error}
           <p>{error}</p>
@@ -394,6 +437,7 @@
     <div id="controls">
       <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
       <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
+      <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2}>Double</button>
     </div>
 
     {#if showOverlay}
