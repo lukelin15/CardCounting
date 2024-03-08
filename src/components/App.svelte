@@ -7,8 +7,61 @@
 
 <main>
   <h1>Card Interaction and Counting: BlackJack</h1>
+  <h2>Introduction to Blackjack</h2>
+  <body>
+  <p>
+    BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
+    the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
+    as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
+    getting the highest score under 21. Players automatically lose of their hand is above 21.
+  </p>
+  <p>
+    Try playing a round!
+  </p>
+  </body>
   <Base />
+  <body>
+    <h2>Visualizing the Cards</h2>
+    <p>
+      It might seem like winning and losing is just random luck, up to chance of the cards you
+      end up being dealt. However, if you know what cards are left in the deck, you can actually 
+      see your odds of obtaining a desirable card.
+    </p>
+    <p>
+      Now you have a visualization of all the cards in the deck. Cards that have been dealt and 
+      are no longer in the deck are shaded in. Try playing a round and see if this helps you 
+      in your game decisions.
+    </p>
+  </body>
+  <Base stats=true/>
+  <h2>Simulating a Game</h2>
+  <body>
+    <p>
+      You may have noticed that seeing all the cards doesn't really help all that much. The odds
+      in BlackJack are... 
+    </p>
+  </body>
   <Base stats=true simulate=true/>
+  <h2>Betting</h2>
+  <h2>Statistics of the Game</h2>
+  <h2>Card Counting</h2>
+  <body>
+    <p>
+      As displayed in the visualization section above, keeping track of everys single card is simply 
+      not feasible since there are 52 cards in a deck. Since a typical game of BlackJack can 
+      have 6-8 decks in play, this becomes impossible. Thus, players use card counting to
+      keep track of cards.
+    </p>
+    <p>
+      A simple form of Card Counting is the Hi-Lo system. As the name suggests, it 
+      keeps track of the ratio of high valued cards vs low values cards left in the deck.
+      Cards valued 2-6 are worth +1, cards valued 7-9 are worth 0, and 10 to Ace is worth. 
+      As each card is dealt add the appropriate amount to your running count until all the cards in the deck are dealt.
+      As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
+      the dealer's advantage increases.
+    </p>
+  </body>
+  <Base stats=true simulate=true counts=true/>
   <body>
   <p>
     1. Thus far, we have created a working single-player BlackJack game. In this game, 
@@ -40,8 +93,13 @@
 </main>
 
 <style>
-  h1 {
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');  h1 {
     text-align: center;
+    font-family: "PT Serif", serif;
+  }
+  h2{
+    margin-left: 125px;
+    font-family: "PT Serif", serif;
   }
   body {
     /* background-image: url('https://st.depositphotos.com/3215383/5028/i/450/depositphotos_50286385-stock-photo-nice-abstract-background.jpg'); */
@@ -49,8 +107,8 @@
     background-attachment: fixed;
     background-size: cover;
     color: #333;
-    margin: 10;
-    padding: 20px;
+    margin: 20;
+    padding: 5px;
   }
   p {
     font-size: 1.2em;
@@ -58,5 +116,6 @@
     margin: 0 auto;
     width: 80%;
     text-indent: 30px;
+    font-family: "PT Serif", serif;
   }
 </style>

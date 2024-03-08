@@ -6,6 +6,7 @@
   // customization
   export let stats = false;
   export let simulate = false;
+  export let counts = false;
 
   // deck initializing stuff
   let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -35,6 +36,7 @@
   let betAmount = 100;
   let error = '';
   let betPlaced = false;
+  let runningCount=0;
 
   // only display overlay after animations
   // equations gets amount of extra cards dealt
@@ -221,6 +223,23 @@
     }
   }
 
+  function calculateRunningCount(hand){
+    if (deck.length == 0){
+      runningCount =0;
+    }
+      for (let c of hand) {
+        let val = c.slice(0, -1);
+        if (val >=2 && val<=6) {
+          runningCount += 1;
+        } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+          runningCount-=1;
+        } else {
+          runningCount += 0;
+        }
+      }
+      return runningCount;
+    }
+
 
 </script>
 
@@ -286,6 +305,9 @@
         <div>Losses: {losses}</div>
         <div>Ties: {ties}</div>
         <div>Money: {playerMoney}</div>
+        {#if counts}
+          <div>Running Count: {calculateRunningCount(playerHand)+calculateRunningCount(dealerHand)}</div>
+        {/if}
         <h2>Player: {calculateHand(playerHand)}</h2>
       </div>
     </div>
