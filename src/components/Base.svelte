@@ -2,8 +2,8 @@
   import { fly } from 'svelte/transition';
   import Card from './Card.svelte';
   import Stats from './Stats.svelte';
-  import { onMount, afterUpdate } from 'svelte';
-  import * as d3 from 'd3';
+  import Graph from './Graph.svelte';
+  import Counting from './Counting.svelte';
 
   // customization
   export let stats = false;
@@ -41,6 +41,8 @@
   let runningCount=0;
   let stopSimulation = true;
 
+  let moneyHistory = [1000];
+
   // only display overlay after animations
   // equations gets amount of extra cards dealt
   $: if (gameOver) {
@@ -51,6 +53,8 @@
 
   function restart() {
     deck = [...newDeck]
+
+    stopSimulation = true;
 
     playerHand = [];
     dealerHand = [];
@@ -67,7 +71,8 @@
     error = '';
     betPlaced = false;
     runningCount = 0;
-    stopSimulation = true;
+
+    moneyHistory = [1000];
   }
 
   function shuffle() {
@@ -305,6 +310,8 @@
       losses += 1
     }
     betPlaced = false;
+    moneyHistory.push(playerMoney);
+    moneyHistory = [...moneyHistory];
     return winner;
   }
 
@@ -320,7 +327,6 @@
           placeBet(betAmount);
         } else {
           betAmount = Math.round(playerMoney / -(runningCount-3) / 1000)
-          console.log(betAmount)
           placeBet(betAmount)
         }
         // smartHit(betAmount);
@@ -352,153 +358,96 @@
       runningCount += 0;
     }
   }
-
-
-  let playerMoneyHistory = [];
-
-  // Update playerMoneyHistory every time playerMoney changes
-  $: playerMoneyHistory.push(playerMoney);
-
-  let svg;
-  
-
-  onMount(() => {
-    if ((stats && simulate) || counts) {
-      svg = d3.select("#mySvg");
-    }
-  });
-
-  afterUpdate(() => {
-    if ((stats && simulate) || counts && svg) {
-      drawChart();
-    }
-  });
-
-  function drawChart() {
-    // Clear the SVG
-    svg.selectAll("*").remove();
-
-    // Set the dimensions and margins of the graph
-    let margin = {top: 10, right: 30, bottom: 30, left: 60},
-        width = 460 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
-
-    // Add X axis
-    let x = d3.scaleLinear()
-      .domain([0, playerMoneyHistory.length])
-      .range([ 0, width ]);
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-    // Add Y axis
-    let y = d3.scaleLinear()
-      .domain([0, d3.max(playerMoneyHistory)])
-      .range([ height, 0]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
-
-    // Add the line
-    svg.append("path")
-      .datum(playerMoneyHistory)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x((d, i) => x(i))
-        .y(d => y(d))
-      );
-  }
 </script>
 
 <main>
-  <div class="blackjack-container">
-    <div class="header">
-      <h1 class="blackjack-header">BLACKJACK</h1>
-    </div>
-
-    <div class="mid">
-      <div class="top-bar">
-        <div class="betting">
-          Bet: $
-          <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
-        </div>
-        <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
-        <button on:click={() => restart()}> Restart</button>
-        {#if simulate}
-          <button on:click={() => simulateRounds(1000, false, false)}>Simulate</button>
-        {/if}
-        {#if error}
-          <p>{error}</p>
-        {/if}
+  <div class="addons" class:stats-active={stats}>
+    {#if stats}
+    <Counting counts={runningCount} />
+    {/if}
+    <div class="blackjack-container">
+      <div class="header">
+        <h1 class="blackjack-header">BLACKJACK</h1>
       </div>
-      <div class="cards-container">
-        <div id="dealer">
-          <!-- {#if !gameOver && !hasStood}
+
+      <div class="mid">
+        <div class="top-bar">
+          <div class="betting">
+            Bet: $
+            <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
+          </div>
+          <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
+          <button on:click={() => restart()}> Restart</button>
+          {#if simulate}
+            <button on:click={() => simulateRounds(1000, false, true)}>Simulate</button>
+          {/if}
+          {#if error}
+            <p>{error}</p>
+          {/if}
+        </div>
+        <div class="cards-container">
+          <div id="dealer">
+            <!-- {#if !gameOver && !hasStood}
+              <h2>Dealer: ?</h2>
+            {:else}
+              <h2>Dealer: {calculateHand(dealerHand)}</h2>
+            {/if} -->
+            <div class="hand">
+              {#each dealerHand as card, i (i)}          
+                <div in:fly={{ y: -100, duration: 400, delay: i * 100}}>
+                {#if i === 1 && !showOverlay && !hasStood}
+                  <Card isPlaceholder={true} />
+                {:else}
+                  <Card {card} />
+                {/if}
+                </div>
+              {/each}
+            </div>
+            <div class="deck"></div>
+          </div>
+
+          <div id="player">
+            <div class="hand">
+              {#each playerHand as card, i (i)}
+                <div in:fly={{ y: 100, duration: 400, delay: i * 100}}>
+                  <Card {card} />
+                </div>
+              {/each}
+            </div>
+          </div>
+        </div>
+        <div class="player-info">
+          {#if !gameOver && !hasStood}
             <h2>Dealer: ?</h2>
           {:else}
             <h2>Dealer: {calculateHand(dealerHand)}</h2>
-          {/if} -->
-          <div class="hand">
-            {#each dealerHand as card, i (i)}          
-              <div in:fly={{ y: -100, duration: 400, delay: i * 100}}>
-              {#if i === 1 && !showOverlay && !hasStood}
-                <Card isPlaceholder={true} />
-              {:else}
-                <Card {card} />
-              {/if}
-              </div>
-            {/each}
-          </div>
-          <div class="deck"></div>
-        </div>
-
-        <div id="player">
-          <div class="hand">
-            {#each playerHand as card, i (i)}
-              <div in:fly={{ y: 100, duration: 400, delay: i * 100}}>
-                <Card {card} />
-              </div>
-            {/each}
-          </div>
+          {/if}
+          <div>Wins: {wins}</div>
+          <div>Losses: {losses}</div>
+          <div>Ties: {ties}</div>
+          <div>Money: {playerMoney}</div>
+          <h2>Player: {calculateHand(playerHand)}</h2>
         </div>
       </div>
-      <div class="player-info">
-        {#if !gameOver && !hasStood}
-          <h2>Dealer: ?</h2>
-        {:else}
-          <h2>Dealer: {calculateHand(dealerHand)}</h2>
-        {/if}
-        <div>Wins: {wins}</div>
-        <div>Losses: {losses}</div>
-        <div>Ties: {ties}</div>
-        <div>Money: {playerMoney}</div>
-        {#if counts}
-          <div>Running Count: {runningCount}</div>
-        {/if}
-        <h2>Player: {calculateHand(playerHand)}</h2>
+      <div id="controls">
+        <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
+        <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
+        <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2}>Double</button>
       </div>
+
+      {#if showOverlay}
+          <div class="overlay">
+              <h2>Winner: {determineWinner()}</h2>
+          </div>
+      {/if}
+      {#if simulate}
+        <Graph playerMoneyHistory={moneyHistory}/>
+      {/if}
     </div>
-    <div id="controls">
-      <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
-      <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
-      <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2}>Double</button>
-    </div>
-
-    {#if showOverlay}
-        <div class="overlay">
-            <h2>Winner: {determineWinner()}</h2>
-        </div>
-    {/if}
-
-
     {#if stats}
-      <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand}/>
+    <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand}/>
     {/if}
   </div>
-  {#if (stats && simulate) || counts}
-    <svg id="mySvg" width="500" height="500"></svg>
-  {/if}
 </main>
 
 <style>
@@ -507,6 +456,22 @@
     flex-direction: column;
     align-items: center;
     margin: 10px;
+  }
+
+  .addons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 600px; /* Default width */
+    transition: width 0.5s ease; /* Smooth transition for width changes */
+    background: white;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .addons.stats-active {
+    width: 1200px; /* Expanded width */
   }
 
   .blackjack-container {
@@ -518,8 +483,7 @@
     max-width: 600px; /* As per the image's apparent width */
     background: white;
     border-radius: 20px;
-    border: 2px solid black;
-    padding: 20px;
+
   }
 
 

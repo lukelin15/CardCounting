@@ -96,78 +96,77 @@
 
 </script>
 
-<div class="card-container">
-  {#each allCards as card}
-    <div class="card {deck.includes(card) || card === dealerSecondCard ? '' : 'drawn'}">
-      <Card card={card} width="35px" height="40px" normal=false/>
+<div class="container">
+  <h2>Deck</h2>
+  {#each vals as val, valIndex}
+    <div class="row">
+      {#each suits as suit}
+        <div class="card {deck.includes(val + suit) || val + suit === dealerSecondCard ? '' : 'drawn'}">
+          <Card card={val + suit} width="35px" height="40px" normal=false/>
+        </div>
+      {/each}
+      <div class="probability">{probabilities[valIndex]}%</div>
     </div>
   {/each}
-</div>
-<div class="probabilities">
-  {#each probabilities as prob}
-    <div class="probability">{prob}%</div>
-  {/each}
-</div>
-<div class="odds">
-  <div class="odd">Odds of getting 21: <b>{to21Odds}%</b></div>
-  <div class="odd">Odds of busting: <b>{over21Odds}%</b></div>
+  <div class="odds">
+    <div class="odd">
+      <div>Odds of getting 21:</div>
+      <div><b>{to21Odds}%</b></div>
+    </div>
+    <div class="odd">
+      <div>Odds of busting:</div>
+      <div><b>{over21Odds}%</b></div>
+    </div>
+  </div>
 </div>
 
+
 <style>
-  .card-container {
+  .container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 600px;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 2px solid black;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
   }
+
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1px; /* Space between rows */
+  }
+
   .card {
-    margin: 4px;
+    margin: 1px;
     transition: opacity 0.3s ease;
   }
+
   .drawn {
     opacity: 0.4;
   }
-  .probabilities {
-    display: flex;
-    justify-content: center;
-    margin-top: 4px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 
-  }
   .probability {
-    width: 35px;
-    text-align: center;
+    margin-left: 10px; /* Space between cards and probability */
     padding: 3px;
     border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    width: 50px;
   }
-  .probability:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
-  .probability:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
+
   .odds {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-top: 5px;
+    width: 200px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   }
+
   .odd {
-    text-align: center;
-    padding: 3px;
-    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
   }
-  .odd:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
-  .odd:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
+
 </style>

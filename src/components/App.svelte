@@ -7,6 +7,11 @@
 </script>
 
 <main>
+  <Base stats=true simulate=true counts=true/>
+
+  <!-- makes Base the only visible thing -->
+  <div style="height: 300px;"></div>
+  
   <h1>Card Interaction and Counting: BlackJack</h1>
   <h2>Introduction to Blackjack</h2>
   <body>
@@ -42,7 +47,7 @@
       in BlackJack are... 
     </p>
   </body>
-  <Base stats=true simulate=true/>
+  <Base stats=true simulate=true counts=true/>
   <h2>Betting</h2>
   <h2>Statistics of the Game</h2>
   <h2>Card Counting</h2>
