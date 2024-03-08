@@ -216,6 +216,7 @@
 
   async function simulateRounds(rounds) {
     stopSimulation = false
+    console.log(5000.0 / rounds)
     for (let i = 0; i < rounds; i++) {
 
       placeBet(100);
@@ -269,7 +270,7 @@
         <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
         <button on:click={() => restart()}> Restart</button>
         {#if simulate}
-          <button on:click={() => simulateRounds(10)}>Simulate</button>
+          <button on:click={() => simulateRounds(1000)}>Simulate</button>
         {/if}
         {#if error}
           <p>{error}</p>
@@ -335,7 +336,7 @@
 
 
     {#if stats}
-      <Stats {deck} dealerSecondCard={dealerHand[1]} />
+      <Stats {deck} dealerSecondCard={dealerHand[1]}/>
     {/if}
   </div>
 </main>
