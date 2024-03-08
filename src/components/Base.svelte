@@ -48,6 +48,7 @@
   let stopSimulation = true;
 
   let moneyHistory = [1000];
+  export let svgId = "graph";
 
   // only display overlay after animations
   // equations gets amount of extra cards dealt
@@ -465,7 +466,7 @@
           </div>
       {/if}
       {#if simulate}
-        <Graph playerMoneyHistory={moneyHistory}/>
+        <Graph playerMoneyHistory={moneyHistory} svgId={svgId}/>
       {/if}
     </div>
     {#if stats}

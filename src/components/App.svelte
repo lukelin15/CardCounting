@@ -81,7 +81,7 @@
       the dealer's advantage increases.
     </p>
   </body>
-  <BaseCounts stats=true simulate=true counts=true/>
+  <Base stats=true simulate=true counts=true svgId="graph2"/>
   <body>
   <p>
     1. Thus far, we have created a working single-player BlackJack game. In this game, 
