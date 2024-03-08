@@ -12,7 +12,7 @@
 
 </script>
 
-<div class="card" class:placeholder={isPlaceholder} style="width: {width}; height: {height};">
+<div class="card" class:placeholder={isPlaceholder} style="width: {width}; height: {height}; border-radius: {normal=="false" ? '5px' : '10px'};">
   <div class="card-top" class:icon={normal=="false"}>
     <span class="card-value" class:red={isRed}>{value}</span>
     <span class="card-suit" class:red={isRed}>{suit}</span>
@@ -35,7 +35,6 @@
     justify-content: center;
     position: relative;
     border: 1px solid #ccc;
-    border-radius: 10px;
     background-color: white;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     padding: 10px;

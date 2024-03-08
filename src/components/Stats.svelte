@@ -1,6 +1,7 @@
 <script>
   import Card from './Card.svelte';
 
+  export let simulate;
   export let deck;
   export let dealerSecondCard = '';
   export let playerHand;
@@ -97,7 +98,9 @@
 </script>
 
 <div class="container">
-  <h2>Deck</h2>
+  {#if simulate}
+    <h2>Deck</h2>
+  {/if}
   {#each vals as val, valIndex}
     <div class="row">
       {#each suits as suit}
