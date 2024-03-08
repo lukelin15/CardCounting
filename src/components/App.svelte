@@ -9,15 +9,18 @@
   let stats = false;
   let simulate = false;
 
-  function reset() {
+  function statsButton() {
     stats = !stats;
+  }
+  function simultateButton() {
     simulate = !simulate;
   }
 </script>
 
 <main>
   <Base stats={stats} simulate={simulate}/>
-  <button on:click={reset}>Expand</button>
+  <button on:click={statsButton}>stats</button>
+  <button on:click={simultateButton}>simulate</button>
 
 
   <!-- makes Base the only visible thing -->
