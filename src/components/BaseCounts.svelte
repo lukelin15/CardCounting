@@ -272,16 +272,13 @@
   $: playerMoneyHistory.push(playerMoney);
 
   let svg;
-  
 
   onMount(() => {
-    if ((stats && simulate) || counts) {
-      svg = d3.select("#mySvg");
-    }
+    svg = d3.select("#mySvg2");
   });
 
   afterUpdate(() => {
-    if ((stats && simulate) || counts && svg) {
+    if ((simulate)  && svg) {
       drawChart();
     }
   });
@@ -407,8 +404,8 @@
       <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand}/>
     {/if}
   </div>
-  {#if (stats && simulate) || counts}
-    <svg id="mySvg" width="500" height="500"></svg>
+  {#if simulate}
+    <svg id="mySvg2" width="500" height="500"></svg>
   {/if}
 </main>
 

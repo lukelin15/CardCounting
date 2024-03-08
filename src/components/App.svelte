@@ -1,6 +1,7 @@
 <script>
   import BlackJack from './Blackjack.svelte';
   import Base from './Base.svelte'
+  import BaseCounts from './BaseCounts.svelte';
   import BasicStrategy from './BasicStrategy.svelte';
   // Write your JS here, or import other files
 </script>
@@ -61,7 +62,7 @@
       the dealer's advantage increases.
     </p>
   </body>
-  <Base stats=true simulate=true counts=true/>
+  <BaseCounts stats=true simulate=true counts=true/>
   <body>
   <p>
     1. Thus far, we have created a working single-player BlackJack game. In this game, 
