@@ -3,11 +3,12 @@
   import * as d3 from 'd3';
 
   export let playerMoneyHistory;
+  export let svgId = 'mySvg2';
 
   let svg;
 
   onMount(() => {
-    svg = d3.select(".mySvg2").attr("width", "550").attr("height", "200");
+    svg = d3.select("#" + svgId).attr("width", "550").attr("height", "200");
     drawChart(); // Initial draw
   });
 
@@ -78,10 +79,10 @@
   }
 </script>
 
-<svg class="mySvg2"></svg>
+<svg id={svgId}>></svg>
 
 <style>
-  .mySvg2 {
+  svg {
     margin-top: 10px;
     padding-top: 10px;
   }
