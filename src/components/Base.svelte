@@ -476,22 +476,24 @@
 </main>
 
 <style>
+  
   main {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 10px;
+    background-color: #333;
   }
 
   .addons {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 600px; /* Default width */
+    width: 600px;
     height: 400px;
-    transition: width 0.5s ease, height 0.5s ease; /* Smooth transition for width changes */
-    background: white;
-    border: 2px solid black;
+    transition: width 0.5s ease, height 0.5s ease;
+    background: #000;
+    border: 2px solid #ffd700;
     padding: 20px;
     border-radius: 20px;
   }
@@ -509,19 +511,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%; /* Set this to match the container size you want */
-    max-width: 600px; /* As per the image's apparent width */
-    background: white;
+    width: 100%;
+    max-width: 600px;
+    background: #000;
     border-radius: 20px;
-
+    color: #ffd700;
   }
-
 
   .top-bar {
     display: flex;
     flex-direction: column;
     width: 100%;
     justify-content: center;
+    color: #ffd700;
   }
 
   .player-info {
@@ -530,21 +532,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: #ffd700;
   }
 
   .header {
     display: flex;
     justify-content: space-between;
+    color: #ffd700;
   }
 
   .mid {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    color: #ffd700;
   }
 
   .betting {
     padding: 5px;
+    color: #ffd700;
   }
 
   .hand {
@@ -559,9 +565,10 @@
 
   #dealer, #player {
     margin-bottom: 1em;
-    overflow: visible; /* Ensure the container allows for overflow */
-    width: 100%; /* Ensure full utilization of the available width */
-    min-height: 140px; /* Adjust based on card height to ensure container does not collapse */
+    overflow: visible;
+    width: 100%;
+    min-height: 140px;
+    color: #ffd700;
   }
 
   .overlay {
@@ -573,7 +580,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    color: #ffd700;
     border-radius: 20px;
     font-size: 24px;
   }
@@ -582,8 +589,8 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
+    background-color: #ffd700;
+    color: #000;
     font-size: 16px;
     cursor: pointer;
     width: 100px;
@@ -592,10 +599,12 @@
 
   input {
     width: 50px;
+    color: #ffd700;
+    background-color: #000;
   }
 
   button:hover {
-    background-color: #0056b3;
+    background-color: #b8860b;
   }
 
   button:disabled {
