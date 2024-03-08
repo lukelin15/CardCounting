@@ -362,6 +362,7 @@
         await new Promise(resolve => setTimeout(resolve, 500.0 / rounds));
       }
     }
+    stopSimulation = true
   }
 
   function calculateRunningCount(card){
@@ -412,7 +413,7 @@
           <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
           <button on:click={() => restart()}> Restart</button>
           {#if simulate}
-            <button on:click={() => simulateRounds(1000, false)}>Simulate</button>
+            <button on:click={() => simulateRounds(1000, false)} disabled={!stopSimulation}>Simulate</button>
           {/if}
           {#if error}
             <p>{error}</p>
