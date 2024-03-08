@@ -4,10 +4,23 @@
   import BaseCounts from './BaseCounts.svelte';
   import BasicStrategy from './BasicStrategy.svelte';
   // Write your JS here, or import other files
+
+  // presentation stuff
+  let stats = false;
+  let simulate = false;
+  let counts = false;
+
+  function reset() {
+    stats = !stats;
+    simulate = !simulate;
+    counts = !counts;
+  }
 </script>
 
 <main>
-  <Base stats=true simulate=true counts=true/>
+  <Base stats={stats} simulate={simulate} counts={counts}/>
+  <button on:click={reset}>Expand</button>
+
 
   <!-- makes Base the only visible thing -->
   <div style="height: 300px;"></div>
