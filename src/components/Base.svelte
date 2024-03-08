@@ -479,7 +479,7 @@
       {/if}
     </div>
     {#if stats}
-    <div class="stats">
+    <div class="stats" class:simulate-active={simulate}>
       <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand} simulate={simulate}/>
       {#if simulate}
         <StatsGraph {winningCards} />
@@ -533,7 +533,13 @@
   .stats {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
   }
+
+  .stats.simulate-active {
+    height: 700px;
+  }
+
   .top-bar {
     display: flex;
     flex-direction: column;
