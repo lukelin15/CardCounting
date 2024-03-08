@@ -35,7 +35,7 @@
               .range([0, width]);
     g.append("g")
      .attr("transform", "translate(0," + height + ")")
-     .call(d3.axisBottom(x).ticks(Math.min(playerMoneyHistory.length, 10)).tickFormat(i => `${i + 1}`))
+     .call(d3.axisBottom(x).ticks(Math.min(playerMoneyHistory.length, 10)).tickFormat(i => `${i}`))
      .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")

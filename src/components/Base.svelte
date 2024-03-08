@@ -61,10 +61,9 @@
   }
 
   function restart() {
-    deck = [...newDeck]
-
     stopSimulation = true;
-
+    
+    deck = [...newDeck]
     playerHand = [];
     dealerHand = [];
     gameOver = false;
@@ -354,6 +353,8 @@
 
       if (stopSimulation) {
         stopSimulation = false
+        await new Promise(resolve => setTimeout(resolve, 500));
+        restart();
         break;
       }
 
