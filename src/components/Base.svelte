@@ -444,6 +444,7 @@
           {:else}
             <h2>Dealer: {calculateHand(dealerHand)}</h2>
           {/if}
+          <div>Games: {wins + losses + ties}</div>
           <div>Wins: {wins}</div>
           <div>Losses: {losses}</div>
           <div>Ties: {ties}</div>
@@ -460,6 +461,7 @@
       {#if showOverlay}
           <div class="overlay">
               <h2>Winner: {determineWinner()}</h2>
+              <!-- <div>{betAmount}</div> -->
           </div>
       {/if}
       {#if simulate}
@@ -562,14 +564,16 @@
   }
 
   .overlay {
+    flex-direction: column;
     position: absolute;
-    width: 25%;
+    width: 20%;
     height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
+    border-radius: 20px;
     font-size: 24px;
   }
 

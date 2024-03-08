@@ -102,7 +102,7 @@
     <div class="row">
       {#each suits as suit}
         <div class="card {deck.includes(val + suit) || val + suit === dealerSecondCard ? '' : 'drawn'}">
-          <Card card={val + suit} width="35px" height="40px" normal=false/>
+          <Card card={val + suit} width="35px" height="27px" normal=false/>
         </div>
       {/each}
       <div class="probability">{probabilities[valIndex]}%</div>
