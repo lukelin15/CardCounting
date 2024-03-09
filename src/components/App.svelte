@@ -20,8 +20,8 @@
 <main>
   <h1>Card Interaction and Counting: BlackJack</h1>
   <Base stats={stats} simulate={simulate}/>
-  <button on:click={statsButton}>stats</button>
-  <button on:click={simultateButton}>simulate</button>
+  <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
+  <button on:click={simultateButton} style="margin: auto; display:block;">simulate</button>
 
 
   <!-- makes Base the only visible thing -->
@@ -34,7 +34,8 @@
     as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
     getting the highest score under 21. Players automatically lose of their hand is above 21. Players can choose 'Hit' to
     take another card to increase the total value of their cards or to 'Stand' wherein you keep 
-    your current hand without taking any additional cards.
+    your current hand without taking any additional cards. Double refers to doubling your original bet and 
+    receiving exactly one more card.
   </p>
   <p>
     Try playing a round!
@@ -132,7 +133,7 @@
     make a lot of profit, they to inform bets and prevent players from losing money. The 
     graph illustrating player money over bets visualizes this. Players tend to lose a lot of money
     and even go into debt very quickly when betting and playing blind against the dealer. However, when
-    informing bets based on the different card counting systems, players are able to reamin fairly steady. 
+    informing bets based on the different card counting systems, players are able to remain fairly steady. 
     </p>
   </body>
   <h2>Conclusion</h2>
