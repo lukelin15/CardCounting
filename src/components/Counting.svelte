@@ -6,6 +6,19 @@
   let mode = 'none'; // Default mode
   export let counts;
 
+
+  export let playerHand = [];
+  export let dealerHand = [];
+  export let dealerSecond = '';
+
+  $: combinedHands = [...playerHand, ...dealerHand.filter(card => card !== dealerSecond)];
+  $: cardCounts = combinedHands.reduce((acc, card) => {
+    const cardValue = card.slice(0, -1); // Extract card value (e.g., 'A', '10', 'K')
+    acc[cardValue] = (acc[cardValue] || 0) + 1;
+    return acc;
+  }, {});
+
+
   const descriptions = {
     'none': 'Trust your Gut',
     'hi-lo': 'Use 1s and 0s',
@@ -38,13 +51,13 @@
     <table>
       <tr><th>Card</th><th>Value</th></tr>
       {#each Object.entries(cardValues[mode] || {}) as [card, value]}
-        <tr>
+        <tr class:highlighted={cardCounts[card]}>
           <td>{card}</td>
           <td>{value}</td>
         </tr>
       {/each}
     </table>
-    <div class="count">Count: {counts}</div>
+    <div class="count">Count: <b>{counts}</b></div>
   {/if}
   
 </div>
@@ -77,8 +90,11 @@
   .description {
     transition: color 0.4s ease;
   }
+  .count {
+    margin-top: 5px;
+  }
   .counting {
-    height: 400px;
+    height: 420px;
   }
   table {
     width: 150px;
@@ -92,4 +108,8 @@
   th {
     background-color: #f2f2f2;
   }
+  tr.highlighted {
+    background-color: lightgrey; /* Or any highlight color */
+  }
+
 </style>

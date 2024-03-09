@@ -5,6 +5,7 @@
   import Graph from './Graph.svelte';
   import Counting from './Counting.svelte';
   import StatsGraph from './StatsGraph.svelte';
+  import CountsGraph from './CountsGraph.svelte';
 
   // customization
   export let stats = false;
@@ -27,6 +28,7 @@
       newDeck.push(val + suit);
     }
   }
+  
 
   // newDeck is a template to copy decks from
   let deck = [...newDeck]
@@ -48,6 +50,8 @@
   let runningCount=0;
   let stopSimulation = true;
   let winningCards = [];
+  let runningWins = [];
+  let runningLoss = [];
 
   let moneyHistory = [1000];
   export let svgId = "graph";
@@ -82,6 +86,8 @@
 
     moneyHistory = [1000];
     winningCards = [];
+    runningWins = [];
+    runningLoss = [];
 
     shuffle();
   }
@@ -318,11 +324,15 @@
         winningCards.push(card);
       }
       winningCards = [...winningCards];
+      runningWins = [...runningWins, runningCount];
+      
     } else if (winner === 'Draw') {
       playerMoney += betAmount; // player gets their bet back
       ties += 1
     } else {
       losses += 1
+      runningLoss = [...runningLoss, runningCount];
+
     }
     betPlaced = false;
     moneyHistory.push(playerMoney);
@@ -396,9 +406,17 @@
 
 <main>
   <div class="addons" class:stats-active={stats} class:simulate-active={simulate}>
+    <div class="counts" class:simulate-active={simulate}>
     {#if stats}
-    <Counting on:modeChange={handleModeChange} counts={runningCount} />
+    {#if simulate}
+    <h2>Counting</h2>
     {/if}
+    <Counting on:modeChange={handleModeChange} counts={runningCount} dealerHand={dealerHand} playerHand={playerHand} dealerSecond{dealerHand[1]}/>
+      {#if simulate}
+        <CountsGraph {runningWins} {runningLoss}/>
+      {/if}
+    {/if}
+    </div>
     <div class="blackjack-container">
       <div class="header">
         <h1 class="blackjack-header">BLACKJACK</h1>
@@ -423,11 +441,6 @@
         </div>
         <div class="cards-container">
           <div id="dealer">
-            <!-- {#if !gameOver && !hasStood}
-              <h2>Dealer: ?</h2>
-            {:else}
-              <h2>Dealer: {calculateHand(dealerHand)}</h2>
-            {/if} -->
             <div class="hand">
               {#each dealerHand as card, i (i)}          
                 <div in:fly={{ y: -100, duration: 400, delay: i * 100}}>
@@ -544,6 +557,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .counts {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .stats.simulate-active {
