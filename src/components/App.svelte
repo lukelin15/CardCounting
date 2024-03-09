@@ -18,22 +18,24 @@
 </script>
 
 <main>
+  <h1>Card Interaction and Counting: BlackJack</h1>
   <Base stats={stats} simulate={simulate}/>
-  <button on:click={statsButton}>stats</button>
-  <button on:click={simultateButton}>simulate</button>
+  <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
+  <button on:click={simultateButton} style="margin: auto; display:block;">simulate</button>
 
 
   <!-- makes Base the only visible thing -->
-  <div style="height: 300px;"></div>
-  
-  <h1>Card Interaction and Counting: BlackJack</h1>
+  <div style="height: 50px;"></div>
   <h2>Introduction to Blackjack</h2>
   <body>
   <p>
     BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
     the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
     as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
-    getting the highest score under 21. Players automatically lose of their hand is above 21.
+    getting the highest score under 21. Players automatically lose of their hand is above 21. Players can choose 'Hit' to
+    take another card to increase the total value of their cards or to 'Stand' wherein you keep 
+    your current hand without taking any additional cards. 'Double' refers to doubling your original bet and 
+    receiving exactly one more card.
   </p>
   <p>
     Try playing a round!
@@ -57,18 +59,37 @@
   <h2>Simulating a Game</h2>
   <body>
     <p>
-      You may have noticed that seeing all the cards doesn't really help all that much. The odds
-      in BlackJack are... 
+      You may have noticed that seeing all the cards doesn't really help all that much. Because while 
+      you can now see all the cards, unless you are calculating the exact probability of getting a desirble card 
+      between every round, seeing so many cards does not really help most people.The odds
+      in BlackJack are as follows: 
+    </p>
+    <p style="color: white;">
+      space
+    </p>
+      <p>
+      <img src="src/components/odds.png" alt="odds chart">
+    </p>
+    <p style="color: white;">
+      space
+    </p>
+    <p>
+      This is done my calculating the probability of a player getting a card that will cause their
+      total go go over 21 based on their current total of their first two cards. Naturally, as 
+      cards are dealt these odds change and less and less cards remain in the deck.
+    </p>
+    <p>
+      Simulate a game below with No Card Counting to see how Player money rises and falls when a 
+      player blindly plays against the dealer.
     </p>
   </body>
   <Base stats=true simulate=true/>
-  <h2>Betting</h2>
-  <h2>Statistics of the Game</h2>
   <h2>Card Counting</h2>
   <body>
     <p>
-      As displayed in the visualization section above, keeping track of everys single card is simply 
-      not feasible since there are 52 cards in a deck. Since a typical game of BlackJack can 
+      As displayed in the "Visualizing the Cards" section above, keeping track of everys single card is simply 
+      not feasible since there are 52 cards in a deck, and its not feasible to calculate 
+      the exact odds of busting as the games goes on. Since a typical game of BlackJack can 
       have 6-8 decks in play, this becomes impossible. Thus, players use card counting to
       keep track of cards.
     </p>
@@ -80,8 +101,67 @@
       As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
       the dealer's advantage increases.
     </p>
+    <p style="color: white;">
+      space
+    </p>
+      <p>
+      <img src="src/components/hilo.png" alt="hilo chart">
+    </p>
+    <p style="color: white;">
+      space
+    </p>
+    <p>
+      Another form of card counting is the Halves system which is more complicated than the 
+      aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned different values to add to your 
+      running count. But this time, a 5 is worth +1.5; 3, 4 and 6 are worth +1; 2 and 7 are worth 
+      +0.5, 8 is worth 0, 9 is worth -0.5, and 10, J, Q, K, and A are worth -1. This system 
+      is proven to give more accurate information than the Hi-Lo system, but these point values 
+      are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
+      track of the ratio of low cards and high cards.
+    </p>
+    <p style="color: white;">
+      space
+    </p>
+      <p>
+      <img src="src/components/halves.png" alt="halves chart">
+    </p>
+    <p style="color: white;">
+      space
+    </p>
+    <p>
+      Click on the simulate button with the different card counting strategies to see how the running count changes
+      and how that can inform the bets you make in comparision to not card counting at all.
+    </p>
   </body>
   <Base stats=true simulate=true svgId="graph2"/>
+  <body>
+    <p>
+    As the simulation demonstrates, while using these counting systems do not necessarily help players
+    make a lot of profit, they to inform bets and prevent players from losing money. The 
+    graph illustrating player money over bets visualizes this. Players tend to lose a lot of money
+    and even go into debt very quickly when betting and playing blind against the dealer. However, when
+    informing bets based on the different card counting systems, players are able to remain fairly steady. 
+    </p>
+  </body>
+  <h2>Try it yourself!</h2>
+  <body>
+    <p>
+      Try using what you have learned about card counting and play a couple rounds. We have
+      hidden the statistics from you, but feel free to turn them on by clicking the button if you are 
+      feeling a little stuck.
+    </p>
+  </body>
+  <Base stats={stats} svgId="graph2"/>
+  <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
+  <h2>Conclusion</h2>
+  <body>
+    <p>
+      Ultimately, anyone can learn Blackjack and Card Counting. And while this may not be applicable 
+      in everyday life, statistics and strategies like card counting - which is simply keeping track
+      of the ratio of high valued items vs low valued items - certainly can be.
+    </p>
+  </body>
+  <!--
   <body>
   <p>
     1. Thus far, we have created a working single-player BlackJack game. In this game, 
@@ -109,6 +189,7 @@
     can choose their experience and apply what they have learned about card counting to increase their amount of wins.
   </p>
 </body>
+-->
 <!-- <BasicStrategy /> -->
 </main>
 
@@ -132,4 +213,12 @@
     text-indent: 30px;
     font-family: "PT Serif", serif;
   }
+
+  img {
+      width: 300px; 
+      height: auto; 
+      display: block; 
+      margin: 0 auto; 
+      border: 2px solid #333; 
+    }
 </style>

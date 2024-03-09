@@ -33,21 +33,23 @@
     let x = d3.scaleLinear()
               .domain([0, playerMoneyHistory.length - 1])
               .range([0, width]);
+
+    // Add Y axis
+    let y = d3.scaleLinear()
+              .domain([-10000, 10000])
+              .range([ height, 0 ]);
     g.append("g")
-     .attr("transform", "translate(0," + height + ")")
+     .call(d3.axisLeft(y).ticks(5));
+
+     g.append("g")
+     // .attr("transform", "translate(0," + height + ")")
+     .attr("transform", "translate(0," + y(0) + ")")
      .call(d3.axisBottom(x).ticks(Math.min(playerMoneyHistory.length, 10)).tickFormat(i => `${i}`))
      .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)");
-
-    // Add Y axis
-    let y = d3.scaleLinear()
-              .domain([0, d3.max(playerMoneyHistory)])
-              .range([ height, 0 ]);
-    g.append("g")
-     .call(d3.axisLeft(y).ticks(5));
 
     // Add the line
     g.append("path")
@@ -73,7 +75,7 @@
        .attr("transform", "rotate(-90)")
        .attr("y", 0 + margin.left / 4)
        .attr("x",0 - (height / 2) - margin.top + 10)
-       .attr("dy", "1em")
+       .attr("dy", "0em")
        .style("text-anchor", "middle")
        .text("Money");
   }
