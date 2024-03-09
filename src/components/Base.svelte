@@ -330,7 +330,7 @@
     return winner;
   }
 
-  async function simulateRounds(rounds, instant=false) {
+  async function simulateRounds(rounds, instant=false, unit=20) {
     stopSimulation = false
     for (let i = 0; i < rounds; i++) {
 
@@ -338,10 +338,10 @@
         placeBet(100);
       } else if (currentMode == 'hi-lo' || currentMode == 'halves') {
         if (runningCount >= 2) {
-          betAmount = Math.round(playerMoney * (runningCount) / 1000)
+          betAmount = Math.round(unit * (runningCount-1))
           placeBet(betAmount);
         } else {
-          betAmount = Math.round(playerMoney / -(runningCount-2) / 1000)
+          betAmount = Math.round(unit / -(runningCount-2))
           placeBet(betAmount)
         }
       }
@@ -405,19 +405,21 @@
       </div>
 
       <div class="mid">
-        <div class="top-bar">
-          <div class="betting">
-            Bet: $
-            <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
+          <div class="blackjack-buttons">
+            <button on:click={() => restart()}> Restart</button>
+            <div class="top-bar">
+            <div class="betting">
+              Bet: $
+              <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
+            </div>
+            <button on:click={() => placeBet(betAmount)} disabled={betPlaced || !stopSimulation}>Place</button>
+            {#if simulate}
+              <button on:click={() => simulateRounds(1000, false)} disabled={!stopSimulation}>Simulate</button>
+            {/if}
+            {#if error}
+              <p>{error}</p>
+            {/if}
           </div>
-          <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
-          <button on:click={() => restart()}> Restart</button>
-          {#if simulate}
-            <button on:click={() => simulateRounds(1000, false)} disabled={!stopSimulation}>Simulate</button>
-          {/if}
-          {#if error}
-            <p>{error}</p>
-          {/if}
         </div>
         <div class="cards-container">
           <div id="dealer">
@@ -465,9 +467,9 @@
         </div>
       </div>
       <div id="controls">
-        <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
-        <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
-        <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2}>Double</button>
+        <button on:click={hit} disabled={gameOver || !hasStarted || !stopSimulation}>Hit</button>
+        <button on:click={stand} disabled={gameOver || !hasStarted || !stopSimulation}>Stand</button>
+        <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2 || !stopSimulation}>Double</button>
       </div>
 
       {#if showOverlay}
@@ -518,6 +520,13 @@
 
   .addons.simulate-active {
     height: 700px; /* Adjusted height for simulate, set to your preferred height */
+  }
+
+  .blackjack-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .blackjack-container {
