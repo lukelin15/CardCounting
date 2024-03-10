@@ -373,7 +373,7 @@
       }
 
       if (!instant) {
-        await new Promise(resolve => setTimeout(resolve, 500.0 / rounds));
+        await new Promise(resolve => setTimeout(resolve, 50.0 / rounds));
       }
     }
     stopSimulation = true
