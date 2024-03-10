@@ -39,11 +39,13 @@
 
   function showTooltip(event, val) {
     const probability = probabilities[val] || 0;
-    tooltipContent = `Count ${val}: ${probability.toFixed(2)}% chance of winning`;
+    const totalOccurrences = (winsCounts[val] || 0) + (lossCounts[val] || 0);
+    tooltipContent = `Count ${val}: ${probability.toFixed(2)}% chance of winning (Total: ${totalOccurrences})`;
     tooltipX = event.clientX;
     tooltipY = event.clientY - 20; // Position above the cursor
     tooltipVisible = true;
   }
+
 
   function hideTooltip() {
     tooltipVisible = false;

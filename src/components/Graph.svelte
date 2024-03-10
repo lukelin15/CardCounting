@@ -36,7 +36,7 @@
 
     // Add Y axis
     let y = d3.scaleLinear()
-              .domain([-10000, 10000])
+              .domain([0, d3.max(playerMoneyHistory)])
               .range([ height, 0 ]);
     g.append("g")
      .call(d3.axisLeft(y).ticks(5));
