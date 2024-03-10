@@ -52,6 +52,7 @@
   let winningCards = [];
   let runningWins = [];
   let runningLoss = [];
+  let reccBet = 10;
 
   let moneyHistory = [1000];
   export let svgId = "graph";
@@ -83,6 +84,7 @@
     error = '';
     betPlaced = false;
     runningCount = 0;
+    reccBet = 10;
 
     moneyHistory = [1000];
     winningCards = [];
@@ -349,9 +351,11 @@
       } else if (currentMode == 'hi-lo' || currentMode == 'halves') {
         if (runningCount >= 2) {
           betAmount = Math.round(unit * (runningCount-1))
+          reccBet = betAmount;
           placeBet(betAmount);
         } else {
           betAmount = Math.round(unit / -(runningCount-2))
+          reccBet = betAmount
           placeBet(betAmount)
         }
       }
@@ -401,6 +405,11 @@
         runningCount += 0;
       }
     }
+    if (runningCount >= 2) {
+      reccBet = Math.round(20 * (runningCount-1))
+    } else {
+      reccBet = Math.round(20 / -(runningCount-2))
+    }
   }
 </script>
 
@@ -411,7 +420,7 @@
     {#if simulate}
     <h2>Counting</h2>
     {/if}
-    <Counting on:modeChange={handleModeChange} counts={runningCount} dealerHand={dealerHand} playerHand={playerHand} dealerSecond{dealerHand[1]}/>
+    <Counting on:modeChange={handleModeChange} counts={runningCount} bet= {reccBet} dealerHand={dealerHand} playerHand={playerHand} dealerSecond={dealerHand[1]}/>
       {#if simulate}
         <CountsGraph {runningWins} {runningLoss}/>
       {/if}

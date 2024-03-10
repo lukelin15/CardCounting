@@ -1,10 +1,12 @@
 <script>
   import { fade } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
+  import { count } from 'd3';
 
   const dispatch = createEventDispatcher();
   let mode = 'none'; // Default mode
   export let counts;
+  export let bet;
 
 
   export let playerHand = [];
@@ -45,7 +47,9 @@
     <button on:click={() => changeMode('halves')} disabled={mode === 'halves'}>Halves</button>
   </div>
   <div class="description" transition:fade>
-    {descriptions[mode]}
+    {#if mode == 'none'}
+      {descriptions[mode]}
+    {/if}
   </div>
   {#if mode !== 'none'}
     <table>
@@ -58,6 +62,7 @@
       {/each}
     </table>
     <div class="count">Count: <b>{counts}</b></div>
+    <div class="count">Recommended Bet: <b>{bet}</b></div>
   {/if}
   
 </div>

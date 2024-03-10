@@ -18,14 +18,14 @@
 </script>
 
 <main>
-  <h1>Card Interaction and Counting: BlackJack</h1>
+  <!-- <h1>Card Interaction and Counting: BlackJack</h1> -->
   <Base stats={stats} simulate={simulate}/>
   <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
   <button on:click={simultateButton} style="margin: auto; display:block;">simulate</button>
 
 
   <!-- makes Base the only visible thing -->
-  <div style="height: 50px;"></div>
+  <div style="height: 500px;"></div>
   <h2>Introduction to Blackjack</h2>
   <body>
   <p>
