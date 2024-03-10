@@ -441,7 +441,7 @@
             </div>
             <button on:click={() => placeBet(betAmount)} disabled={betPlaced || !stopSimulation}>Place</button>
             {#if simulate}
-              <button on:click={() => simulateRounds(1000, false)} disabled={!stopSimulation}>Simulate</button>
+              <button on:click={() => simulateRounds(500, false)} disabled={!stopSimulation}>Simulate</button>
             {/if}
             {#if error}
               <p>{error}</p>
