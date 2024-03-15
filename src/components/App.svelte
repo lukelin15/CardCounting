@@ -19,13 +19,14 @@
 
 <main>
   <!-- <h1>Card Interaction and Counting: BlackJack</h1> -->
+  <h1>Card Counting: BlackJack</h1>
   <Base stats={stats} simulate={simulate}/>
   <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
   <button on:click={simultateButton} style="margin: auto; display:block;">simulate</button>
 
 
   <!-- makes Base the only visible thing -->
-  <div style="height: 500px;"></div>
+  <div style="height: 50px;"></div>
   <h2>Introduction to Blackjack</h2>
   <body>
   <p>
@@ -43,6 +44,7 @@
   </body>
   <Base />
   <body>
+    <div style="height: 50px;"></div>
     <h2>Visualizing the Cards</h2>
     <p>
       It might seem like winning and losing is just random luck, up to chance of the cards you
@@ -54,25 +56,23 @@
       are no longer in the deck are shaded in. Try playing a round and see if this helps you 
       in your game decisions.
     </p>
+    <div style="height: 25px;"></div>
   </body>
   <Base stats=true/>
+  <div style="height: 50px;"></div>
   <h2>Simulating a Game</h2>
   <body>
     <p>
       You may have noticed that seeing all the cards doesn't really help all that much. Because while 
-      you can now see all the cards, unless you are calculating the exact probability of getting a desirble card 
-      between every round, seeing so many cards does not really help most people.The odds
+      you can now see all the cards, unless you are calculating the exact probability of getting a desirable card 
+      between every round, seeing so many cards does not really help most people. The odds
       in BlackJack are as follows: 
     </p>
-    <p style="color: white;">
-      space
-    </p>
+    <div style="height: 25px;"></div>
       <p>
       <img src="src/components/odds.png" alt="odds chart">
     </p>
-    <p style="color: white;">
-      space
-    </p>
+    <div style="height: 25px;"></div>
     <p>
       This is done my calculating the probability of a player getting a card that will cause their
       total go go over 21 based on their current total of their first two cards. Naturally, as 
@@ -82,13 +82,15 @@
       Simulate a game below with No Card Counting to see how Player money rises and falls when a 
       player blindly plays against the dealer.
     </p>
+    <div style="height: 25px;"></div>
   </body>
   <Base stats=true simulate=true/>
+  <div style="height: 50px;"></div>
   <h2>Card Counting</h2>
   <body>
     <p>
-      As displayed in the "Visualizing the Cards" section above, keeping track of everys single card is simply 
-      not feasible since there are 52 cards in a deck, and its not feasible to calculate 
+      As displayed in the "Visualizing the Cards" section above, keeping track of every single card is simply 
+      not feasible since there are 52 cards in a deck, its more unrealistic to calculate 
       the exact odds of busting as the games goes on. Since a typical game of BlackJack can 
       have 6-8 decks in play, this becomes impossible. Thus, players use card counting to
       keep track of cards.
@@ -101,15 +103,11 @@
       As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
       the dealer's advantage increases.
     </p>
-    <p style="color: white;">
-      space
-    </p>
+    <div style="height: 25px;"></div>
       <p>
       <img src="src/components/hilo.png" alt="hilo chart">
     </p>
-    <p style="color: white;">
-      space
-    </p>
+    <div style="height: 25px;"></div>
     <p>
       Another form of card counting is the Halves system which is more complicated than the 
       aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned different values to add to your 
@@ -119,22 +117,20 @@
       are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
       track of the ratio of low cards and high cards.
     </p>
-    <p style="color: white;">
-      space
-    </p>
+    <div style="height: 25px;"></div>
       <p>
       <img src="src/components/halves.png" alt="halves chart">
     </p>
-    <p style="color: white;">
-      space
-    </p>
+    <div style="height: 25px;"></div>
     <p>
       Click on the simulate button with the different card counting strategies to see how the running count changes
       and how that can inform the bets you make in comparision to not card counting at all.
     </p>
+    <div style="height: 25px;"></div>
   </body>
   <Base stats=true simulate=true svgId="graph2"/>
   <body>
+    <div style="height: 25px;"></div>
     <p>
     As the simulation demonstrates, while using these counting systems do not necessarily help players
     make a lot of profit, they to inform bets and prevent players from losing money. The 
@@ -143,6 +139,7 @@
     informing bets based on the different card counting systems, players are able to remain fairly steady. 
     </p>
   </body>
+  <div style="height: 50px;"></div>
   <h2>Try it yourself!</h2>
   <body>
     <p>
@@ -150,15 +147,42 @@
       hidden the statistics from you, but feel free to turn them on by clicking the button if you are 
       feeling a little stuck.
     </p>
+    <div style="height: 25px;"></div>
   </body>
   <Base stats={stats} svgId="graph2"/>
   <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
-  <h2>Conclusion</h2>
+  <div style="height: 50px;"></div>
+  <h2>Conclusion and Takeaways</h2>
   <body>
     <p>
       Ultimately, anyone can learn Blackjack and Card Counting. And while this may not be applicable 
       in everyday life, statistics and strategies like card counting - which is simply keeping track
       of the ratio of high valued items vs low valued items - certainly can be.
+    </p>
+    <p>
+      Ultimately, our visualization breaks down statistics and game theory 
+      into digestible steps and logic for the everyday user to understand 
+      with lessons in betting and card counting. Our visualization is able 
+      to do this effectively but using a combination of simulations, text, and 
+      interactive visuals to communicate to users both visually and kinesthetically.
+    </p>
+    <p>
+      One thing people should learn from our visualization is that statistics does not 
+      have to be super complicated. Anyone can learn how to card count, or even apply 
+      statistics in their daily life whether that be with fitness tracking, 
+      consumerism/price tracking, social media trends, or even personal finance. Fundementally,
+      our visualization aims to demystify the confusion around math and statistics 
+      as card counting at the fundamental level is simply keeping tracking of the 
+      ratio of low items to high items. 
+    </p>
+    <p>
+      Our visualization succeeds at explaining this by going through the process of 
+      betting and card counting step by step. We only add one new piece of 
+      information at a time and use simulations and visuals to aid the text 
+      explanation. Our hope is that a combination of these elements helps users 
+      fundamentally understand the mechanics behind not only betting and card 
+      counting in this blackjack application, but math and statistics at the higher 
+      level.  
     </p>
   </body>
   <!--
@@ -201,8 +225,9 @@
     font-family: "PT Serif", serif;
   }
   body {
-    margin: 20px;
-    padding: 5px;
+    margin: 0px;
+    padding: 20px;
+    background-color: #E8EDFA;
   }
 
   p {
@@ -221,4 +246,12 @@
       margin: 0 auto; 
       border: 2px solid #333; 
     }
+  
+  .section1 {
+    background-color: #E8EDFA;
+  }
+
+  .section2 {
+    background-color: lightblue;
+  }
 </style>
