@@ -44,8 +44,6 @@
       <h2>Part 1:</h2>
       <h4>Why Card Count?</h4>
     </div>
-    <div style="height: 50px;"></div>
-    <h2>Visualizing the Cards</h2>
     <p>
       It might seem like winning and losing is just random luck, up to chance of the cards you
       end up being dealt. However, if you know what cards are left in the deck, you can actually 
@@ -60,7 +58,6 @@
   </body>
   <Base stats=true/>
   <div style="height: 50px;"></div>
-  <h2>Statistics and Simulating a Game</h2>
   <body>
     <p>
       You may have noticed that seeing all the cards doesn't really help all that much. Because while 
@@ -80,7 +77,7 @@
     </p>
     <div style="height: 25px;"></div>
   </body>
-  <Base stats=true simulate=true/>
+  <Base simulate=true/>
   <div class="header">
     <h2>Part 2:</h2>
     <h4>Mastering Card Counting</h4>
@@ -110,10 +107,6 @@
       are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
       track of the ratio of low cards and high cards.
     </p>
-    <p>
-      Click on the simulate button with the different card counting strategies to see how the running count changes
-      and how that can inform the bets you make in comparision to not card counting at all.
-    </p>
     <div style="height: 25px;"></div>
   </body>
   <Base stats=true simulate=true counts=true svgId="graph2"/>
@@ -122,7 +115,10 @@
     <h2>Part 3:</h2>
     <h4>The Statistics</h4>
   </div>
-    <div style="height: 25px;"></div>
+  <p>
+    Click on the simulate button with the different card counting strategies to see how the running count changes
+    and how that can inform the bets you make in comparision to not card counting at all.
+  </p>
     <p>
     As the simulation demonstrates, while using these counting systems do not necessarily help players
     make a lot of profit, they to inform bets and prevent players from losing money. The 
@@ -132,20 +128,20 @@
     </p>
 </body>
 <body>
-  <div style="height: 50px;"></div>
-  <h2>Try it yourself!</h2>
   <p>
     Try using what you have learned about card counting and play a couple rounds. We have
     hidden the statistics from you, but feel free to turn them on by clicking the button if you are 
     feeling a little stuck.
   </p>
-  <div style="height: 25px;"></div>
 </body>
 <Base stats={stats} svgId="graph2"/>
   <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
   <div style="height: 50px;"></div>
 <!-- <BasicStrategy /> -->
-<h2>Conclusion and Takeaways</h2>
+<div class="header">
+  <h2>Part 4:</h2>
+  <h4>Conclusion and Takeaways</h4>
+</div>
 <body>
   <p>
     Ultimately, anyone can learn Blackjack and Card Counting. And while this may not be applicable 
@@ -223,20 +219,26 @@
   body {
     margin: 0;
     padding: 0;
+    width: 100%;
     /* background-image: url('https://st.depositphotos.com/3215383/5028/i/450/depositphotos_50286385-stock-photo-nice-abstract-background.jpg'); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   p {
     font-size: 1.2em;
     line-height: 1.15;
-    margin:  40px;
-    width: 80%;
-    text-indent: 30px;
+    padding: 50px;
+    margin: 0 auto;
+    width: 40%;
     font-family: "Roboto", serif;
   }
+
+
 </style>
 
