@@ -18,98 +18,45 @@
 </script>
 
 <main>
-  <Base stats={stats} simulate={simulate}/>
-  <button on:click={statsButton}>stats</button>
-  <button on:click={simultateButton}>simulate</button>
-
-
-  <!-- makes Base the only visible thing -->
-  <div style="height: 300px;"></div>
-  
-  <h1>Card Interaction and Counting: BlackJack</h1>
-  <h2>Introduction to Blackjack</h2>
+  <h1>Unveiling the Secrets of Blackjack: A Game of Strategy, Not Just Luck</h1>
   <body>
   <p>
-    BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
-    the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
-    as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
-    getting the highest score under 21. Players automatically lose of their hand is above 21.
+    Have you ever wondered why some people seem to have an uncanny knack for winning at card games? Is it all just down to luck, or is there more to it? Welcome to our interactive exploration of Blackjack, a game where strategy can tip the scales in your favor.
   </p>
   <p>
-    Try playing a round!
+    In its simplest form, Blackjack is a card game where players attempt to reach a score of 21 by summing the values of their dealt cards. But beneath this simplicity lies a world of strategy and calculated risk. Let's dive in and uncover the secrets of this popular game.
   </p>
   </body>
   <Base />
   <body>
-    <h2>Visualizing the Cards</h2>
+    <h2>The Art of Card Counting</h2>
     <p>
-      It might seem like winning and losing is just random luck, up to chance of the cards you
-      end up being dealt. However, if you know what cards are left in the deck, you can actually 
-      see your odds of obtaining a desirable card.
+      It's easy to think that winning at Blackjack is just a matter of luck. But what if we told you that there's a way to tilt the odds in your favor? Enter the world of card counting.
     </p>
     <p>
-      Now you have a visualization of all the cards in the deck. Cards that have been dealt and 
-      are no longer in the deck are shaded in. Try playing a round and see if this helps you 
-      in your game decisions.
+      Card counting is a strategy used by Blackjack players to keep track of the ratio of high to low value cards left in the deck. It's not about memorizing every card that's been dealt, but rather understanding the overall composition of the deck. And while it's not a guarantee of winning, it can certainly give you an edge.
     </p>
   </body>
   <Base stats=true/>
-  <h2>Simulating a Game</h2>
+  <h2>Simulating the Game</h2>
   <body>
     <p>
-      You may have noticed that seeing all the cards doesn't really help all that much. The odds
-      in BlackJack are... 
+      Now that we've introduced the concept of card counting, let's put it to the test. We've created a simulation of a Blackjack game that allows you to try out this strategy for yourself. Will it make a difference? There's only one way to find out.
     </p>
   </body>
   <Base stats=true simulate=true/>
-  <h2>Betting</h2>
-  <h2>Statistics of the Game</h2>
-  <h2>Card Counting</h2>
+  <h2>The Thrill of Betting</h2>
+  <h2>Unraveling the Statistics</h2>
+  <h2>Mastering Card Counting</h2>
   <body>
     <p>
-      As displayed in the visualization section above, keeping track of everys single card is simply 
-      not feasible since there are 52 cards in a deck. Since a typical game of BlackJack can 
-      have 6-8 decks in play, this becomes impossible. Thus, players use card counting to
-      keep track of cards.
+      As we've seen, card counting is a powerful tool in the hands of a skilled Blackjack player. But it's not just about keeping track of the numbers. It's about understanding the game, reading the situation, and making smart decisions. It's about turning a game of chance into a game of strategy.
     </p>
     <p>
-      A simple form of Card Counting is the Hi-Lo system. As the name suggests, it 
-      keeps track of the ratio of high valued cards vs low values cards left in the deck.
-      Cards valued 2-6 are worth +1, cards valued 7-9 are worth 0, and 10 to Ace is worth. 
-      As each card is dealt add the appropriate amount to your running count until all the cards in the deck are dealt.
-      As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
-      the dealer's advantage increases.
+      So, are you ready to take your Blackjack game to the next level? With our interactive guide, you can learn the ins and outs of card counting and see how it can transform your approach to the game. It's not just about winning - it's about understanding the game on a deeper level.
     </p>
   </body>
   <Base stats=true simulate=true counts=true svgId="graph2"/>
-  <body>
-  <p>
-    1. Thus far, we have created a working single-player BlackJack game. In this game, 
-    two cards are dealt, two for both the dealer and the player. However, one of the dealer's cards are hidden.
-    Then the player has the choice to 'hit' or 'stand' based on the score of their cards. In the end, a
-    card pops up to display the winner of the game: either the player or the dealer. Players can then start a 
-    new game. We have also included a visualization of all the cards below to show which cards have been used and
-    discarded and which are still in the deck: cards still in the deck are at 100% opacity while cards that are out are shaded. 
-    After all cards have been dealt, the deck is shuffled and the game is reset.
-  </p>
-  <p>
-    2. We think the most challenging part of the design will be having this game tell a story. As of right now, we 
-    just have a working BlackJack game and visualization of all of the cards in the deck, but we hope that we can explain 
-    the system of card counting and/or helping players understand their odds while playing games as it's not just
-    luck, there is stategy and game theory involved in games like BlackJack to maximize profit. 
-    Thus, we want to create some sort of story/interactive presentation to teach users card counting, namely
-    the Hi-Lo card counting system wherein you assign point values to the cards dealt in order
-    to keep track of the ratio of high cards to low cards in the deck. Right now, we just have the game and visualization of all the cards. Then, in the end, they will hopefully have the chance to play their own
-    game applying this stategy that they have learned. We want to add a tally of games the dealer has won vs the player and hopefully, 
-    with the card counting stategy, the player ends up winning a majority of the games. Moreover, we may also try to implement more customization
-    for the user to play around with like increasing the number of decks (as a standard game of BlackJack has 6 or 8 decks) and/or choosing 
-    the number of players. However, we think these customizations may be the hardest part of this project as it gives the user complete control
-    over their game and so we have to adapt our game to handle that. As an overall scheme of our final project, we may have the user play one initial game of BlackJack, then introduce
-    the stategy of card counting through a visual presentation of sorts, then end the article with BlackJack with more customizations so users
-    can choose their experience and apply what they have learned about card counting to increase their amount of wins.
-  </p>
-</body>
-<!-- <BasicStrategy /> -->
 </main>
 
 <style>
