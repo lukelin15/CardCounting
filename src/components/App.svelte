@@ -49,7 +49,13 @@
     That shouldn't make sense right, the dealer and the player both get the same opportunities.
     They follow the same rules and bet the same amount of money.
     The reason the player is at a disadavantage is because they go first.
-    The player can bust first which is why the dealer wins more.
+  </p>
+  <p>
+    When the player goes first, they face the risk of "busting," which means their hand 
+    total exceeds 21. This instantly results in a loss for the player, regardless of the 
+    dealer's hand. This element of risk introduces an asymmetry in the game dynamics, as 
+    the dealer doesn't need to take additional cards if the player busts, automatically 
+    winning the round.
   </p>
   <p>
     This is why BlackJack is offered so much at casinos.
