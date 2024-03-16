@@ -13,6 +13,8 @@
   export let dealerHand = [];
   export let dealerSecond = '';
 
+  export let countMode;
+
   $: combinedHands = [...playerHand, ...dealerHand.filter(card => card !== dealerSecond)];
   $: cardCounts = combinedHands.reduce((acc, card) => {
     const cardValue = card.slice(0, -1); // Extract card value (e.g., 'A', '10', 'K')
@@ -42,9 +44,15 @@
 <div class="container">
   <div class="counting">
     <div class="buttons">
-    <button on:click={() => changeMode('none')} disabled={mode === 'none'}>None</button>
-    <button on:click={() => changeMode('hi-lo')} disabled={mode === 'hi-lo'}>Hi-Lo</button>
-    <button on:click={() => changeMode('halves')} disabled={mode === 'halves'}>Halves</button>
+    {#if countMode == 0 || countMode == 1}
+      <button on:click={() => changeMode('none')} disabled={mode === 'none'}>None</button>
+    {/if}
+    {#if countMode == 0 || countMode == 2}
+      <button on:click={() => changeMode('hi-lo')} disabled={mode === 'hi-lo'}>Hi-Lo</button>
+    {/if}
+    {#if countMode == 0 || countMode == 3}
+      <button on:click={() => changeMode('halves')} disabled={mode === 'halves'}>Halves</button>
+    {/if}
   </div>
   <div class="description" transition:fade>
     {#if mode == 'none'}

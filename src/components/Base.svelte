@@ -10,6 +10,7 @@
   // customization
   export let stats = false;
   export let simulate = false;
+  export let countMode = 0;
 
   // deck initializing stuff
   let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -420,7 +421,7 @@
     {#if simulate}
     <h2>Counting</h2>
     {/if}
-    <Counting on:modeChange={handleModeChange} counts={runningCount} bet= {reccBet} dealerHand={dealerHand} playerHand={playerHand} dealerSecond={dealerHand[1]}/>
+    <Counting on:modeChange={handleModeChange} counts={runningCount} bet= {reccBet} dealerHand={dealerHand} playerHand={playerHand} dealerSecond={dealerHand[1]} {countMode}/>
       {#if simulate}
         <CountsGraph {runningWins} {runningLoss}/>
       {/if}

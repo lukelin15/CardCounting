@@ -59,7 +59,7 @@
     </p>
     <div style="height: 25px;"></div>
   </body>
-  <Base stats=true/>
+  <Base stats=true countMode=1/>
   <div style="height: 50px;"></div>
   <body>
     <p>
@@ -112,7 +112,7 @@
     </p>
     <div style="height: 25px;"></div>
   </body>
-  <Base stats=true simulate=true counts=true svgId="graph2"/>
+  <Base stats=true simulate=true counts=true svgId="graph2" countMode=2/>
   <body>
   <div class="header">
     <h2>Part 3:</h2>
