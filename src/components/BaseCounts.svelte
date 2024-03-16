@@ -2,18 +2,24 @@
   import { fly } from 'svelte/transition';
   import Card from './Card.svelte';
   import Stats from './Stats.svelte';
-  import { onMount, afterUpdate } from 'svelte';
-  import * as d3 from 'd3';
+  import Graph from './Graph.svelte';
+  import Counting from './Counting.svelte';
 
   // customization
   export let stats = false;
   export let simulate = false;
-  export let counts = false;
 
   // deck initializing stuff
   let vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   let suits = ['♠', '♣', '♥', '♦'];
   let newDeck = [];
+
+  let currentMode = 'none'; // This will hold the current mode selected in Counting
+
+  function handleModeChange(event) {
+    currentMode = event.detail.mode;
+    restart();
+  }
   
   for (let suit of suits) {
     for (let val of vals) {
@@ -41,6 +47,8 @@
   let runningCount=0;
   let stopSimulation = true;
 
+  let moneyHistory = [1000];
+
   // only display overlay after animations
   // equations gets amount of extra cards dealt
   $: if (gameOver) {
@@ -51,6 +59,8 @@
 
   function restart() {
     deck = [...newDeck]
+
+    stopSimulation = true;
 
     playerHand = [];
     dealerHand = [];
@@ -67,7 +77,8 @@
     error = '';
     betPlaced = false;
     runningCount = 0;
-    stopSimulation = true;
+
+    moneyHistory = [1000];
   }
 
   function shuffle() {
@@ -92,6 +103,15 @@
       return newHand;
   }
 
+  function doubleDown() {
+    if (playerHand.length === 2 && (playerMoney >= betAmount * 2) || simulate) {
+      playerMoney -= betAmount;
+      betAmount *= 2;
+      hit();
+      stand();
+    }
+  }
+
   function hit() {
     if (!gameOver && hasStarted) {
       playerHand = deal(playerHand);
@@ -106,6 +126,86 @@
     while (calculateHand(playerHand) < 17) {
       playerHand = deal(playerHand);
     }
+  }
+
+  function smartHit(bet) {
+    let dealerCard = String(dealerHand[0]).slice(0,-1);
+
+    // doubling down when simulating
+    function fakeDouble() {
+      playerMoney -= betAmount;
+      betAmount *= 2
+    }
+
+    // count aces
+    let aces = 0;
+    for (let card of playerHand) {
+      let value = card.slice(0, -1);
+      if (value === 'A') {
+        aces += 1;
+      }
+    }
+
+    // soft responses
+    if (aces = 1) {
+      if (calculateHand(playerHand) == 13 || calculateHand(playerHand) == 14) {
+        if (['5', '6'].includes(dealerCard)) {
+          fakeDouble();
+          return
+        } else {
+          playerHand = deal(playerHand);
+        }
+      } else if (calculateHand(playerHand) == 15 || calculateHand(playerHand) == 16) {
+         if (['4', '5', '6'].includes(dealerCard)) {
+          fakeDouble();
+          return
+        } else {
+          playerHand = deal(playerHand);
+        }
+      } else if (calculateHand(playerHand) == 17) {
+          if (['3', '4', '5', '6'].includes(dealerCard)) {
+            fakeDouble();
+            return
+          } else {
+            playerHand = deal(playerHand);
+          }
+      } else if (calculateHand(playerHand) == 18) {
+          if (['3', '4', '5', '6'].includes(dealerCard)) {
+            fakeDouble();
+            return
+          }
+        }
+    }
+
+    // always hit when below 11 or below
+    while (calculateHand(playerHand) <= 11) {
+      playerHand = deal(playerHand);
+    }
+
+    // 12 stands on 4 5 6
+    if (calculateHand(playerHand) == 12) {
+      if (['4', '5', '6'].includes(dealerCard)) {
+        return
+      } else {
+        playerHand = deal(playerHand);
+      }
+    }
+
+    // 13 14 15 16 stands on 2 3 4 5 6
+    if (13 <= calculateHand(playerHand) <= 16) {
+      if (['2', '3', '4', '5', '6'].includes(dealerCard)) {
+        return
+      } else {
+        playerHand = deal(playerHand);
+      }
+    }
+
+    // always stand 17
+    if (calculateHand(playerHand) == 17) {
+      return
+    }
+
+    return
   }
 
   function placeBet(amount) {
@@ -216,29 +316,28 @@
       losses += 1
     }
     betPlaced = false;
+    moneyHistory.push(playerMoney);
+    moneyHistory = [...moneyHistory];
     return winner;
   }
 
-  async function simulateRounds(rounds, instant=false, counting=false) {
+  async function simulateRounds(rounds, instant=false) {
     stopSimulation = false
-    console.log(5000.0 / rounds)
     for (let i = 0; i < rounds; i++) {
 
-      if (!counting) {
+      if (currentMode == 'none') {
         placeBet(100);
-      } else {
-        if (runningCount > 2) {
-          betAmount = Math.round(playerMoney * (runningCount-1) / 1000)
+      } else if (currentMode == 'hi-lo' || currentMode == 'halves') {
+        if (runningCount >= 2) {
+          betAmount = Math.round(playerMoney * (runningCount) / 1000)
           placeBet(betAmount);
         } else {
-          betAmount = Math.round(playerMoney / -(runningCount-3) / 1000)
-          console.log(betAmount)
+          betAmount = Math.round(playerMoney / -(runningCount-2) / 1000)
           placeBet(betAmount)
         }
       }
 
       simulateHit();
-
       simulateStand();
 
       determineWinner();
@@ -249,164 +348,130 @@
       }
 
       if (!instant) {
-        await new Promise(resolve => setTimeout(resolve, 5000.0 / rounds));
+        await new Promise(resolve => setTimeout(resolve, 500.0 / rounds));
       }
     }
   }
 
   function calculateRunningCount(card){
     let val = card.slice(0, -1);
-    if (val >=2 && val<=6) {
-      runningCount += 1;
-    } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
-      runningCount -= 1;
-    } else {
-      runningCount += 0;
+    if (currentMode == 'hi-lo') {
+      if (val >=2 && val<=6) {
+        runningCount += 1;
+      } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+        runningCount -= 1;
+      } else {
+        runningCount += 0;
+      }
     }
-  }
-
-
-  let playerMoneyHistory = [];
-
-  // Update playerMoneyHistory every time playerMoney changes
-  $: playerMoneyHistory.push(playerMoney);
-
-  let svg;
-
-  onMount(() => {
-    svg = d3.select("#mySvg2");
-  });
-
-  afterUpdate(() => {
-    if ((simulate)  && svg) {
-      drawChart();
+    if (currentMode == 'halves') {
+      if ([2, 7].includes(val)) {
+        runningCount += 0.5;
+      } else if ([3, 4, 6].includes(val)) {
+        runningCount += 1;
+      } else if (val == 5) {
+        runningCount += 1.5;
+      } else if (val == 9) {
+        runningCount -= 0.5
+      } else if ([10, 'K', 'Q', 'J', 'A'].includes(val)) {
+        runningCount -= 1;
+      } else {
+        runningCount += 0;
+      }
     }
-  });
-
-  function drawChart() {
-    // Clear the SVG
-    svg.selectAll("*").remove();
-
-    // Set the dimensions and margins of the graph
-    let margin = {top: 10, right: 30, bottom: 30, left: 60},
-        width = 460 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
-
-    // Add X axis
-    let x = d3.scaleLinear()
-      .domain([0, playerMoneyHistory.length])
-      .range([ 0, width ]);
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-    // Add Y axis
-    let y = d3.scaleLinear()
-      .domain([0, d3.max(playerMoneyHistory)])
-      .range([ height, 0]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
-
-    // Add the line
-    svg.append("path")
-      .datum(playerMoneyHistory)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x((d, i) => x(i))
-        .y(d => y(d))
-      );
   }
 </script>
 
 <main>
-  <div class="blackjack-container">
-    <div class="header">
-      <h1 class="blackjack-header">BLACKJACK</h1>
-    </div>
-
-    <div class="mid">
-      <div class="top-bar">
-        <div class="betting">
-          Bet: $
-          <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
-        </div>
-        <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
-        <button on:click={() => restart()}> Restart</button>
-        {#if simulate}
-          <button on:click={() => simulateRounds(100)}>Simulate</button>
-        {/if}
-        {#if error}
-          <p>{error}</p>
-        {/if}
+  <div class="addons" class:stats-active={stats} class:simulate-active={simulate}>
+    {#if stats}
+    <Counting on:modeChange={handleModeChange} counts={runningCount} />
+    {/if}
+    <div class="blackjack-container">
+      <div class="header">
+        <h1 class="blackjack-header">BLACKJACK</h1>
       </div>
-      <div class="cards-container">
-        <div id="dealer">
-          <!-- {#if !gameOver && !hasStood}
+
+      <div class="mid">
+        <div class="top-bar">
+          <div class="betting">
+            Bet: $
+            <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
+          </div>
+          <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
+          <button on:click={() => restart()}> Restart</button>
+          {#if simulate}
+            <button on:click={() => simulateRounds(1000, false)}>Simulate</button>
+          {/if}
+          {#if error}
+            <p>{error}</p>
+          {/if}
+        </div>
+        <div class="cards-container">
+          <div id="dealer">
+            <!-- {#if !gameOver && !hasStood}
+              <h2>Dealer: ?</h2>
+            {:else}
+              <h2>Dealer: {calculateHand(dealerHand)}</h2>
+            {/if} -->
+            <div class="hand">
+              {#each dealerHand as card, i (i)}          
+                <div in:fly={{ y: -100, duration: 400, delay: i * 100}}>
+                {#if i === 1 && !showOverlay && !hasStood}
+                  <Card isPlaceholder={true} />
+                {:else}
+                  <Card {card} />
+                {/if}
+                </div>
+              {/each}
+            </div>
+            <div class="deck"></div>
+          </div>
+
+          <div id="player">
+            <div class="hand">
+              {#each playerHand as card, i (i)}
+                <div in:fly={{ y: 100, duration: 400, delay: i * 100}}>
+                  <Card {card} />
+                </div>
+              {/each}
+            </div>
+          </div>
+        </div>
+        <div class="player-info">
+          {#if !gameOver && !hasStood}
             <h2>Dealer: ?</h2>
           {:else}
             <h2>Dealer: {calculateHand(dealerHand)}</h2>
-          {/if} -->
-          <div class="hand">
-            {#each dealerHand as card, i (i)}          
-              <div in:fly={{ y: -100, duration: 400, delay: i * 100}}>
-              {#if i === 1 && !showOverlay && !hasStood}
-                <Card isPlaceholder={true} />
-              {:else}
-                <Card {card} />
-              {/if}
-              </div>
-            {/each}
-          </div>
-          <div class="deck"></div>
-        </div>
-
-        <div id="player">
-          <div class="hand">
-            {#each playerHand as card, i (i)}
-              <div in:fly={{ y: 100, duration: 400, delay: i * 100}}>
-                <Card {card} />
-              </div>
-            {/each}
-          </div>
+          {/if}
+          <div>Games: {wins + losses + ties}</div>
+          <div>Wins: {wins}</div>
+          <div>Losses: {losses}</div>
+          <div>Ties: {ties}</div>
+          <div>Money: {playerMoney}</div>
+          <h2>Player: {calculateHand(playerHand)}</h2>
         </div>
       </div>
-      <div class="player-info">
-        {#if !gameOver && !hasStood}
-          <h2>Dealer: ?</h2>
-        {:else}
-          <h2>Dealer: {calculateHand(dealerHand)}</h2>
-        {/if}
-        <div>Wins: {wins}</div>
-        <div>Losses: {losses}</div>
-        <div>Ties: {ties}</div>
-        <div>Money: {playerMoney}</div>
-        {#if counts}
-          <div>Running Count: {runningCount}</div>
-        {/if}
-        <h2>Player: {calculateHand(playerHand)}</h2>
+      <div id="controls">
+        <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
+        <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
+        <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2}>Double</button>
       </div>
+
+      {#if showOverlay}
+          <div class="overlay">
+              <h2>Winner: {determineWinner()}</h2>
+              <!-- <div>{betAmount}</div> -->
+          </div>
+      {/if}
+      {#if simulate}
+        <Graph playerMoneyHistory={moneyHistory}/>
+      {/if}
     </div>
-    <div id="controls">
-      <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
-      <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
-    </div>
-
-    {#if showOverlay}
-        <div class="overlay">
-            <h2>Winner: {determineWinner()}</h2>
-        </div>
-    {/if}
-
-
     {#if stats}
-      <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand}/>
+    <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand} simulate={simulate}/>
     {/if}
   </div>
-  {#if simulate}
-    <svg id="mySvg2" width="500" height="500"></svg>
-  {/if}
 </main>
 
 <style>
@@ -415,6 +480,27 @@
     flex-direction: column;
     align-items: center;
     margin: 10px;
+  }
+
+  .addons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 600px; /* Default width */
+    height: 400px;
+    transition: width 0.5s ease, height 0.5s ease; /* Smooth transition for width changes */
+    background: white;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .addons.stats-active {
+    width: 1200px; /* Expanded width */
+  }
+
+  .addons.simulate-active {
+    height: 700px; /* Adjusted height for simulate, set to your preferred height */
   }
 
   .blackjack-container {
@@ -426,8 +512,7 @@
     max-width: 600px; /* As per the image's apparent width */
     background: white;
     border-radius: 20px;
-    border: 2px solid black;
-    padding: 20px;
+
   }
 
 
@@ -479,14 +564,16 @@
   }
 
   .overlay {
+    flex-direction: column;
     position: absolute;
-    width: 25%;
+    width: 20%;
     height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
+    border-radius: 20px;
     font-size: 24px;
   }
 
