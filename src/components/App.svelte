@@ -34,7 +34,10 @@
     BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
     the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
     as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
-    getting the highest score under 21. Players automatically lose of their hand is above 21.
+    getting the highest score under 21. Players automatically lose of their hand is above 21. Players can choose 'Hit' to
+    take another card to increase the total value of their cards or to 'Stand' wherein you keep 
+    your current hand without taking any additional cards. 'Double' refers to doubling your original bet and 
+    receiving exactly one more card.
   </p>
   <p>
     Try playing a round!
@@ -42,6 +45,7 @@
   </body>
   <Base />
   <body>
+    <div style="height: 50px;"></div>
     <h2>Visualizing the Cards</h2>
     <p>
       It might seem like winning and losing is just random luck, up to chance of the cards you
@@ -53,6 +57,7 @@
       are no longer in the deck are shaded in. Try playing a round and see if this helps you 
       in your game decisions.
     </p>
+    <div style="height: 25px;"></div>
   </body>
   <Base stats=true/>
   <h2>Simulating a Game</h2>
