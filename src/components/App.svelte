@@ -76,11 +76,7 @@
       are no longer in the deck are shaded in. Try playing a round and see if this helps you 
       in your game decisions.
     </p>
-    <div style="height: 25px;"></div>
-  </body>
-  <Base stats=true countMode=1/>
-  <div style="height: 50px;"></div>
-  <body>
+    <Base stats=true countMode=1/>
     <p>
       You may have noticed that seeing all the cards doesn't really help all that much. Because while 
       you can now see all the cards, unless you are calculating the exact probability of getting a desirable card 
@@ -97,9 +93,14 @@
       Simulate a game below with No Card Counting to see how Player money rises and falls when a 
       player blindly plays against the dealer.
     </p>
-    <div style="height: 25px;"></div>
+    <Base simulate=true/>
+    <p>
+      [SOME TEXT ABOUT LOSING MONEY JUST FOLLOWING THE DEALER]
+    </p>
+    <p>
+      Now we'll move onto learning how to card count.
+    </p>
   </body>
-  <Base simulate=true/>
   <div class="header">
     <h2>Part 2:</h2>
     <h4>Mastering Card Counting</h4>
