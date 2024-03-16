@@ -26,7 +26,10 @@
   </div>
   <body>
   <p>
-    Have you ever wondered why some people seem to have an uncanny knack for winning at card games? Is it all just down to luck, or is there more to it? Welcome to our interactive exploration of Blackjack, a game where strategy can tip the scales in your favor.
+    Have you ever wondered why some people seem to have an uncanny knack for winning at card games?
+    Is it all just down to luck, or is there more to it? 
+    We will explore that today in our interactive exploration of Blackjack, 
+    a game where good strategy along with some useful math can help tip the scales in your favor.
   </p>
   <p>
     BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
@@ -196,6 +199,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
+    margin-bottom: 60px;
   }
 
   .header h1 {
@@ -239,8 +243,8 @@
 
   p {
     font-size: 1.2em;
-    line-height: 1.15;
-    padding: 50px;
+    line-height: 1.5;
+    padding: 20px;
     margin: 0 auto;
     width: 40%;
     font-family: "Roboto", serif;
