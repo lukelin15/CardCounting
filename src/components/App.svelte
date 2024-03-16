@@ -19,7 +19,7 @@
 
 
 <main>
-  <div class="header">
+  <div class="header" style="margin-top: 0px;">
     <h1>Unveiling Blackjack</h1>
     <h2>a game of strategy, not just luck</h2>
     <h4>by Andrew, Luke, and Pallavi</h4>
@@ -41,10 +41,26 @@
     receiving exactly one more card.
   </p>
   <p>
-    Try playing a round!
+    Try playing a couple rounds!
+  </p>
+  <Base />
+  <p>
+    You might have noticed if you played enough rounds that you somehow lose money.
+    That shouldn't make sense right, the dealer and the player both get the same opportunities.
+    They follow the same rules and bet the same amount of money.
+    The reason the player is at a disadavantage is because they go first.
+    The player can bust first which is why the dealer wins more.
+  </p>
+  <p>
+    This is why BlackJack is offered so much at casinos.
+    The player is at a heavy disadvantage from the start. 
+    In fact, the player playing the same as the dealer only has around a 40% chance to win because they have to act first.
+    There are however, things you can do to change this.
+  </p>
+  <p>
+    Lets learn about card counting.
   </p>
   </body>
-  <Base />
   <body>
     <div class="header">
       <h2>Part 1:</h2>
@@ -200,6 +216,7 @@
     background-size: cover;
     color: white;
     margin-bottom: 60px;
+    margin-top: 60px;
   }
 
   .header h1 {

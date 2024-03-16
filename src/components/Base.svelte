@@ -522,7 +522,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px;
+    padding: 20px;
   }
 
   .addons {
