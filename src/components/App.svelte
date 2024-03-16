@@ -18,7 +18,11 @@
 </script>
 
 <main>
-  <h1>Unveiling the Secrets of Blackjack: A Game of Strategy, Not Just Luck</h1>
+  <div class="header">
+    <h1>Unveiling Blackjack</h1>
+    <h2>a game of strategy, not just luck</h2>
+    <h4>by Andrew, Luke, and Pallavi</h4>
+  </div>
   <body>
   <p>
     Have you ever wondered why some people seem to have an uncanny knack for winning at card games? Is it all just down to luck, or is there more to it? Welcome to our interactive exploration of Blackjack, a game where strategy can tip the scales in your favor.
@@ -60,29 +64,61 @@
 </main>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');  h1 {
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+  .header {
+    background-color: #d2b48c; 
+    padding: 40px 0;
     text-align: center;
-    font-family: "PT Serif", serif;
+    /* background-image: url('https://images.unsplash.com/photo-1541278107931-e006523892df?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); Replace with your cards image URL */
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
   }
-  h2{
-    margin-left: 125px;
-    font-family: "PT Serif", serif;
+
+  .header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2em;
   }
+
+  .header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: normal; 
+    letter-spacing: 0.05em; 
+    color: white;
+  }
+  .header h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 0.05em; 
+    color: white;
+  }
+
   body {
+    margin: 0;
+    padding: 0;
     /* background-image: url('https://st.depositphotos.com/3215383/5028/i/450/depositphotos_50286385-stock-photo-nice-abstract-background.jpg'); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     color: #333;
-    margin: 20;
-    padding: 5px;
   }
+
   p {
     font-size: 1.2em;
     line-height: 1.15;
     margin: 0 auto;
     width: 80%;
     text-indent: 30px;
-    font-family: "PT Serif", serif;
+    font-family: "Roboto", serif;
   }
 </style>
