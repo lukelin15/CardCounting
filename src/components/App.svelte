@@ -33,7 +33,10 @@
   </body>
   <Base />
   <body>
-    <h2>The Art of Card Counting</h2>
+    <div class="header">
+      <h2>Part 1:</h2>
+      <h4>Why Card Count?</h4>
+    </div>
     <p>
       It's easy to think that winning at Blackjack is just a matter of luck. But what if we told you that there's a way to tilt the odds in your favor? Enter the world of card counting.
     </p>
@@ -42,16 +45,16 @@
     </p>
   </body>
   <Base stats=true/>
-  <h2>Simulating the Game</h2>
   <body>
     <p>
       Now that we've introduced the concept of card counting, let's put it to the test. We've created a simulation of a Blackjack game that allows you to try out this strategy for yourself. Will it make a difference? There's only one way to find out.
     </p>
   </body>
   <Base stats=true simulate=true/>
-  <h2>The Thrill of Betting</h2>
-  <h2>Unraveling the Statistics</h2>
-  <h2>Mastering Card Counting</h2>
+  <div class="header">
+    <h2>Part 2:</h2>
+    <h4>Mastering Card Counting</h4>
+  </div>
   <body>
     <p>
       As we've seen, card counting is a powerful tool in the hands of a skilled Blackjack player. But it's not just about keeping track of the numbers. It's about understanding the game, reading the situation, and making smart decisions. It's about turning a game of chance into a game of strategy.
@@ -59,6 +62,10 @@
     <p>
       So, are you ready to take your Blackjack game to the next level? With our interactive guide, you can learn the ins and outs of card counting and see how it can transform your approach to the game. It's not just about winning - it's about understanding the game on a deeper level.
     </p>
+  <div class="header">
+    <h2>Part 3:</h2>
+    <h4>The Statistics</h4>
+  </div>
   </body>
   <Base stats=true simulate=true counts=true svgId="graph2"/>
 </main>
@@ -69,7 +76,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
   .header {
-    background-color: #d2b48c; 
+    background-color: #d4c8b9; 
     padding: 40px 0;
     text-align: center;
     /* background-image: url('https://images.unsplash.com/photo-1541278107931-e006523892df?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); Replace with your cards image URL */
@@ -116,7 +123,7 @@
   p {
     font-size: 1.2em;
     line-height: 1.15;
-    margin: 0 auto;
+    margin:  40px;
     width: 80%;
     text-indent: 30px;
     font-family: "Roboto", serif;
