@@ -26,6 +26,9 @@
   </div>
   <body>
   <p>
+    Have you ever wondered why some people seem to have an uncanny knack for winning at card games? Is it all just down to luck, or is there more to it? Welcome to our interactive exploration of Blackjack, a game where strategy can tip the scales in your favor.
+  </p>
+  <p>
     BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
     the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
     as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
