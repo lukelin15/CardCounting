@@ -17,17 +17,12 @@
   }
 </script>
 
-<main>
-  <Base stats={stats} simulate={simulate}/>
-  <button on:click={statsButton}>stats</button>
-  <button on:click={simultateButton}>simulate</button>
-
-
-  <!-- makes Base the only visible thing -->
-  <div style="height: 300px;"></div>
-  
-  <h1>Card Interaction and Counting: BlackJack</h1>
-  <h2>Introduction to Blackjack</h2>
+<main>  
+  <div class="header">
+    <h1>Unveiling Blackjack</h1>
+    <h2>a game of strategy, not just luck</h2>
+    <h4>by Andrew, Luke, and Pallavi</h4>
+  </div>
   <body>
   <p>
     BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
@@ -41,7 +36,10 @@
   </body>
   <Base />
   <body>
-    <h2>Visualizing the Cards</h2>
+    <div class="header">
+      <h2>Part 1:</h2>
+      <h4>Why Card Count?</h4>
+    </div>
     <p>
       It might seem like winning and losing is just random luck, up to chance of the cards you
       end up being dealt. However, if you know what cards are left in the deck, you can actually 
@@ -54,7 +52,6 @@
     </p>
   </body>
   <Base stats=true/>
-  <h2>Simulating a Game</h2>
   <body>
     <p>
       You may have noticed that seeing all the cards doesn't really help all that much. The odds
@@ -62,9 +59,10 @@
     </p>
   </body>
   <Base stats=true simulate=true/>
-  <h2>Betting</h2>
-  <h2>Statistics of the Game</h2>
-  <h2>Card Counting</h2>
+  <div class="header">
+    <h2>Part 2:</h2>
+    <h4>Mastering Card Counting</h4>
+  </div>
   <body>
     <p>
       As displayed in the visualization section above, keeping track of everys single card is simply 
@@ -83,6 +81,10 @@
   </body>
   <Base stats=true simulate=true counts=true svgId="graph2"/>
   <body>
+  <div class="header">
+    <h2>Part 3:</h2>
+    <h4>The Statistics</h4>
+  </div>
   <p>
     1. Thus far, we have created a working single-player BlackJack game. In this game, 
     two cards are dealt, two for both the dealer and the player. However, one of the dealer's cards are hidden.
@@ -113,29 +115,62 @@
 </main>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');  h1 {
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+  .header {
+    background-color: #d4c8b9; 
+    padding: 40px 0;
     text-align: center;
-    font-family: "PT Serif", serif;
+    /* background-image: url('https://images.unsplash.com/photo-1541278107931-e006523892df?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); Replace with your cards image URL */
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
   }
-  h2{
-    margin-left: 125px;
-    font-family: "PT Serif", serif;
+
+  .header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2em;
   }
+
+  .header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: normal; 
+    letter-spacing: 0.05em; 
+    color: white;
+  }
+  .header h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 0.05em; 
+    color: white;
+  }
+
   body {
+    margin: 0;
+    padding: 0;
     /* background-image: url('https://st.depositphotos.com/3215383/5028/i/450/depositphotos_50286385-stock-photo-nice-abstract-background.jpg'); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     color: #333;
-    margin: 20;
-    padding: 5px;
   }
+
   p {
     font-size: 1.2em;
     line-height: 1.15;
-    margin: 0 auto;
+    margin:  40px;
     width: 80%;
     text-indent: 30px;
-    font-family: "PT Serif", serif;
+    font-family: "Roboto", serif;
   }
 </style>
+
