@@ -4,6 +4,8 @@
   import Stats from './Stats.svelte';
   import Graph from './Graph.svelte';
   import Counting from './Counting.svelte';
+  import StatsGraph from './StatsGraph.svelte';
+  import CountsGraph from './CountsGraph.svelte';
 
   // customization
   export let stats = false;
@@ -26,6 +28,7 @@
       newDeck.push(val + suit);
     }
   }
+  
 
   // newDeck is a template to copy decks from
   let deck = [...newDeck]
@@ -46,6 +49,10 @@
   let betPlaced = false;
   let runningCount=0;
   let stopSimulation = true;
+  let winningCards = [];
+  let runningWins = [];
+  let runningLoss = [];
+  let reccBet = 10;
 
   let moneyHistory = [1000];
   export let svgId = "graph";
@@ -59,10 +66,9 @@
   }
 
   function restart() {
-    deck = [...newDeck]
-
     stopSimulation = true;
-
+    
+    deck = [...newDeck]
     playerHand = [];
     dealerHand = [];
     gameOver = false;
@@ -78,8 +84,14 @@
     error = '';
     betPlaced = false;
     runningCount = 0;
+    reccBet = 10;
 
     moneyHistory = [1000];
+    winningCards = [];
+    runningWins = [];
+    runningLoss = [];
+
+    shuffle();
   }
 
   function shuffle() {
@@ -310,11 +322,19 @@
     if (winner === 'Player') {
       playerMoney += betAmount * 2; // player gets their bet back plus the same amount
       wins += 1
+      for (let card of playerHand) {
+        winningCards.push(card);
+      }
+      winningCards = [...winningCards];
+      runningWins = [...runningWins, runningCount];
+      
     } else if (winner === 'Draw') {
       playerMoney += betAmount; // player gets their bet back
       ties += 1
     } else {
       losses += 1
+      runningLoss = [...runningLoss, runningCount];
+
     }
     betPlaced = false;
     moneyHistory.push(playerMoney);
@@ -322,7 +342,7 @@
     return winner;
   }
 
-  async function simulateRounds(rounds, instant=false) {
+  async function simulateRounds(rounds, instant=false, unit=20) {
     stopSimulation = false
     for (let i = 0; i < rounds; i++) {
 
@@ -330,10 +350,12 @@
         placeBet(100);
       } else if (currentMode == 'hi-lo' || currentMode == 'halves') {
         if (runningCount >= 2) {
-          betAmount = Math.round(playerMoney * (runningCount) / 1000)
+          betAmount = Math.round(unit * (runningCount-1))
+          reccBet = betAmount;
           placeBet(betAmount);
         } else {
-          betAmount = Math.round(playerMoney / -(runningCount-2) / 1000)
+          betAmount = Math.round(unit / -(runningCount-2))
+          reccBet = betAmount
           placeBet(betAmount)
         }
       }
@@ -345,13 +367,16 @@
 
       if (stopSimulation) {
         stopSimulation = false
+        await new Promise(resolve => setTimeout(resolve, 500));
+        restart();
         break;
       }
 
       if (!instant) {
-        await new Promise(resolve => setTimeout(resolve, 500.0 / rounds));
+        await new Promise(resolve => setTimeout(resolve, 50.0 / rounds));
       }
     }
+    stopSimulation = true
   }
 
   function calculateRunningCount(card){
@@ -380,41 +405,51 @@
         runningCount += 0;
       }
     }
+    if (runningCount >= 2) {
+      reccBet = Math.round(20 * (runningCount-1))
+    } else {
+      reccBet = Math.round(20 / -(runningCount-2))
+    }
   }
 </script>
 
 <main>
   <div class="addons" class:stats-active={stats} class:simulate-active={simulate}>
+    <div class="counts" class:simulate-active={simulate}>
     {#if stats}
-    <Counting on:modeChange={handleModeChange} counts={runningCount} />
+    {#if simulate}
+    <h2>Counting</h2>
     {/if}
+    <Counting on:modeChange={handleModeChange} counts={runningCount} bet= {reccBet} dealerHand={dealerHand} playerHand={playerHand} dealerSecond={dealerHand[1]}/>
+      {#if simulate}
+        <CountsGraph {runningWins} {runningLoss}/>
+      {/if}
+    {/if}
+    </div>
     <div class="blackjack-container">
       <div class="header">
         <h1 class="blackjack-header">BLACKJACK</h1>
       </div>
 
       <div class="mid">
-        <div class="top-bar">
-          <div class="betting">
-            Bet: $
-            <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
+          <div class="blackjack-buttons">
+            <button on:click={() => restart()}> Restart</button>
+            <div class="top-bar">
+            <div class="betting">
+              Bet: $
+              <input bind:value={betAmount} type="number" min="1" max={playerMoney} placeholder="100" disabled={betPlaced} />
+            </div>
+            <button on:click={() => placeBet(betAmount)} disabled={betPlaced || !stopSimulation}>Place</button>
+            {#if simulate}
+              <button on:click={() => simulateRounds(500, false)} disabled={!stopSimulation}>Simulate</button>
+            {/if}
+            {#if error}
+              <p>{error}</p>
+            {/if}
           </div>
-          <button on:click={() => placeBet(betAmount)} disabled={betPlaced}>Place</button>
-          <button on:click={() => restart()}> Restart</button>
-          {#if simulate}
-            <button on:click={() => simulateRounds(1000, false)}>Simulate</button>
-          {/if}
-          {#if error}
-            <p>{error}</p>
-          {/if}
         </div>
         <div class="cards-container">
           <div id="dealer">
-            <!-- {#if !gameOver && !hasStood}
-              <h2>Dealer: ?</h2>
-            {:else}
-              <h2>Dealer: {calculateHand(dealerHand)}</h2>
-            {/if} -->
             <div class="hand">
               {#each dealerHand as card, i (i)}          
                 <div in:fly={{ y: -100, duration: 400, delay: i * 100}}>
@@ -454,9 +489,9 @@
         </div>
       </div>
       <div id="controls">
-        <button on:click={hit} disabled={gameOver || !hasStarted}>Hit</button>
-        <button on:click={stand} disabled={gameOver || !hasStarted}>Stand</button>
-        <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2}>Double</button>
+        <button on:click={hit} disabled={gameOver || !hasStarted || !stopSimulation}>Hit</button>
+        <button on:click={stand} disabled={gameOver || !hasStarted || !stopSimulation}>Stand</button>
+        <button on:click={doubleDown} disabled={gameOver || !hasStarted || playerHand.length > 2 || !stopSimulation}>Double</button>
       </div>
 
       {#if showOverlay}
@@ -470,26 +505,31 @@
       {/if}
     </div>
     {#if stats}
-    <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand} simulate={simulate}/>
+    <div class="stats" class:simulate-active={simulate}>
+      <Stats {deck} dealerSecondCard={dealerHand[1]} playerHand={playerHand} simulate={simulate}/>
+      {#if simulate}
+        <StatsGraph {winningCards} />
+      {/if}
+    </div>
     {/if}
   </div>
 </main>
 
 <style>
+  
   main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px;
   }
 
   .addons {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 600px; /* Default width */
+    width: 600px;
     height: 400px;
-    transition: width 0.5s ease, height 0.5s ease; /* Smooth transition for width changes */
+    transition: width 0.5s ease, height 0.5s ease;
     background: white;
     border: 2px solid black;
     padding: 20px;
@@ -504,24 +544,47 @@
     height: 700px; /* Adjusted height for simulate, set to your preferred height */
   }
 
+  .blackjack-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   .blackjack-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%; /* Set this to match the container size you want */
-    max-width: 600px; /* As per the image's apparent width */
-    background: white;
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
     border-radius: 20px;
-
   }
 
+  .stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .counts {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stats.simulate-active {
+    height: 700px;
+  }
 
   .top-bar {
     display: flex;
     flex-direction: column;
     width: 100%;
     justify-content: center;
+    
   }
 
   .player-info {
@@ -559,9 +622,9 @@
 
   #dealer, #player {
     margin-bottom: 1em;
-    overflow: visible; /* Ensure the container allows for overflow */
-    width: 100%; /* Ensure full utilization of the available width */
-    min-height: 140px; /* Adjust based on card height to ensure container does not collapse */
+    overflow: visible;
+    width: 100%;
+    min-height: 140px;
   }
 
   .overlay {
@@ -573,7 +636,6 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
-    color: white;
     border-radius: 20px;
     font-size: 24px;
   }
@@ -582,7 +644,7 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
+    background-color: #3486de;
     color: white;
     font-size: 16px;
     cursor: pointer;

@@ -85,9 +85,20 @@
         }
       });
     });
-
     to21Odds = Math.round(to21Count * 10000 / totalCards) / 100;
     over21Odds = Math.round(over21Count * 10000 / totalCards) / 100;
+
+    if (to21Count == totalCards) {
+      to21Count = 100.00;
+    } else if (to21Count == 0) {
+      to21Count = 0;
+    }
+
+    if (over21Count == totalCards) {
+      over21Count = 100.00;
+    } else if (over21Count == 0) {
+      over21Count = 0;
+    }
   }
 
   // Reactive statement to recalculate odds when deck or playerHand changes
@@ -141,7 +152,7 @@
 
   .card {
     margin: 1px;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.1s ease;
   }
 
   .drawn {
