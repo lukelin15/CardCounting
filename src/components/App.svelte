@@ -17,13 +17,13 @@
   }
 </script>
 
-<main>  
+
+<main>
   <div class="header">
     <h1>Unveiling Blackjack</h1>
     <h2>a game of strategy, not just luck</h2>
     <h4>by Andrew, Luke, and Pallavi</h4>
   </div>
-<main>
   <h1>UNVEILING BLACKJACK</h1>
   <h2>A GAME OF STRATEGY, NOT JUST LUCK</h2>
   <h3>BY ANDREW, LUKE, AND PALLAVI</h3>
