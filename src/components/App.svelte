@@ -110,9 +110,13 @@
       are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
       track of the ratio of low cards and high cards.
     </p>
+
+    <p>
+      Try using the Hi-Lo system to count your cards. To bring up the table press the "Hi-Lo" button on the left.
+    </p>
     <div style="height: 25px;"></div>
   </body>
-  <Base stats=true simulate=true counts=true svgId="graph2" countMode=2/>
+  <Base stats=true counts=true countMode=2/>
   <body>
   <div class="header">
     <h2>Part 3:</h2>
@@ -138,8 +142,7 @@
   </p>
 </body>
 <Base stats={stats} svgId="graph2"/>
-  <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
-  <div style="height: 50px;"></div>
+<button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
 <!-- <BasicStrategy /> -->
 <div class="header">
   <h2>Part 4:</h2>
@@ -177,6 +180,7 @@
     level.  
   </p>
 </body>
+<Base />
 </main>
 
 <style>
