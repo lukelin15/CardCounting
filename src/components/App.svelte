@@ -24,17 +24,6 @@
     <h2>a game of strategy, not just luck</h2>
     <h4>by Andrew, Luke, and Pallavi</h4>
   </div>
-  <h1>UNVEILING BLACKJACK</h1>
-  <h2>A GAME OF STRATEGY, NOT JUST LUCK</h2>
-  <h3>BY ANDREW, LUKE, AND PALLAVI</h3>
-  <Base stats={stats} simulate={simulate}/>
-  <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
-  <button on:click={simultateButton} style = "margin: auto; display: block;">simulate</button>
-
-
-  <!-- makes Base the only visible thing -->
-  <div style="height: 50px;"></div>
-  <h2>Introduction to Blackjack</h2>
   <body>
   <p>
     BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
