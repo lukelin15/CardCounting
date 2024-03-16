@@ -101,7 +101,9 @@
     </p>
     <Base simulate=true/>
     <p>
-      [SOME TEXT ABOUT LOSING MONEY JUST FOLLOWING THE DEALER]
+      As the simulation progresses, you'll notice a trend - the player's money tends to decrease 
+      over time. This is because, in the long run, the house always has an edge. Without card 
+      counting or a solid strategy, a player is likely to lose more than they win.
     </p>
     <p>
       Now we'll move onto learning how to card count.
