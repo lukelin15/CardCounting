@@ -24,27 +24,23 @@
 
 
   <!-- makes Base the only visible thing -->
-  <div style="height: 50px;"></div>
+  <div style="height: 300px;"></div>
   
   <h1>Card Interaction and Counting: BlackJack</h1>
   <h2>Introduction to Blackjack</h2>
   <body>
-    <p>
-      BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
-      the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
-      as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
-      getting the highest score under 21. Players automatically lose of their hand is above 21. Players can choose 'Hit' to
-      take another card to increase the total value of their cards or to 'Stand' wherein you keep 
-      your current hand without taking any additional cards. 'Double' refers to doubling your original bet and 
-      receiving exactly one more card.
-    </p>
-    <p>
-      Try playing a round!
-    </p>
+  <p>
+    BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
+    the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
+    as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
+    getting the highest score under 21. Players automatically lose of their hand is above 21.
+  </p>
+  <p>
+    Try playing a round!
+  </p>
   </body>
   <Base />
   <body>
-    <div style="height: 50px;"></div>
     <h2>Visualizing the Cards</h2>
     <p>
       It might seem like winning and losing is just random luck, up to chance of the cards you
@@ -58,39 +54,21 @@
     </p>
   </body>
   <Base stats=true/>
-  <div style="height: 50px;"></div>
   <h2>Simulating a Game</h2>
   <body>
     <p>
-      You may have noticed that seeing all the cards doesn't really help all that much. Because while 
-      you can now see all the cards, unless you are calculating the exact probability of getting a desirable card 
-      between every round, seeing so many cards does not really help most people. The odds
-      in BlackJack are as follows: 
+      You may have noticed that seeing all the cards doesn't really help all that much. The odds
+      in BlackJack are... 
     </p>
-    <div style="height: 25px;"></div>
-      <p>
-      <img src="src/components/odds.png" alt="odds chart">
-    </p>
-    <div style="height: 25px;"></div>
-    <p>
-      This is done my calculating the probability of a player getting a card that will cause their
-      total go go over 21 based on their current total of their first two cards. Naturally, as 
-      cards are dealt these odds change and less and less cards remain in the deck.
-    </p>
-    <p>
-      Simulate a game below with No Card Counting to see how Player money rises and falls when a 
-      player blindly plays against the dealer.
-    </p>
-    <div style="height: 25px;"></div>
   </body>
   <Base stats=true simulate=true/>
-  <div style="height: 50px;"></div>
+  <h2>Betting</h2>
+  <h2>Statistics of the Game</h2>
   <h2>Card Counting</h2>
   <body>
     <p>
-      As displayed in the "Visualizing the Cards" section above, keeping track of every single card is simply 
-      not feasible since there are 52 cards in a deck, its more unrealistic to calculate 
-      the exact odds of busting as the games goes on. Since a typical game of BlackJack can 
+      As displayed in the visualization section above, keeping track of everys single card is simply 
+      not feasible since there are 52 cards in a deck. Since a typical game of BlackJack can 
       have 6-8 decks in play, this becomes impossible. Thus, players use card counting to
       keep track of cards.
     </p>
@@ -102,118 +80,62 @@
       As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
       the dealer's advantage increases.
     </p>
-    <div style="height: 25px;"></div>
-      <p>
-      <img src="src/components/hilo.png" alt="hilo chart">
-    </p>
-    <div style="height: 25px;"></div>
-    <p>
-      Another form of card counting is the Halves system which is more complicated than the 
-      aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned different values to add to your 
-      running count. But this time, a 5 is worth +1.5; 3, 4 and 6 are worth +1; 2 and 7 are worth 
-      +0.5, 8 is worth 0, 9 is worth -0.5, and 10, J, Q, K, and A are worth -1. This system 
-      is proven to give more accurate information than the Hi-Lo system, but these point values 
-      are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
-      track of the ratio of low cards and high cards.
-    </p>
-    <div style="height: 25px;"></div>
-      <p>
-      <img src="src/components/halves.png" alt="halves chart">
-    </p>
-    <div style="height: 25px;"></div>
-    <p>
-      Click on the simulate button with the different card counting strategies to see how the running count changes
-      and how that can inform the bets you make in comparision to not card counting at all.
-    </p>
-    <div style="height: 25px;"></div>
   </body>
-  <Base stats=true simulate=true svgId="graph2"/>
+  <Base stats=true simulate=true counts=true svgId="graph2"/>
   <body>
-    <div style="height: 25px;"></div>
-    <p>
-    As the simulation demonstrates, while using these counting systems do not necessarily help players
-    make a lot of profit, they to inform bets and prevent players from losing money. The 
-    graph illustrating player money over bets visualizes this. Players tend to lose a lot of money
-    and even go into debt very quickly when betting and playing blind against the dealer. However, when
-    informing bets based on the different card counting systems, players are able to remain fairly steady. 
-    </p>
-  </body>
-  <div style="height: 50px;"></div>
-  <h2>Try it yourself!</h2>
-  <body>
-    <p>
-      Try using what you have learned about card counting and play a couple rounds. We have
-      hidden the statistics from you, but feel free to turn them on by clicking the button if you are 
-      feeling a little stuck.
-    </p>
-    <div style="height: 25px;"></div>
-  </body>
-  <Base stats={stats} svgId="graph2"/>
-  <button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
-  <div style="height: 50px;"></div>
-  <h2>Conclusion and Takeaways</h2>
-  <body>
-    <p>
-      Ultimately, anyone can learn Blackjack and Card Counting. And while this may not be applicable 
-      in everyday life, statistics and strategies like card counting - which is simply keeping track
-      of the ratio of high valued items vs low valued items - certainly can be.
-    </p>
-    <p>
-      Ultimately, our visualization breaks down statistics and game theory 
-      into digestible steps and logic for the everyday user to understand 
-      with lessons in betting and card counting. Our visualization is able 
-      to do this effectively but using a combination of simulations, text, and 
-      interactive visuals to communicate to users both visually and kinesthetically.
-    </p>
-    <p>
-      One thing people should learn from our visualization is that statistics does not 
-      have to be super complicated. Anyone can learn how to card count, or even apply 
-      statistics in their daily life whether that be with fitness tracking, 
-      consumerism/price tracking, social media trends, or even personal finance. Fundementally,
-      our visualization aims to demystify the confusion around math and statistics 
-      as card counting at the fundamental level is simply keeping tracking of the 
-      ratio of low items to high items. 
-    </p>
-    <p>
-      Our visualization succeeds at explaining this by going through the process of 
-      betting and card counting step by step. We only add one new piece of 
-      information at a time and use simulations and visuals to aid the text 
-      explanation. Our hope is that a combination of these elements helps users 
-      fundamentally understand the mechanics behind not only betting and card 
-      counting in this blackjack application, but math and statistics at the higher 
-      level.  
-    </p>
-  </body>
+  <p>
+    1. Thus far, we have created a working single-player BlackJack game. In this game, 
+    two cards are dealt, two for both the dealer and the player. However, one of the dealer's cards are hidden.
+    Then the player has the choice to 'hit' or 'stand' based on the score of their cards. In the end, a
+    card pops up to display the winner of the game: either the player or the dealer. Players can then start a 
+    new game. We have also included a visualization of all the cards below to show which cards have been used and
+    discarded and which are still in the deck: cards still in the deck are at 100% opacity while cards that are out are shaded. 
+    After all cards have been dealt, the deck is shuffled and the game is reset.
+  </p>
+  <p>
+    2. We think the most challenging part of the design will be having this game tell a story. As of right now, we 
+    just have a working BlackJack game and visualization of all of the cards in the deck, but we hope that we can explain 
+    the system of card counting and/or helping players understand their odds while playing games as it's not just
+    luck, there is stategy and game theory involved in games like BlackJack to maximize profit. 
+    Thus, we want to create some sort of story/interactive presentation to teach users card counting, namely
+    the Hi-Lo card counting system wherein you assign point values to the cards dealt in order
+    to keep track of the ratio of high cards to low cards in the deck. Right now, we just have the game and visualization of all the cards. Then, in the end, they will hopefully have the chance to play their own
+    game applying this stategy that they have learned. We want to add a tally of games the dealer has won vs the player and hopefully, 
+    with the card counting stategy, the player ends up winning a majority of the games. Moreover, we may also try to implement more customization
+    for the user to play around with like increasing the number of decks (as a standard game of BlackJack has 6 or 8 decks) and/or choosing 
+    the number of players. However, we think these customizations may be the hardest part of this project as it gives the user complete control
+    over their game and so we have to adapt our game to handle that. As an overall scheme of our final project, we may have the user play one initial game of BlackJack, then introduce
+    the stategy of card counting through a visual presentation of sorts, then end the article with BlackJack with more customizations so users
+    can choose their experience and apply what they have learned about card counting to increase their amount of wins.
+  </p>
+</body>
 <!-- <BasicStrategy /> -->
 </main>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-h1, h2 {
-  text-align: center;
-  font-family: "PT Serif", serif;
-}
-body {
-  margin: 0px;
-  padding: 20px;
-}
-
-p {
-  font-size: 1.2em;
-  line-height: 1.15;
-  margin: 0 auto;
-  width: 80%;
-  text-indent: 30px;
-  font-family: "PT Serif", serif;
-}
-
-img {
-    width: 300px; 
-    height: auto; 
-    display: block; 
-    margin: 0 auto; 
-    border: 2px solid #333; 
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');  h1 {
+    text-align: center;
+    font-family: "PT Serif", serif;
   }
-
+  h2{
+    margin-left: 125px;
+    font-family: "PT Serif", serif;
+  }
+  body {
+    /* background-image: url('https://st.depositphotos.com/3215383/5028/i/450/depositphotos_50286385-stock-photo-nice-abstract-background.jpg'); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #333;
+    margin: 20;
+    padding: 5px;
+  }
+  p {
+    font-size: 1.2em;
+    line-height: 1.15;
+    margin: 0 auto;
+    width: 80%;
+    text-indent: 30px;
+    font-family: "PT Serif", serif;
+  }
 </style>
