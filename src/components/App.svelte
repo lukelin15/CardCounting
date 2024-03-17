@@ -27,31 +27,31 @@
   <body>
   <p>
     Have you ever wondered why some people seem to have an uncanny knack for winning at card games?
-    Is it all just down to luck, or is there more to it? 
-    We will explore that today in our interactive exploration of Blackjack, 
+    Is it all just down to <i>luck</i>, or is there more to it? 
+    We will explore that today in our interactive exploration of <b>Blackjack</b>, 
     a game where good strategy along with some useful math can help tip the scales in your favor.
   </p>
   <p>
-    BlackJack, in it's most simplist form, is a card game wherein players attemp to reach a score of 21 by summing 
+    BlackJack, in it's most simplist form, is a <i>card</i> game wherein players attemp to reach a score of at most 21 by summing 
     the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
-    as 10. Players play against eachother and the dealer. You win by getting a score of 21 with the least amount of cards or 
-    getting the highest score under 21. Players automatically lose of their hand is above 21. Players can choose 'Hit' to
-    take another card to increase the total value of their cards or to 'Stand' wherein you keep 
-    your current hand without taking any additional cards. 'Double' refers to doubling your original bet and 
-    receiving exactly one more card.
+    as 10. Players play against the dealer. You win by getting a score higher than the dealer without going over 21 or you win if the dealer went over 21.
+    Players and dealers automatically lose if their hand's value is above 21. Players can choose <b>Hit</b> to
+    take another card to increase the total value of their cards or to <b>Stand</b> wherein you keep 
+    your current hand without taking any additional cards. <b>Double</b> refers to doubling your original bet and 
+    receiving exactly one more card. This can only be done as your first and only move.
   </p>
   <p>
-    Try playing a couple rounds!
+    <b>Try playing a couple rounds!</b>
   </p>
   <Base />
   <p>
-    You might have noticed if you played enough rounds that you somehow lose money.
+    You might have noticed if you played enough rounds that you consistently <i>lose</i> money.
     That shouldn't make sense right, the dealer and the player both get the same opportunities.
     They follow the same rules and bet the same amount of money.
-    The reason the player is at a disadavantage is because they go first.
+    The reason the player loses more often is that they must go <i>first</i>.
   </p>
   <p>
-    When the player goes first, they face the risk of "busting," which means their hand 
+    When the player goes first, they face the risk of <b>busting</b>, which means their hand 
     total exceeds 21. This instantly results in a loss for the player, regardless of the 
     dealer's hand. This element of risk introduces an asymmetry in the game dynamics, as 
     the dealer doesn't need to take additional cards if the player busts, automatically 
@@ -60,11 +60,11 @@
   <p>
     This is why BlackJack is offered so much at casinos.
     The player is at a heavy disadvantage from the start. 
-    In fact, the player playing the same as the dealer only has around a 40% chance to win because they have to act first.
+    In fact, the player playing the same as the dealer only has around a <i>40%</i> chance to win because they have to act first.
     There are however, things you can do to change this.
   </p>
   <p>
-    Lets learn about card counting.
+    <b>Lets learn about card counting.</b>
   </p>
   </body>
   <body>
@@ -74,21 +74,22 @@
       <h4>Visualizing the Cards</h4>
     </div>
     <p>
-      It might seem like winning and losing is just random luck, up to chance of the cards you
-      end up being dealt. However, if you know what cards are left in the deck, you can actually 
-      see your odds of obtaining a desirable card.
+      It might seem like winning and losing is just random luck. 
+      You might be worried that the chance of getting the cards you want is completely arbitrary. 
+      However, if you know what cards are left in the deck, you can actually 
+      utilize this to find the odds of getting a <i>desirable</i> card.
     </p>
     <p>
-      Now you have a visualization of all the cards in the deck. Cards that have been dealt and 
+      Now you have a <b>visualization</b> of all the cards in the deck. Cards that have been dealt and 
       are no longer in the deck are shaded in. Try playing a round and see if this helps you 
       in your game decisions.
     </p>
     <Base stats=true countMode=1/>
     <p>
-      You may have noticed that seeing all the cards doesn't really help all that much. Because while 
-      you can now see all the cards, unless you are calculating the exact probability of getting a desirable card 
-      between every round, seeing so many cards does not really help most people. The odds
-      in BlackJack are as follows: 
+      You may have noticed that seeing all the cards doesn't really help as much as you might've hoped. 
+      This is because while you can now see all the cards, unless you are calculating the <i>exact</i> probability of getting a desirable card 
+      between every round, seeing so many cards does not really help most people. 
+      With a <i>full</i> deck the odds of BlackJack are as follows: 
     </p>
     <table border="1">
       <thead>
@@ -150,20 +151,21 @@
     <p>
       This is determined by calculating the probability of a player getting a card that will cause their
       total go go over 21 based on their current total of their first two cards. Naturally, as 
-      cards are dealt these odds change and less and less cards remain in the deck.
+      cards are dealt these odds <i>change</i> and less and less cards remain in the deck.
     </p>
     <p>
-      Simulate a game below with No Card Counting to see how Player money rises and falls when a 
+      Simulate a game below with the new <b>simulate</b> button to see how Player money rises and falls when a 
       player blindly plays against the dealer.
+      Each simulation proceeds with 500 plays where the player operates the same as the dealer.
     </p>
     <Base simulate=true/>
     <p>
-      As the simulation progresses, you'll notice a trend - the player's money tends to decrease 
-      over time. This is because, in the long run, the house always has an edge. Without card 
+      As the simulation progresses, you'll notice a trend - the player's money tends to decrease drastically
+      over time. This is because, in the long run, the <b>house</b> (or the dealer) always has an edge. Without card 
       counting or a solid strategy, a player is likely to lose more than they win.
     </p>
     <p>
-      Now we'll move onto learning how to card count.
+      <b>Now we're ready to learn how to card count.</b>
     </p>
   </body>
   <div class="header">
@@ -172,19 +174,19 @@
   </div>
   <body>
     <p>
-      As displayed in the "Why Card Count?" section above, keeping track of every single card is simply 
-      not feasible since there are 52 cards in a deck, its more unrealistic to calculate 
-      the exact odds of busting as the games goes on. Since a typical game of BlackJack can 
+      As displayed in the <b>Why Card Count?</b> section above, keeping track of every single card is simply 
+      not feasible since there are 52 cards in a deck, it becomes more unrealistic to calculate 
+      the exact odds of cards you want as the games goes on. Since a typical game of BlackJack at a casino can 
       have 6-8 decks in play, this becomes impossible. Thus, players use card counting to
       keep track of cards.
     </p>
     <p>
-      A simple form of Card Counting is the Hi-Lo system. As the name suggests, it 
+      A simple form of card counting is the <b>Hi-Lo</b> system. As the name suggests, it 
       keeps track of the ratio of high valued cards vs low values cards left in the deck.
       Cards valued 2-6 are worth +1, cards valued 7-9 are worth 0, and 10 to Ace is worth. 
-      As each card is dealt add the appropriate amount to your running count until all the cards in the deck are dealt.
-      As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
-      the dealer's advantage increases.
+      Start with a count of 0 and as each card is dealt add the appropriate amount to your running count until all the cards in the deck are dealt.
+      As the running count increasing, the advantage turns towards the player. But if this becomes negative,
+      the dealer's advantage increases. Make sure to reset your count when the deck is shuffled (although if you counted properly you won't need to). 
     </p>
     <table border="1">
       <thead>
@@ -395,7 +397,7 @@
     padding: 20px;
     margin: 0 auto;
     width: 40%;
-    text-indent: 30px;
+    /* text-indent: 30px; */
     font-family: "Roboto", serif;
   }
 
