@@ -32,7 +32,7 @@
     a game where good strategy along with some useful math can help tip the scales in your favor.
   </p>
   <p>
-    BlackJack, in it's most simplist form, is a <i>card</i> game wherein players attemp to reach a score of at most 21 by summing 
+    BlackJack, in it's most simplist form, is a <i>card</i> game wherein players attempt to reach a score of at most 21 by summing 
     the values of their dealt cards. Aces can count for either a 1 or a 11 and face cards (K, Q, J) count
     as 10. Players play against the dealer. You win by getting a score higher than the dealer without going over 21 or you win if the dealer went over 21.
     Players and dealers automatically lose if their hand's value is above 21. Players can choose <b>Hit</b> to
@@ -86,7 +86,7 @@
     </p>
     <Base stats=true countMode=1/>
     <p>
-      You may have noticed that seeing all the cards <b>doesn't</b> really help as much as you might've hoped. 
+      You may have noticed that seeing all the cards <b>doesn't</b> actually help as much as you might've hoped. 
       This is because while you can now see all the cards, unless you are calculating the <i>exact</i> probability of getting a desirable card 
       between every round, seeing so many cards does not really help most people. 
       With a <i>full</i> deck the odds of BlackJack are as follows: 
@@ -150,7 +150,7 @@
       </table>
     <p>
       This is determined by calculating the probability of a player getting a card that will cause their
-      total go go over 21 based on their current total of their first two cards. Naturally, as 
+      total go go over 21 based on the current total of their first two cards. Naturally, as 
       cards are dealt these odds <i>change</i> and less and less cards remain in the deck.
     </p>
     <p>
@@ -277,7 +277,7 @@
       The count just tells us how likely we are to win the game <i>before</i> it even starts.
       You might notice the <b>recommended</b> bet goes up as the count goes up and goes down as the count goes down.
       This mirrors the <i>proper</i> way to use your count.
-      The amount you want to be is up to you, but as the count gets higher and higher, the odds of you winning increase too.
+      The amount you want the bet to be is up to you, but as the count gets higher and higher, the odds of you winning increase too.
     </p>
     <p>
       <b>Now we can move on to the math behind this.</b>
