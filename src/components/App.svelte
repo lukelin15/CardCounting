@@ -23,6 +23,7 @@
     <h1>Unveiling Blackjack</h1>
     <h2>a game of strategy, not just luck</h2>
     <h4>by Andrew, Luke, and Pallavi</h4>
+    <a href="https://youtu.be/JtHIpce4yZk">Demo Video</a>
   </div>
   <body>
   <p>
@@ -385,11 +386,11 @@
   <p>
     <b>Try playing another game to see how your skills have improved!</b>
   </p>
-  <p>
-
-  </p>
 </body>
 <Base />
+<body>
+  <p style=text-align:center> <a href="https://github.com/lukelin15/CardCounting/tree/main">Repository</a></p>
+</body>
 </main>
 
 <style>
@@ -456,6 +457,10 @@
     margin: 0 auto;
     width: 40%;
     /* text-indent: 30px; */
+    font-family: "Roboto", serif;
+  }
+
+  a{
     font-family: "Roboto", serif;
   }
 
