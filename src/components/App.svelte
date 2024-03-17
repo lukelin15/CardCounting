@@ -148,7 +148,7 @@
       </tbody>
       </table>
     <p>
-      This is done my calculating the probability of a player getting a card that will cause their
+      This is determined by calculating the probability of a player getting a card that will cause their
       total go go over 21 based on their current total of their first two cards. Naturally, as 
       cards are dealt these odds change and less and less cards remain in the deck.
     </p>
