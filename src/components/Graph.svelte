@@ -33,21 +33,22 @@
     let x = d3.scaleLinear()
               .domain([0, playerMoneyHistory.length - 1])
               .range([0, width]);
+  
+    // Add Y axis
+    let y = d3.scaleLinear()
+              .domain([-4000, 2000])
+              .range([ height, 0 ]);
     g.append("g")
-     .attr("transform", "translate(0," + height + ")")
+     .call(d3.axisLeft(y).ticks(5));
+
+     g.append("g")
+     .attr("transform", "translate(0," + y(0) + ")")
      .call(d3.axisBottom(x).ticks(Math.min(playerMoneyHistory.length, 10)).tickFormat(i => `${i + 1}`))
      .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)");
-
-    // Add Y axis
-    let y = d3.scaleLinear()
-              .domain([0, d3.max(playerMoneyHistory)])
-              .range([ height, 0 ]);
-    g.append("g")
-     .call(d3.axisLeft(y).ticks(5));
 
     // Add the line
     g.append("path")
@@ -64,7 +65,7 @@
     svg.append("text")             
        .attr("transform",
              "translate(" + (width/2 + margin.left) + " ," + 
-                            (height + margin.top + 35) + ")")
+                            (height + margin.top + 40) + ")")
        .style("text-anchor", "middle")
        .text("Bets");
 
