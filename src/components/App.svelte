@@ -90,9 +90,6 @@
       between every round, seeing so many cards does not really help most people. The odds
       in BlackJack are as follows: 
     </p>
-    <div style="height: 25px;"></div>
-     <img src='./src/components/odds.png' alt="hilo chart">
-    <div style="height: 25px;"></div>
     <p>
       This is done my calculating the probability of a player getting a card that will cause their
       total go go over 21 based on their current total of their first two cards. Naturally, as 
@@ -132,9 +129,6 @@
       As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
       the dealer's advantage increases.
     </p>
-    <div style="height: 25px;"></div>
-      <img src='./src/components/hilo.png' alt="hilo chart">
-    <div style="height: 25px;"></div>
     <p>
       Another form of card counting is the Halves system which is more complicated than the 
       aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned different values to add to your 
@@ -144,9 +138,6 @@
       are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
       track of the ratio of low cards and high cards.
     </p>
-    <div style="height: 25px;"></div>
-      <img src='./src/components/halves.png' alt="halves chart">
-    <div style="height: 25px;"></div>
     <p>
       Try using the Hi-Lo system to count your cards. To bring up the table press the "Hi-Lo" button on the left.
     </p>
