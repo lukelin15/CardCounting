@@ -86,7 +86,7 @@
     </p>
     <Base stats=true countMode=1/>
     <p>
-      You may have noticed that seeing all the cards doesn't really help as much as you might've hoped. 
+      You may have noticed that seeing all the cards <b>doesn't</b> really help as much as you might've hoped. 
       This is because while you can now see all the cards, unless you are calculating the <i>exact</i> probability of getting a desirable card 
       between every round, seeing so many cards does not really help most people. 
       With a <i>full</i> deck the odds of BlackJack are as follows: 
@@ -181,9 +181,12 @@
       keep track of cards.
     </p>
     <p>
-      A simple form of card counting is the <b>Hi-Lo</b> system. As the name suggests, it 
+      <b>But how do I count?</b>
+    </p>
+    <p>
+      A simple form of card counting we can use is the <b>Hi-Lo</b> system. As the name suggests, it 
       keeps track of the ratio of high valued cards vs low values cards left in the deck.
-      Cards valued 2-6 are worth +1, cards valued 7-9 are worth 0, and 10 to Ace is worth. 
+      Cards valued 2-6 are worth <b>+1</b>, cards valued 7-9 are worth <b>0</b>, and 10 to Ace is worth <b>-1</b>. 
       Start with a count of 0 and as each card is dealt add the appropriate amount to your running count until all the cards in the deck are dealt.
       As the running count increasing, the advantage turns towards the player. But if this becomes negative,
       the dealer's advantage increases. Make sure to reset your count when the deck is shuffled (although if you counted properly you won't need to). 
@@ -214,13 +217,16 @@
       </tbody>
       </table>
     <p>
-      Another form of card counting is the Halves system which is more complicated than the 
-      aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned different values to add to your 
-      running count. But this time, a 5 is worth +1.5; 3, 4 and 6 are worth +1; 2 and 7 are worth 
-      +0.5, 8 is worth 0, 9 is worth -0.5, and 10, J, Q, K, and A are worth -1. This system 
-      is proven to give more accurate information than the Hi-Lo system, but these point values 
-      are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
-      track of the ratio of low cards and high cards.
+      <b>Is that all?</b>
+    </p>
+    <p>
+      Another <b>less</b> used form of card counting is the <b>Halves</b> system which is more <i>complicated</i> than the 
+      aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned <i>different</i> values to add to your 
+      running count. But this time, a 5 is worth <b>+1.5</b>; 3, 4 and 6 are worth <b>+1</b>; 2 and 7 are worth 
+      <b>+0.5</b>, 8 is worth <b>0</b>, 9 is worth <b>-0.5</b>, and 10, J, Q, K, and A are worth <b>-1</b>. This system 
+      is proven to give more <b>accurate</b> information than the Hi-Lo system, but these point values 
+      are <i>harder</i> to calculate. Like the Hi-Lo system, the running count helps players keep 
+      track of the <i>ratio</i> of low cards and high cards.
     </p>
     <table border="1">
       <thead>
@@ -283,64 +289,104 @@
     <h4>The Statistics</h4>
   </div>
   <p>
-    Click on the simulate button with the different card counting strategies to see how the running count changes
-    and how that can inform the bets you make in comparision to not card counting at all.
+    You might be wondering why the count works the way it does.
+    We could tell you, but instead we will <i>show</i> you. 
+    Using our <b>simulate</b> button simulate another 500 games and focus on the graph in the <b>bottom right</b>.
+    It shows you what <i>cards</i> you have on you when you beat the dealer.
+    Keep track of which ones are more frequent.
   </p>
-  </body>
-  <Base stats=true counts=true simulate=true svgId="graph2"/>
-  <body>
-    <p>
-    As the simulation demonstrates, while using these counting systems do not necessarily help players
-    make a lot of profit, they to inform bets and prevent players from losing money. The 
-    graph illustrating player money over bets visualizes this. Players tend to lose a lot of money
-    and even go into debt very quickly when betting and playing blind against the dealer. However, when
-    informing bets based on the different card counting systems, players are able to remain fairly steady. 
-    </p>
-</body>
-<body>
+  <Base stats=true counts=true simulate=true countMode=1/>
   <p>
-    Try using what you have learned about card counting and play a couple rounds. We have
-    hidden the statistics from you, but feel free to turn them on by clicking the button if you are 
-    feeling a little stuck.
+    If everything goes right, you should've noticed a huge quantity of 4 specific cards:
+    <b>A, 10, J, Q, K</b>. This is why card counting systems evalute them with <b>low</b> points.
+    You're much <i>more</i> likely to win with these in the deck, so the <i>more</i> you see, the <i>less</i> likely you win after.
+  </p>
+  <p>
+    Other cards also have <i>distinct</i> probabilities of benefitting you, which is why they aren't all -1 or 0. 
+    Cards like <b>7, 8, 9</b> are more neutral which is why they don't affect the count, while <b>lower</b> number cards are bad for the player, so seeing more means <i>better</i> odds later.
+  </p>
+  <p>
+    <b>What about the halves system?</b>
+  </p>
+  <p>
+    It also uses the same principal, the cards are just divided up into even <i>further</i> categories of importance.
+    Statistically speaking, havles <i>should</i> be better for your odds of making money, but counting cards with too much variation can often be challenging in a real world scenario.
+    This is why the <b>Hi-Lo</b> method is still the most common even though it is a bit worse.
+  </p>
+  <p>
+    <b>But how much worse?</b>
+  </p>
+  <p>
+    Below we have finally unlocked the <b>full</b> extent of the simulation.
+    Try simulating <i>both</i> counting methods and comparing them.
+    You'll also notice in the <b>bottom left</b> a graph for the running count.
+    This shows you the <i>odds</i> of winning with each count.
+  </p>
+  <p>Experiment a little, <b>go crazy</b>!</p>
+  <Base stats=true counts=true simulate=true svgId="graph2"/>
+  <p>
+  You might've noticed if you did enough attempts that you often still <b>lose</b> money. 
+  It's definitely a lot <i>less</i> than before, but it still hasn't allowed you win <b>much</b> yet.
+  The simulation's goal is to demonstrate that using these counting systems do not necessarily help players
+  make a <i>lot</i> of profit, but instead help prevent players from <b>losing</b> alot of money. When
+  informing bets based on the different card counting systems, players are able to remain fairly steady. 
+  </p>
+  <p>
+    <b>Then what's the point of card counting?</b>
+  </p>
+  <p>
+    You might remember from the beginning that our simulation involves the dealer and the player acting the <b>same</b>.
+    This is done by hitting when below <b>17</b>. 
+    This is traditionally how dealers play in casinos, but player aren't bound by <i>any</i> rules.
+    In fact, you can probably find many more guides on when to <b>hit or stand</b> when compared to how to card count!
+    Blackjack is a complex game, and while card counting might help you <i>minimize</i> your losses, it's often not enough <b>alone</b> to help you win big money.
+    Card counting is only a small fraction of what makes a good Blackjack player, but utlizing every tool to your advantage will allow you to come away with <i>consistent</i> money.
+  </p>
+  <p>
+    <b>Onto the conclusion.</b>
   </p>
 </body>
-<Base stats={stats} svgId="graph2"/>
-<button on:click={statsButton} style = "margin: auto; display: block;">stats</button>
-<!-- <BasicStrategy /> -->
 <div class="header">
   <h2>Part 4:</h2>
   <h4>Conclusion and Takeaways</h4>
 </div>
 <body>
   <p>
-    Ultimately, anyone can learn Blackjack and Card Counting. And while this may not be applicable 
-    in everyday life, statistics and strategies like card counting - which is simply keeping track
+    Ultimately, <b>anyone</b> can learn Blackjack and card counting. 
+    And while card counting <i>itself</i> may not be applicable 
+    in everyday life, <b>statistics and strategies</b> like card counting - which can involve simply keeping track
     of the ratio of high valued items vs low valued items - certainly can be.
   </p>
   <p>
-    Ultimately, our visualization breaks down statistics and game theory 
-    into digestible steps and logic for the everyday user to understand 
+    The goal of our <b>visualization</b> was to break down the statistics and game theory 
+    into digestible steps and logic for the <i>everyday</i> user to understand 
     with lessons in betting and card counting. Our visualization is able 
-    to do this effectively but using a combination of simulations, text, and 
-    interactive visuals to communicate to users both visually and kinesthetically.
+    to do this <i>effectively</i> by using a combination of simulations, text, and 
+    interactive visuals to communicate to users both <b>visually and kinesthetically</b>.
   </p>
   <p>
-    One thing people should learn from our visualization is that statistics does not 
-    have to be super complicated. Anyone can learn how to card count, or even apply 
+    One thing people should <i>learn</i> from our visualization is that statistics does <b>not</b> 
+    have to be super complicated. <i>Anyone</i> can learn how to card count, or even apply 
     statistics in their daily life whether that be with fitness tracking, 
     consumerism/price tracking, social media trends, or even personal finance. Fundementally,
-    our visualization aims to demystify the confusion around math and statistics 
+    our visualization aims to <b>demystify</b> the confusion around math and statistics 
     as card counting at the fundamental level is simply keeping tracking of the 
     ratio of low items to high items. 
   </p>
   <p>
-    Our visualization succeeds at explaining this by going through the process of 
-    betting and card counting step by step. We only add one new piece of 
-    information at a time and use simulations and visuals to aid the text 
-    explanation. Our hope is that a combination of these elements helps users 
-    fundamentally understand the mechanics behind not only betting and card 
+    We aimed for our visualization to <b>succeed</b> at explaining this by going through the process of 
+    betting and card counting <i>step by step</i>. We only add one new piece of 
+    information at a time and use simulations and visuals to <b>aid</b> the text 
+    explanation. Our hope is that a <b>combination</b> of these elements helps users 
+    <i>fundamentally</i> understand the mechanics behind not only betting and card 
     counting in this blackjack application, but math and statistics at the higher 
-    level.  
+    level. <b>Thank You</b> for comings this far and to conclude we'll leave you with another opportunity to <i>test</i> yourself.
+  </p>
+  <p>
+    <b>Try playing another game to see how your skills have improved!</b>
+  </p>
+  <p>
+
   </p>
 </body>
 <Base />
@@ -413,32 +459,27 @@
     font-family: "Roboto", serif;
   }
 
-  img {
-      width: 300px; 
-      height: auto; 
-      display: block; 
-      margin: 0 auto; 
-      border: 2px solid #333; 
+  table {
+    width: 40%;
+    font-size: 14px;
+    border-collapse: collapse;
+    font-family: 'Roboto', serif;
+    border: 1px solid black;
+    margin: 0 auto; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+  th, td {
+  padding: 10px;
+  font-family: "Roboto", serif;
+  width: 50%; 
+  background-color: #ffffff;
   }
 
-  table {
-      width: 40%; /* Adjust the width of the table */
-      font-size: 14px; /* Adjust the font size of the text within the table */
-      border-collapse: collapse; /* Collapse borders between cells */
-      font-family: 'Roboto', serif;
-      border: 1px solid black;
-      margin: 0 auto; 
-      }
-      th, td {
-      padding: 10px; /* Adjust padding within cells */
-      font-family: "Roboto", serif;
-      width: 50%; 
-      background-color: #ffffff;
-      }
-
-      th {
-        background-color: #ece4d9; /* Change the background color of header cells */
-      }
+  th {
+    background-color: #ece4d9;
+  }
 
 </style>
 
