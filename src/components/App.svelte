@@ -91,7 +91,7 @@
       in BlackJack are as follows: 
     </p>
     <div style="height: 25px;"></div>
-      <img src="./odds.png" alt="odds chart">
+     <img src='./src/components/odds.png' alt="hilo chart">
     <div style="height: 25px;"></div>
     <p>
       This is done my calculating the probability of a player getting a card that will cause their
@@ -133,7 +133,7 @@
       the dealer's advantage increases.
     </p>
     <div style="height: 25px;"></div>
-      <img src='./hilo.png' alt="hilo chart">
+      <img src='./src/components/hilo.png' alt="hilo chart">
     <div style="height: 25px;"></div>
     <p>
       Another form of card counting is the Halves system which is more complicated than the 
@@ -145,7 +145,7 @@
       track of the ratio of low cards and high cards.
     </p>
     <div style="height: 25px;"></div>
-      <img src='./halves.png' alt="halves chart">
+      <img src='./src/components/halves.png' alt="halves chart">
     <div style="height: 25px;"></div>
     <p>
       Try using the Hi-Lo system to count your cards. To bring up the table press the "Hi-Lo" button on the left.
