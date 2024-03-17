@@ -260,11 +260,23 @@
       </tbody>
       </table>
     <p>
-      Try using the Hi-Lo system to count your cards. To bring up the table press the "Hi-Lo" button on the left.
+      Try using the basic Hi-Lo system to count your cards.
+      To bring up the table in-game, press the <b>Hi-Lo</b> button on the left.
+      Don't worry about winning or losing yet, just try to get the hang of counting the cards.
     </p>
-    <div style="height: 25px;"></div>
+    <Base stats=true counts=true countMode=2/>
+    <p>
+      You might be wondering how to properly use your running count to beat the dealer.
+      The truth is we don't use it for winning <i>individual</i> games.
+      The count just tells us how likely we are to win the game <i>before</i> it even starts.
+      You might notice the <b>recommended</b> bet goes up as the count goes up and goes down as the count goes down.
+      This mirrors the <i>proper</i> way to use your count.
+      The amount you want to be is up to you, but as the count gets higher and higher, the odds of you winning increase too.
+    </p>
+    <p>
+      <b>Now we can move on to the math behind this.</b>
+    </p>
   </body>
-  <Base stats=true counts=true countMode=2/>
   <body>
   <div class="header">
     <h2>Part 3:</h2>
