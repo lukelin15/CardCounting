@@ -73,7 +73,7 @@
        .attr("transform", "rotate(-90)")
        .attr("y", 0 + margin.left / 4)
        .attr("x",0 - (height / 2) - margin.top)
-       .attr("dy", "1em")
+       .attr("dy", "0em")
        .style("text-anchor", "middle")
        .text("Money");
   }

@@ -154,7 +154,7 @@
     and how that can inform the bets you make in comparision to not card counting at all.
   </p>
   </body>
-  <Base stats=true counts=true simulate=true/>
+  <Base stats=true counts=true simulate=true svgId="graph2"/>
   <body>
     <p>
     As the simulation demonstrates, while using these counting systems do not necessarily help players
