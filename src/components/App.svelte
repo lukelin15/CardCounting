@@ -71,6 +71,7 @@
     <div class="header">
       <h2>Part 1:</h2>
       <h4>Why Card Count?</h4>
+      <h4>Visualizing the Cards</h4>
     </div>
     <p>
       It might seem like winning and losing is just random luck, up to chance of the cards you
@@ -89,6 +90,8 @@
       between every round, seeing so many cards does not really help most people. The odds
       in BlackJack are as follows: 
     </p>
+    <div style="height: 25px;"></div>
+      <img src="./odds.png" alt="odds chart">
     <div style="height: 25px;"></div>
     <p>
       This is done my calculating the probability of a player getting a card that will cause their
@@ -115,7 +118,7 @@
   </div>
   <body>
     <p>
-      As displayed in the "Visualizing the Cards" section above, keeping track of every single card is simply 
+      As displayed in the "Why Card Count?" section above, keeping track of every single card is simply 
       not feasible since there are 52 cards in a deck, its more unrealistic to calculate 
       the exact odds of busting as the games goes on. Since a typical game of BlackJack can 
       have 6-8 decks in play, this becomes impossible. Thus, players use card counting to
@@ -129,6 +132,9 @@
       As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
       the dealer's advantage increases.
     </p>
+    <div style="height: 25px;"></div>
+      <img src='./hilo.png' alt="hilo chart">
+    <div style="height: 25px;"></div>
     <p>
       Another form of card counting is the Halves system which is more complicated than the 
       aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned different values to add to your 
@@ -138,7 +144,9 @@
       are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
       track of the ratio of low cards and high cards.
     </p>
-
+    <div style="height: 25px;"></div>
+      <img src='./halves.png' alt="halves chart">
+    <div style="height: 25px;"></div>
     <p>
       Try using the Hi-Lo system to count your cards. To bring up the table press the "Hi-Lo" button on the left.
     </p>
@@ -154,6 +162,9 @@
     Click on the simulate button with the different card counting strategies to see how the running count changes
     and how that can inform the bets you make in comparision to not card counting at all.
   </p>
+  </body>
+  <Base stats=true counts=true simulate=true/>
+  <body>
     <p>
     As the simulation demonstrates, while using these counting systems do not necessarily help players
     make a lot of profit, they to inform bets and prevent players from losing money. The 
@@ -265,6 +276,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: #f4efe9ff;
   }
 
   p {
@@ -273,9 +285,16 @@
     padding: 20px;
     margin: 0 auto;
     width: 40%;
+    text-indent: 30px;
     font-family: "Roboto", serif;
   }
 
-
+  img {
+      width: 300px; 
+      height: auto; 
+      display: block; 
+      margin: 0 auto; 
+      border: 2px solid #333; 
+  }
 </style>
 
