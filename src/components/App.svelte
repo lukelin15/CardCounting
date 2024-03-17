@@ -90,6 +90,63 @@
       between every round, seeing so many cards does not really help most people. The odds
       in BlackJack are as follows: 
     </p>
+    <table border="1">
+      <thead>
+        <tr>
+          <th colspan="2" style='background-color: #d4c8b9'>BlackJack Odds</th>
+      </tr>
+          <tr>
+              <th>Player Hand Value</th>
+              <th>Probability of Busting</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>11 or lower</td>
+              <td>0%</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>31%</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>39%</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>56%</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>58%</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td>62%</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td>69%</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td>77%</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td>85%</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>92%</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td>100%</td>
+          </tr>
+      </tbody>
+      </table>
     <p>
       This is done my calculating the probability of a player getting a card that will cause their
       total go go over 21 based on their current total of their first two cards. Naturally, as 
@@ -129,6 +186,31 @@
       As the sunning count increasing, the advantage turns towards the player. But if this becomes negative,
       the dealer's advantage increases.
     </p>
+    <table border="1">
+      <thead>
+        <tr>
+          <th colspan="2" style='background-color: #d4c8b9'>Hi-Lo Card Counting</th>
+      </tr>
+          <tr>
+              <th>Card</th>
+              <th>Value</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>2-6</td>
+              <td>+1.0</td>
+          </tr>
+          <tr>
+            <td>7-9</td>
+            <td>+0</td>
+        </tr>
+        <tr>
+          <td>10, J, Q, K, A</td>
+          <td>-1.0</td>
+      </tr>
+      </tbody>
+      </table>
     <p>
       Another form of card counting is the Halves system which is more complicated than the 
       aforementioned Hi-Lo system. Like Hi-Lo, cards are assigned different values to add to your 
@@ -138,6 +220,43 @@
       are harder to calculate. Like the Hi-Lo system, the running count helps players keep 
       track of the ratio of low cards and high cards.
     </p>
+    <table border="1">
+      <thead>
+        <tr>
+          <th colspan="2" style='background-color: #d4c8b9'>Halves Card Counting</th>
+      </tr>
+          <tr>
+              <th>Card</th>
+              <th>Value</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>5</td>
+              <td>+1.5</td>
+          </tr>
+          <tr>
+            <td>3, 4, 6</td>
+            <td>+1.0</td>
+        </tr>
+        <tr>
+          <td>2, 7</td>
+          <td>+0.5</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>+0</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>-0.5</td>
+        </tr>
+        <tr>
+          <td>10, J, Q, K, A</td>
+          <td>-1.0</td>
+        </tr>
+      </tbody>
+      </table>
     <p>
       Try using the Hi-Lo system to count your cards. To bring up the table press the "Hi-Lo" button on the left.
     </p>
@@ -287,5 +406,25 @@
       margin: 0 auto; 
       border: 2px solid #333; 
   }
+
+  table {
+      width: 40%; /* Adjust the width of the table */
+      font-size: 14px; /* Adjust the font size of the text within the table */
+      border-collapse: collapse; /* Collapse borders between cells */
+      font-family: 'Roboto', serif;
+      border: 1px solid black;
+      margin: 0 auto; 
+      }
+      th, td {
+      padding: 10px; /* Adjust padding within cells */
+      font-family: "Roboto", serif;
+      width: 50%; 
+      background-color: #ffffff;
+      }
+
+      th {
+        background-color: #ece4d9; /* Change the background color of header cells */
+      }
+
 </style>
 
